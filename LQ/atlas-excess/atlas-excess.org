@@ -1,0 +1,168 @@
+#+TITLE:     ATLAS $e + e + \nu + j$ excess compared with CMS LQ1
+#+EMAIL:     Edmund.A.Berry@cern.ch
+#+DATE:      2014-02-11 Tue
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [bigger]
+#+BEAMER_FRAME_LEVEL: 2
+#+latex_header: \mode<beamer>{\usetheme{Berlin}}
+#+latex_header: \input{tex/header.tex}
+#+latex_header: \input{tex/macros.tex}
+#+latex_header: \mode<beamer>{\usecolortheme{bear}}
+#+latex_header: \mode<beamer>{\titlegraphic{\includegraphics[width=0.2\textwidth]{brown-logo}}}
+#+latex_header: \institute[Brown University]{\inst{1} Brown University}
+#+beamer_header_extra: \author[E. Berry]{\alert{E. Berry}\inst{1}, G. Landsberg\inst{2}}
+
+* Introduction
+** ATLAS global search (ATLAS-CONF-2014-006)
+*** Text                                                  :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\begin{itemize}
+\scriptsize
+\item ATLAS released a global search for new phenomena: 
+\item CDS Record: \alert{\href{http://cds.cern.ch/record/1666536}{http://cds.cern.ch/record/1666536}}
+\item Contains dozens of event classes with varying final states
+\item Data is compared with SM Monte Carlo, except for fake
+\item Interesting events at high \meff in the $e + e + \nu + j$ event class (left)
+\item How does this compare with CMS leptoquarks in $e + e + j + j$ (right)? 
+\end{itemize}
+#+END_LaTeX
+*** Plot                                                    :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LATEX: width=0.6\textwidth 
+[[file:fig/fig_09.png]]
+#+ATTR_LATEX: width=0.38\textwidth 
+[[file:fig/BR_Sigma_EE.pdf]]
+
+* Event selection
+** ATLAS selection (note section 4.2)
+*** Text                                                  :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+
+#+BEGIN_LaTeX
+Object selection (excluding object ID/Iso):
+\begin{itemize}
+\scriptsize
+\item Electrons (e) with $\pt > 50$ GeV, $|\eta| < 2.5$
+\item Jets (j) are AK4 with $\pt > 50$ GeV, $|\eta| < 2.8$.
+\item Jets overlapping with electrons ($\Delta R(e,j) < 0.2$) are discarded
+\item After discarding jets overlapping with electrons, electrons close to jets ($\Delta R(e,j) < 0.4$) are discarded
+\item $\meff = \pt(e_1) + \pt(e_2) + \pt(j) + \met$
+\end{itemize}
+
+Event selection:
+\begin{itemize}
+\scriptsize
+\item Trigger on $\met > 150 GeV$
+\item Usual offline event cleaning (PV requirement, detector noise, etc)
+\item Two electrons
+\item One jet
+\item $\met > 150$ GeV
+\item $\met/\meff > 0.2$
+\item $\Delta\phi(j,\met) > 0.4$
+\end{itemize}
+#+END_LaTeX
+
+** CMS selection 
+*** Text                                                  :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+
+#+BEGIN_LaTeX
+Object selection:
+\begin{itemize}
+\scriptsize
+\item Electrons (e) with $\pt > 45$ GeV, $|\eta| < 2.5$
+\item Jets (j) are \alert{AK5} with $\pt > 45$ GeV, $|\eta| < 2.4$.
+\item Jets overlapping with electrons ($\Delta R(e,j) < 0.3$) are discarded
+\item \alert{$\ST = \pt(e_1) + \pt(e_2) + \pt(j_1) + \pt(j_1)$}
+\end{itemize}
+
+Event selection:
+\begin{itemize}
+\scriptsize
+\item \alert{Trigger on $\pt(e) > 30$ GeV + $\pt(j_1) > 100$ GeV + $\pt(j_2) > 25$ GeV}
+\item Usual offline event cleaning (PV requirement, detector noise, etc)
+\item Two electrons
+\item \alert{At least two jets}
+\item $\mee > 50$ GeV
+\item \alert{$\ST = \pt(e_1) + \pt(e_2) + \pt(j_1) + \pt(j_2) > 300$ GeV}
+\item Trigger on $\met > 150 GeV$
+\end{itemize}
+
+Differences from ATLAS marked in \alert{red}
+#+END_LaTeX
+
+* Comparison
+** Events with high \meff in the CMS LQ \eejj excess?
+*** Plot                                                  :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+\meff at \eejj preselection, as defined in the CMS LQ analysis
+#+END_LaTeX
+#+ATTR_LATEX: width=0.6\textwidth 
+[[file:fig/sT_eenuj_PAS_eejj.png]]
+
+*** Text                                                  :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\begin{itemize}
+\item No sign of an excess seen at preselection
+\item $\met/\meff > 0.2$ and $\met/\meff > 0.2$ \alert{not} applied
+\end{itemize}
+#+END_LaTeX
+
+** Events with high \meff in the CMS LQ \eejj excess?
+*** Plot                                                  :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+\meff at \eejj final selection for M(LQ) > 650 GeV
+#+END_LaTeX
+#+ATTR_LATEX: width=0.6\textwidth 
+[[file:fig/sT_eenuj_LQ650_eejj.png]]
+*** Text                                                  :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\begin{itemize}
+\item For whole selection, predict $20.5 \pm 1.2$ (stat).  Observe 36.
+\item In region $1200 < \meff < 1400$, predict $1.9 \pm 0.5$ (stat) events.  Observe 1.
+\end{itemize}
+#+END_LaTeX
+
+
+* Conclusion
+** Conclusion:
+*** ATLAS excess in  $e + e + \nu + j$ events is not related to CMS excess in $e + e + j + j$ events.
+*** To do:
+**** Reproduce ATLAS cuts explicitly
+   
