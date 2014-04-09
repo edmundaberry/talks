@@ -1,0 +1,135 @@
+%--------------------------------------------------------------------------------
+% Useful commands
+%--------------------------------------------------------------------------------
+
+\newcommand{\eejj}{\ensuremath{eejj} }
+\newcommand{\enujj}{\ensuremath{e\nu jj} }
+\newcommand{\mumujj}{\ensuremath{\mu\mu jj} }
+\newcommand{\munujj}{\ensuremath{\mu\nu jj} }
+\newcommand{\emujj}{\ensuremath{e\mu jj} }
+\newcommand{\zjets}{\ensuremath{\text{Z}^{0}}+jets }
+\newcommand{\wjets}{\ensuremath{\text{W}^{\pm}}+jets }
+\newcommand{\ttbar}{\ensuremath{t\bar{t}} }
+\newcommand{\ST}{\ensuremath{S_{\text{T}}} }
+\newcommand{\pt}{\ensuremath{p_{\text{T}}} }
+\newcommand{\mee}{\ensuremath{m_{\text{ee}}} }
+\newcommand{\mll}{\ensuremath{m_{\ell\ell}} }
+\newcommand{\mej}{\ensuremath{m_{\text{ej}}} }
+\newcommand{\mejmin}{\ensuremath{m_{\text{ej}}^{\text{min}}} }
+\newcommand{\mejavg}{\ensuremath{m_{\text{ej}}^{\text{avg}}} }
+\newcommand{\mtjnu}{\ensuremath{m_{\text{T, j}\nu}} }
+\newcommand{\met}{\ensuremath{\not\!\!{E_{\text{T}}}} }
+\newcommand{\MET}{\ensuremath{\not\!\!{E_{\text{T}}}} }
+\newcommand{\mt}{\ensuremath{m_{\text{T, e}\nu}} }
+
+%--------------------------------------------------------------------------------
+% Numbers
+%--------------------------------------------------------------------------------
+
+% Lumi info
+\newcommand{\intLumi}{$19.6 \text{ fb}^{-1}$}
+
+% MC scale factors
+\newcommand{\enujjWJetsMonteCarloScaleFactor}{0.85 \pm 0.01 \text{ (stat)} \pm 0.01    \text{ (syst)}}
+\newcommand{\enujjTTBarMonteCarloScaleFactor}{0.97 \pm 0.02 \text{ (stat)} \pm 0.01    \text{ (syst)}}
+\newcommand{\enujjWJetsMonteCarloScaleFactorNoSyst}{0.85 \pm 0.01 \text{ (stat)}}
+\newcommand{\enujjTTBarMonteCarloScaleFactorNoSyst}{0.97 \pm 0.02 \text{ (stat)}}
+\newcommand{\eejjZJetsMonteCarloScaleFactor} {0.97 \pm 0.01 \text{ (stat)} \pm 0.00004 \text{ (syst)}}
+
+\newcommand{\enujjWJetsMonteCarloScaleFactorMETRescaled}{0.95 \pm 0.02 \text{ (stat)} \pm 0.01 \text{ (syst)}}
+\newcommand{\enujjTTBarMonteCarloScaleFactorMETRescaled}{1.07 \pm 0.03 \text{ (stat)} \pm 0.01 \text{ (syst)}}
+
+\newcommand{\enujjWJetsMonteCarloScaleFactorMETandMTRescaled}{0.97 \pm 0.02 \text{ (stat)} \pm 0.01 \text{ (syst)}}
+\newcommand{\enujjTTBarMonteCarloScaleFactorMETandMTRescaled}{1.08 \pm 0.03 \text{ (stat)} \pm 0.01 \text{ (syst)}}
+
+\newcommand{\eejjZControlRegionContamination}{4\%}
+
+% Electron scale factors
+\newcommand{\electronRecoDataMCScaleFactor}{0.98}
+\newcommand{\electronRecoDataMCScaleFactorRelUnc}{1.5}
+\newcommand{\electronRecoDataMCScaleFactorSqr}{0.96}
+
+% GEN-level cross-sections (not yet rescaled) 
+\newcommand{\wjetsXSection}{37509.0 pb}
+\newcommand{\zjetsXSection}{3503.71 pb}
+\newcommand{\ttbarXSection}{234 pb}
+\newcommand{\stopSChannelXSection}{5.55 pb}
+\newcommand{\stopTChannelXSection}{87.1 pb}
+\newcommand{\stopTWChannelXSection}{22.2 pb}
+\newcommand{\wwXSection}{57.1 pb} % THESE NEED TO BE UPDATED!!!
+\newcommand{\wzXSection}{32.3 pb} % THESE NEED TO BE UPDATED!!!
+\newcommand{\zzXSection}{8.26 pb} % THESE NEED TO BE UPDATED!!!
+
+% QCD contributions at limit of the analysis
+\newcommand{\percentQCDatEEJJLimit}{1\%}
+\newcommand{\percentQCDatENuJJLimit}{3\%}
+
+% Closure test contamination
+\newcommand{\percentContaminationClosureTest}{5\%}
+\newcommand{\percentContaminationClosureTestFinal}{55\%}
+
+% Closure test (low-ST) results
+\newcommand{\closureTestLowSTPredicted}{13100}
+\newcommand{\closureTestLowSTPredictedUnc}{400}
+\newcommand{\closureTestLowSTObserved}{12100}
+\newcommand{\closureTestLowSTObservedUnc}{400}
+\newcommand{\closureTestLowSTRatio}{1.08}
+\newcommand{\closureTestLowSTRatioUnc}{0.05}
+
+% Closure test (mid-ST) results
+\newcommand{\closureTestMidSTPredicted}{877}
+\newcommand{\closureTestMidSTPredictedUnc}{46.7}
+\newcommand{\closureTestMidSTObserved}{600}
+\newcommand{\closureTestMidSTObservedUnc}{53}
+\newcommand{\closureTestMidSTRatio}{1.46}
+\newcommand{\closureTestMidSTRatioUnc}{0.15}
+
+% QCD systematic uncertainty
+\newcommand{\qcdSystematicUncertaintyPerEle}{30\%}
+\newcommand{\qcdSystematicUncertaintyTwoEle}{60\%}
+
+% TTbar (e-mu-jj) contamination
+\newcommand{\emujjContamination}{2\%}
+\newcommand{\emujjRecoScaleFactor}{0.974  \pm 0.011 \text{ (stat)}}
+
+% mumujj/munujj scale factors for data-driven background
+\newcommand{\mumujjRecoScaleFactor}{97.5 \pm 0.4 \text{ (stat)}}
+\newcommand{\munujjRecoScaleFactor}{97.2 \pm 0.5 \text{ (stat)}}
+
+% Shape uncertainties
+\newcommand{\enujjWJetsShapeUncertainty}{5.9\%}
+\newcommand{\enujjTTBarShapeUncertainty}{8.2\%}
+\newcommand{\eejjZJetsShapeUncertainty}{8.7\%}
+
+% EES uncertainties
+\newcommand{\electronEnergyScaleUncBarrel}{0.4\%}
+\newcommand{\electronEnergyScaleUncEndcap}{4.1\%}
+
+% EER uncertainties
+\newcommand{\electronEnergyResolutionUncBarrel}{1.006}
+\newcommand{\electronEnergyResolutionUncEndcap}{1.015}
+
+% lumi uncertainty
+\newcommand{\lumiUncertainty}{2.6\%}
+
+% limits
+\newcommand{\eejjObservedLimit}{1005}
+\newcommand{\eejjExpectedLimit}{1030}
+\newcommand{\enujjObservedLimit}{845}
+\newcommand{\enujjExpectedLimit}{890}
+
+\newcommand{\enujjObservedLimitCombined}{845}
+\newcommand{\enujjExpectedLimitCombined}{932}
+
+\newcommand{\eejjObservedLimitNoSyst}{1010}
+\newcommand{\eejjExpectedLimitNoSyst}{1030}
+\newcommand{\enujjObservedLimitNoSyst}{850}
+\newcommand{\enujjExpectedLimitNoSyst}{895}
+
+\newcommand{\eejjObservedLimitMuon}{1015}
+\newcommand{\eejjExpectedLimitMuon}{980}
+\newcommand{\enujjObservedLimitMuon}{825}
+\newcommand{\enujjExpectedLimitMuon}{890}
+
+\newcommand{\lowBetaExpectedLimit}{790}
+\newcommand{\lowBetaObservedLimit}{635}
