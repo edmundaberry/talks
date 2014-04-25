@@ -1,0 +1,527 @@
+#+TITLE:     HCAL Reconstruction: \newline MC Correction Functions Update
+#+EMAIL:     Edmund.A.Berry@cern.ch
+#+DATE:      Thursday, April 25, 2014
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [bigger]
+#+BEAMER_FRAME_LEVEL: 3
+#+latex_header: \mode<beamer>{\usetheme[compress]{Berlin}}
+#+latex_header: \usepackage{multirow}
+#+latex_header: \input{tex/header.tex}
+#+latex_header: \input{tex/macros.tex}
+#+latex_header: \input{tex/toolbox.tex}
+#+latex_header: \mode<beamer>{\usecolortheme{bear}}
+#+latex_header: \mode<beamer>{\titlegraphic{\includegraphics[width=0.2\textwidth]{brown-logo}}}
+#+beamer_header_extra: \author[Edmund Berry]{\alert{Edmund Berry}}
+
+* Introduction
+** Introduction
+*** Introduction
+**** Have derived MC correction functions for OOT PU
+**** Same derivation method as used for data
+**** Procedure:
+***** Run Alexandre's ratio method on zero PU MC
+***** Derive correction functions based on the pulse shape
+***** Use the same definitions, fits, and methods as in data
+***** \alert{Validate results on MC with OOT PU}
+* Procedure
+** Method
+*** Method
+**** Process a high-$p_{\text{T}}$ QCD sample in two ways:
+***** No pileup: for MC truth comparison (DONE)
+***** With pileup: for validation (Processing)
+**** Compare results event-by-event, channel-by-channel:
+***** No pileup
+***** vs. with pileup and no corrections
+***** vs. with pileup and corrections
+** Datasets
+*** Datasets
+**** Consider two \texttt{GEN-SIM} datasets (no PU) at \texttt{T1\_US\_FNAL}:
+#+BEGIN_LaTeX
+\resizebox{0.9\textwidth}{!}{
+\begin{tabular}{l|l}
+\hline\hline
+Dataset & Production release \\
+\hline\hline
+\texttt{/MinBias\_TuneZ2star\_13TeV-pythia6/Summer13-START53\_V7C-v1/GEN-SIM} & \texttt{CMSSW\_5\_3\_10\_patch2} \\
+\texttt{/QCD\_Pt-1800\_TuneZ2star\_13TeV\_pythia6/Fall13-POSTLS162\_V1-v1/GEN-SIM} & \texttt{CMSSW\_6\_2\_0\_patch1} \\
+\hline\hline
+\end{tabular}
+}
+#+END_LaTeX
+**** \texttt{QCD\_Pt-1800} dataset:
+***** [[https://cmsweb.cern.ch/das/request?input=dataset\%3D\%2FQCD_Pt-1800_TuneZ2star_13TeV_pythia6\%2FFall13-POSTLS162_V1-v1\%2FGEN-SIM\&instance=prod\%2Fglobal][\alert{DAS link}]]
+***** 93453 (\($\sim100$k\)) events, 95 files
+***** HcalNoiseAnalyzer ntuples on FNAL EOS: \texttt{/eos/uscms/store/user/eberry/QCD1800MC/}
+**** \texttt{MinBias} dataset:
+***** [[https://cmsweb.cern.ch/das/request?input=dataset\%3D\%2FMinBias_TuneZ2star_13TeV-pythia6\%2FSummer13-START53_V7C-v1\%2FGEN-SIM\&instance=prod\%2Fglobal][\alert{DAS link}]]
+***** 9999424 (\($\sim10$M\)) events, 946 files
+***** HcalNoiseAnalyzer ntuples on FNAL EOS: \texttt{/eos/uscms/store/user/eberry/MinBiasMC/}
+** Processing
+*** Processing pileup sample
+**** Need to overlay \texttt{QCD} with \texttt{MinBias}
+**** Use \texttt{MixingModule} in \texttt{CMSSW\_6\_2\_8}
+**** Pileup scenario: \texttt{AVE\_50\_BX\_25ns}
+**** Two stages:
+***** 1) \texttt{DIGI}, \texttt{L1}, \texttt{DIGI2RAW}, \texttt{HLT}
+***** 2) \texttt{RAW2DIGI} \texttt{L1Reco} \texttt{RECO}
+**** Stage 1 all done: [[https://github.com/edmundaberry/HcalReco/blob/master/test/hcalNoise_fromGEN-SIM_toGEN-SIM-RAW_62X_withMixer_cmsDriver.sh][\alert{cmsDriver}]] and [[https://github.com/edmundaberry/HcalReco/blob/master/test/hcalNoise_fromGEN-SIM_toGEN-SIM-RAW_62X_withMixer_cfg.py][\alert{python cfg}]]
+**** Stage 2 part done: [[https://github.com/edmundaberry/HcalReco/blob/master/test/hcalNoise_fromGEN-SIM-RAW_62X_cmsDriver.sh][\alert{cmsDriver}]] and [[https://github.com/edmundaberry/HcalReco/blob/master/test/hcalNoise_fromGEN-SIM-RAW_62X_cfg.py][\alert{python cfg}]]
+**** High PU is \alert{VERY} CPU intensive: 2 minutes/event
+* Validation
+** Single DIGI comparison
+*** Pileup vs. No Pileup pulse shape comparison
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Figure                                      :B_ignoreheading:BMCOL:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:BEAMER_col: 0.55
+:END:
+#+BEGIN_LaTeX
+\centering
+single DIGI comparison: HB
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/pulse_QCD1800MC_PU_vs_NoPU.png]]
+***** Figure                                      :B_ignoreheading:BMCOL:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:BEAMER_col: 0.55
+:END:
+#+BEGIN_LaTeX
+\centering
+single DIGI comparison: HE
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/pulse_QCD1800MC_PU_vs_NoPU_HE.png]]
+**** Text                                                :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+***** HE as expected.
+***** HB as expected in TS3.  Strangeness in TS4 + TS5.
+***** Bug in \texttt{MixingModule}?  Investigating with M. Hildreth.
+** Function cross checks
+*** Function validation on zero pileup sample: a\_1
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** HB                                          :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+a\_1 in HB
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/crosscheck_a0_HB.png]]
+***** HE                                          :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+a\_1 in HE
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/crosscheck_a0_HE.png]]
+**** Text                                                :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+***** Sample has zero pileup
+***** Sample size is much smaller in HE (more events coming)
+*** Function validation on zero pileup sample: a1
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** HB                                          :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+a1 in HB
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/crosscheck_a1_HB.png]]
+***** HE                                          :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+a1 in HE
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/crosscheck_a1_HE.png]]
+**** Text                                                :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+***** Sample has zero pileup
+***** Tails need investigation
+***** Sample size is much smaller in HE (more events coming)
+*** Function validation on zero pileup sample: a2
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** HB                                          :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+a2 in HB
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/crosscheck_a2_HB.png]]
+***** HE                                          :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+a2 in HE
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/crosscheck_a2_HE.png]]
+**** Text                                                :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+***** Sample has zero pileup
+***** Tails need investigation
+***** Sample size is much smaller in HE (more events coming)
+*** Function validation on zero pileup sample: a3
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** HB                                          :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+a3 in HB
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/crosscheck_a3_HB.png]]
+***** HE                                          :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+a3 in HE
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/crosscheck_a3_HE.png]]
+**** Text                                                :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+***** Sample has zero pileup
+***** Tails need investigation
+***** Sample size is much smaller in HE (more events coming)
+** Final effect
+*** Effect of corrections
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Plot log                                    :B_ignoreheading:BMCOL:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:BEAMER_col: 0.55
+:END:
+#+BEGIN_LaTeX
+\centering
+Log scale
+#+END_LaTeX
+#+ATTR_LATEX: width=1.0\textwidth
+[[file:fig/correction_comparison.png]]
+***** Plot lin                                    :B_ignoreheading:BMCOL:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:BEAMER_col: 0.55
+:END:
+#+BEGIN_LaTeX
+\centering
+Linear scale
+#+END_LaTeX
+#+ATTR_LATEX: width=1.0\textwidth
+[[file:fig/correction_comparison_linear.png]]
+**** Text                                                :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+***** Corrected mean (blue) = 2.21 fC, RMS = 16.1 fC
+***** Uncorrected mean (red) = 0.76 fC, RMS = 16.6 fC
+* Conclusion
+** Conclusion
+*** Conclusion
+**** Processed zero-pileup samples: OK for shape studies
+**** Processed high-pileup samples: OK for validation
+***** Processing takes \alert{MUCH} longer than expected
+***** Strange features.  Small effect in the end.
+***** Investigating further.
+**** Preliminary results ready using Alexandre's method
+***** Fit functions used for data model MC pulse shape well
+***** Request from Salavat to increase the fit range: coming
+**** Working on validating results to put into CMSSW
+**** Suggestion from Artur: look at MC that approximates Alexandre's data
+* Backup
+** Selection
+*** Selection
+**** Event selection:
+***** No trigger requirement
+***** No \texttt{OfficialDecision} requirement
+***** \texttt{NumberOfGoodPrimaryVertices > 0}
+**** Channel selection:
+***** Only \texttt{HBHE} considered
+***** Rings: HB, HE: {17:20, 21:23, 24:25, 26:27, 28:28}
+***** No channels in bad channels list
+***** \texttt{RecHit} energy > 1 GeV
+***** Charge > 5 fC
+**** Analyzer code:
+***** [[https://github.com/edmundaberry/HcalReco/blob/master/analysis/macros/analysisClass_hcalReco.C][\alert{Git page}]]
+** N(vertex)
+*** N(vertex)
+**** Figure                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Number of primary vertices: QCD sample
+#+END_LaTeX
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:fig/npv_QCD1800.png]]
+**** Text                                                :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+***** 92612 events passing event selection
+***** Confirms no pileup, as expected
+** Definitions
+*** Definitions
+**** The following plots show TProfile distributions
+**** One entry per HCAL digi in the ZS-collection
+**** $x$-axis corresponds to charge in TS4 [fC]
+**** $y$-axis corresponds to one of several charge ratios:
+***** a\_1: charge in TS3 [fC] / charge in TS4 [fC]
+***** a1: charge in TS5 [fC] / charge in TS4 [fC]
+***** a2: charge in TS6 [fC] / charge in TS4 [fC]
+***** a3: charge in TS7 [fC] / charge in TS4 [fC]
+** a\_1(TS4) in the QCD sample
+*** a\_1(TS4) in the QCD sample
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Figure                                      :B_ignoreheading:BMCOL:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:BEAMER_col: 0.55
+:END:
+#+BEGIN_LaTeX
+\centering
+a\_1(TS4) in HB
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/a0_ring0.png]]
+***** Figure                                      :B_ignoreheading:BMCOL:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:BEAMER_col: 0.55
+:END:
+#+BEGIN_LaTeX
+\centering
+a\_1(TS4) in HE 17:20
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/a0_ring1.png]]
+**** Text                                                :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+***** Fit with exponential + polynomial:
+#+BEGIN_LaTeX
+\resizebox{0.8\textwidth}{!}{
+\begin{equation*}
+a\_1(\text{TS4}) = [0] + [1]\cdot\text{TS4} + \text{Exp}\left([2] + [3]\cdot\text{TS4}\right)
+\end{equation*}
+}
+#+END_LaTeX
+** a1(TS4) in the QCD sample
+*** a1(TS4) in the QCD sample
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Figure                                      :B_ignoreheading:BMCOL:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:BEAMER_col: 0.5
+:END:
+#+BEGIN_LaTeX
+\centering
+a1(TS4) in HB
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/a1_ring0.png]]
+***** Figure                                      :B_ignoreheading:BMCOL:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:BEAMER_col: 0.5
+:END:
+#+BEGIN_LaTeX
+\centering
+a1(TS4) in HE 17:20
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/a1_ring1.png]]
+**** Text                                                :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+***** Fit with multiple polynomials (same shape as in data)
+***** Fit function describes the shape well
+***** Numeric results and data comparison next slide
+*** a1(TS4) Data vs QCD MC
+**** Figure                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+a1(TS4) Data vs Monte Carlo in HB
+#+END_LaTeX
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:fig/a1_ring0_daata.png]]
+**** Text                                                :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+***** Blue points: MC
+***** Red line: MC fit
+***** Black line: data fit (from Alexandre)
+** a2(TS4) in the QCD sample
+*** a2(TS4) in the QCD sample
+**** Columns                                                      :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Figure                                      :B_ignoreheading:BMCOL:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:BEAMER_col: 0.55
+:END:
+#+BEGIN_LaTeX
+\centering
+a2(TS4) in HB
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/a2_ring0.png]]
+***** Figure                                      :B_ignoreheading:BMCOL:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:BEAMER_col: 0.55
+:END:
+#+BEGIN_LaTeX
+\centering
+a2(TS4) in HE 17:20
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/a2_ring1.png]]
+*** a2(TS4) Data vs QCD MC
+**** Figure                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+a2(TS4) Data vs Monte Carlo in HB
+#+END_LaTeX
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:fig/a2_ring0_daata.png]]
+**** Text                                                :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+***** Blue points: MC
+***** Red line: MC fit
+***** Black line: data fit (from Alexandre)
+** a3(TS4) in the QCD sample
+*** a3(TS4) in the QCD sample
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Figure                                      :B_ignoreheading:BMCOL:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:BEAMER_col: 0.55
+:END:
+#+BEGIN_LaTeX
+\centering
+a3(TS4) in HB
+#+END_LaTeX
+#+ATTR_LATEX: width=1.0\textwidth
+[[file:fig/a3_ring0.png]]
+
+***** Figure                                      :B_ignoreheading:BMCOL:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:BEAMER_col: 0.55
+:END:
+#+BEGIN_LaTeX
+\centering
+a3(TS4) in HE 17:20
+#+END_LaTeX
+#+ATTR_LATEX: width=1.0\textwidth
+[[file:fig/a3_ring1.png]]
+*** a3(TS4) Data vs QCD MC
+**** Figure                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+a3(TS4) Data vs Monte Carlo in HB
+#+END_LaTeX
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:fig/a2_ring0_daata.png]]
+**** Text                                                :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+***** Blue points: MC
+***** Red line: MC fit
+***** Black line: data fit (from Alexandre)

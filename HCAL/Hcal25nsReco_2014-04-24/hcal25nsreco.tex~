@@ -1,0 +1,641 @@
+% Created 2014-04-24 Thu 17:30
+\documentclass[bigger]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\mode<beamer>{\usetheme[compress]{Berlin}}
+\usepackage{multirow}
+\input{tex/header.tex}
+\input{tex/macros.tex}
+\input{tex/toolbox.tex}
+\mode<beamer>{\usecolortheme{bear}}
+\mode<beamer>{\titlegraphic{\includegraphics[width=0.2\textwidth]{brown-logo}}}
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{HCAL Reconstruction: \newline MC Correction Functions Update}
+\author{Edmund Berry}
+\date{Thursday, April 24, 2014}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.8.11}}
+
+\author[Edmund Berry]{\alert{Edmund Berry}}
+\begin{document}
+
+\maketitle
+
+
+\section{Introduction}
+\label{sec-1}
+\subsection{Introduction}
+\label{sec-1-1}
+\begin{frame}
+\frametitle{Introduction}
+\label{sec-1-1-1}
+\begin{itemize}
+
+\item Alexandre's talk describes a method for OOT PU corrections on data
+\label{sec-1-1-1-1}%
+
+\item We would like to apply the same method for Monte Carlo
+\label{sec-1-1-1-2}%
+
+\item Procedure:
+\label{sec-1-1-1-3}%
+\begin{itemize}
+
+\item Run Alexandre's ratio method on zero PU MC
+\label{sec-1-1-1-3-1}%
+
+\item Derive correction functions based on the pulse shape
+\label{sec-1-1-1-3-2}%
+
+\item Use the same definitions, fits, and methods as in data
+\label{sec-1-1-1-3-3}%
+
+\item Validate results on MC with OOT PU
+\label{sec-1-1-1-3-4}%
+\end{itemize} % ends low level
+
+\item More details on the following slides
+\label{sec-1-1-1-4}%
+\end{itemize} % ends low level
+\end{frame}
+\section{Procedure}
+\label{sec-2}
+\subsection{Datasets}
+\label{sec-2-1}
+\begin{frame}
+\frametitle{GEN-SIM datasets}
+\label{sec-2-1-1}
+\begin{itemize}
+
+\item Consider two \texttt{GEN-SIM} datasets (no PU) at \texttt{T1\_US\_FNAL}:\\
+\label{sec-2-1-1-1}%
+\resizebox{0.9\textwidth}{!}{
+\begin{tabular}{l|l}
+\hline\hline
+Dataset & Production release \\
+\hline\hline
+\texttt{/MinBias\_TuneZ2star\_13TeV-pythia6/Summer13-START53\_V7C-v1/GEN-SIM} & \texttt{CMSSW\_5\_3\_10\_patch2} \\
+\texttt{/QCD\_Pt-1800\_TuneZ2star\_13TeV\_pythia6/Fall13-POSTLS162\_V1-v1/GEN-SIM} & \texttt{CMSSW\_6\_2\_0\_patch1} \\
+\hline\hline
+\end{tabular}
+}
+
+\item \texttt{QCD\_Pt-1800} dataset:
+\label{sec-2-1-1-2}%
+\begin{itemize}
+
+\item \href{https://cmsweb.cern.ch/das/request?input=dataset\%3D\%2FQCD_Pt-1800_TuneZ2star_13TeV_pythia6\%2FFall13-POSTLS162_V1-v1\%2FGEN-SIM\&instance=prod\%2Fglobal}{\alert{DAS link}}
+\label{sec-2-1-1-2-1}%
+
+\item 93453 (\($\sim100$k\)) events, 95 files
+\label{sec-2-1-1-2-2}%
+
+\item HcalNoiseAnalyzer ntuples on FNAL EOS: \texttt{/eos/uscms/store/user/eberry/QCD1800MC/}
+\label{sec-2-1-1-2-3}%
+\end{itemize} % ends low level
+
+\item \texttt{MinBias} dataset:
+\label{sec-2-1-1-3}%
+\begin{itemize}
+
+\item \href{https://cmsweb.cern.ch/das/request?input=dataset\%3D\%2FMinBias_TuneZ2star_13TeV-pythia6\%2FSummer13-START53_V7C-v1\%2FGEN-SIM\&instance=prod\%2Fglobal}{\alert{DAS link}}
+\label{sec-2-1-1-3-1}%
+
+\item 9999424 (\($\sim10$M\)) events, 946 files
+\label{sec-2-1-1-3-2}%
+
+\item HcalNoiseAnalyzer ntuples on FNAL EOS: \texttt{/eos/uscms/store/user/eberry/MinBiasMC/}
+\label{sec-2-1-1-3-3}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+\subsection{Processing}
+\label{sec-2-2}
+\begin{frame}
+\frametitle{No pileup processing (OLD):}
+\label{sec-2-2-1}
+\begin{itemize}
+
+\item Need to process datasets to get \texttt{DIGI} and \texttt{RECO}
+\label{sec-2-2-1-1}%
+
+\item Steps needed: \\\\
+\label{sec-2-2-1-2}%
+\texttt{DIGI}, \texttt{L1}, \texttt{DIGI2RAW}, \texttt{HLT}, \texttt{RAW2DIGI}, \texttt{L1Reco}, \texttt{RECO}
+
+\item Then run \texttt{HcalNoiseAnalyzer} (updated for 62X)
+\label{sec-2-2-1-3}%
+\begin{itemize}
+
+\item \href{https://github.com/FHead/HcalNoiseAnalyzerCMS}{\alert{HcalNoiseAnalyzer git page}}, Maintained by noise group?
+\label{sec-2-2-1-3-1}%
+
+\item \href{http://eberry.web.cern.ch/eberry/HcalNoiseAnalyzer62X.cc.txt}{\alert{Updated .cc file for 62X}}, E. Berry
+\label{sec-2-2-1-3-2}%
+\end{itemize} % ends low level
+
+\item Use \texttt{CMSSW\_6\_2\_8} to process \texttt{QCD\_Pt-1800} dataset:
+\label{sec-2-2-1-4}%
+\begin{itemize}
+
+\item \href{https://raw.githubusercontent.com/edmundaberry/HcalReco/master/test/hcalNoise_fromGEN-SIM_62X_cmsDriver.sh}{\alert{cmsDriver.py command}}
+\label{sec-2-2-1-4-1}%
+
+\item \href{https://raw.githubusercontent.com/edmundaberry/HcalReco/master/test/hcalNoise\_fromGEN-SIM\_62X\_cfg.py}{\alert{Final python cfg}}
+\label{sec-2-2-1-4-2}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{With pileup processing (NEW)}
+\label{sec-2-2-2}
+\begin{itemize}
+
+\item Need to overlay \texttt{QCD} with \texttt{MinBias}
+\label{sec-2-2-2-1}%
+
+\item Use \texttt{MixingModule} in \texttt{CMSSW\_6\_2\_8}
+\label{sec-2-2-2-2}%
+
+\item Pileup scenario: \texttt{AVE\_50\_BX\_25ns}
+\label{sec-2-2-2-3}%
+
+\item Two stages:
+\label{sec-2-2-2-4}%
+\begin{itemize}
+
+\item 1) \texttt{DIGI}, \texttt{L1}, \texttt{DIGI2RAW}, \texttt{HLT}
+\label{sec-2-2-2-4-1}%
+
+\item 2) \texttt{RAW2DIGI} \texttt{L1Reco} \texttt{RECO}
+\label{sec-2-2-2-4-2}%
+\end{itemize} % ends low level
+
+\item Stage 1: Done
+\label{sec-2-2-2-5}%
+\begin{itemize}
+
+\item \href{https://github.com/edmundaberry/HcalReco/blob/master/test/hcalNoise_fromGEN-SIM_toGEN-SIM-RAW_62X_withMixer_cmsDriver.sh}{\alert{cmsDriver.py command}}
+\label{sec-2-2-2-5-1}%
+
+\item \href{https://github.com/edmundaberry/HcalReco/blob/master/test/hcalNoise_fromGEN-SIM_toGEN-SIM-RAW_62X_withMixer_cfg.py}{\alert{Final python cfg}}
+\label{sec-2-2-2-5-2}%
+\end{itemize} % ends low level
+
+\item Stage 2: Subset done
+\label{sec-2-2-2-6}%
+\begin{itemize}
+
+\item \href{https://github.com/edmundaberry/HcalReco/blob/master/test/hcalNoise_fromGEN-SIM-RAW_62X_cmsDriver.sh}{\alert{cmsDriver.py command}}
+\label{sec-2-2-2-6-1}%
+
+\item \href{https://github.com/edmundaberry/HcalReco/blob/master/test/hcalNoise_fromGEN-SIM-RAW_62X_cfg.py}{\alert{Final python cfg}}
+\label{sec-2-2-2-6-2}%
+\end{itemize} % ends low level
+
+\item High PU (AVE 50, BX 25) is \alert{VERY} CPU intensive
+\label{sec-2-2-2-7}%
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Pileup vs. No Pileup pulse shape comparison}
+\label{sec-2-2-3}
+%% Figure
+\label{sec-2-2-3-1}
+
+\centering
+Example single DIGI comparison
+\includegraphics[width=0.6\textwidth]{fig/pulse_QCD1800MC_PU_vs_NoPU.png}
+%% Text
+\label{sec-2-2-3-2}
+\begin{itemize}
+
+\item As expected in TS3.  Strangeness in TS4 + TS5.
+\label{sec-2-2-3-2-1}%
+
+\item Bug in \texttt{MixingModule}?  Investigating.
+\label{sec-2-2-3-2-2}%
+
+\item More detailed results coming (HCAL DPG meeting)
+\label{sec-2-2-3-2-3}%
+\end{itemize} % ends low level
+\end{frame}
+\subsection{Selection}
+\label{sec-2-3}
+\begin{frame}
+\frametitle{Selecton}
+\label{sec-2-3-1}
+\begin{itemize}
+
+\item Event selection:
+\label{sec-2-3-1-1}%
+\begin{itemize}
+
+\item No trigger requirement
+\label{sec-2-3-1-1-1}%
+
+\item No \texttt{OfficialDecision} requirement
+\label{sec-2-3-1-1-2}%
+
+\item \texttt{NumberOfGoodPrimaryVertices > 0}
+\label{sec-2-3-1-1-3}%
+\end{itemize} % ends low level
+
+\item Channel selection:
+\label{sec-2-3-1-2}%
+\begin{itemize}
+
+\item Only \texttt{HBHE} considered
+\label{sec-2-3-1-2-1}%
+
+\item Rings: HB, HE: \{17:20, 21:23, 24:25, 26:27, 28:28\}
+\label{sec-2-3-1-2-2}%
+
+\item No channels in bad channels list
+\label{sec-2-3-1-2-3}%
+
+\item \texttt{RecHit} energy > 1 GeV
+\label{sec-2-3-1-2-4}%
+
+\item Charge > 5 fC
+\label{sec-2-3-1-2-5}%
+\end{itemize} % ends low level
+
+\item Analyzer code:
+\label{sec-2-3-1-3}%
+\begin{itemize}
+
+\item \href{https://github.com/edmundaberry/HcalReco/blob/master/analysis/macros/analysisClass_hcalReco.C}{\alert{Git page}}
+\label{sec-2-3-1-3-1}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+\section{Results}
+\label{sec-3}
+\subsection{N(vertex)}
+\label{sec-3-1}
+\begin{frame}
+\frametitle{N(vertex)}
+\label{sec-3-1-1}
+%% Figure
+\label{sec-3-1-1-1}
+
+\centering
+Number of primary vertices: QCD sample
+\includegraphics[width=0.6\textwidth]{fig/npv_QCD1800.png}
+%% Text
+\label{sec-3-1-1-2}
+\begin{itemize}
+
+\item 92612 events passing event selection
+\label{sec-3-1-1-2-1}%
+
+\item Confirms no pileup, as expected
+\label{sec-3-1-1-2-2}%
+\end{itemize} % ends low level
+\end{frame}
+\subsection{Definitions}
+\label{sec-3-2}
+\begin{frame}
+\frametitle{Definitions}
+\label{sec-3-2-1}
+\begin{itemize}
+
+\item The following plots show TProfile distributions
+\label{sec-3-2-1-1}%
+
+\item One entry per HCAL digi in the ZS-collection
+\label{sec-3-2-1-2}%
+
+\item $x$-axis corresponds to charge in TS4 [fC]
+\label{sec-3-2-1-3}%
+
+\item $y$-axis corresponds to one of several charge ratios:
+\label{sec-3-2-1-4}%
+\begin{itemize}
+
+\item a\_1: charge in TS3 [fC] / charge in TS4 [fC]
+\label{sec-3-2-1-4-1}%
+
+\item a1: charge in TS5 [fC] / charge in TS4 [fC]
+\label{sec-3-2-1-4-2}%
+
+\item a2: charge in TS6 [fC] / charge in TS4 [fC]
+\label{sec-3-2-1-4-3}%
+
+\item a3: charge in TS7 [fC] / charge in TS4 [fC]
+\label{sec-3-2-1-4-4}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+\subsection{a\_1(TS4) in the QCD sample}
+\label{sec-3-3}
+\begin{frame}
+\frametitle{a\_1(TS4) in the QCD sample}
+\label{sec-3-3-1}
+\begin{columns} % Columns
+\label{sec-3-3-1-1}
+\begin{column}{0.55\textwidth}
+%% Figure
+\label{sec-3-3-1-1-1}
+
+\centering
+a\_1(TS4) in HB
+\includegraphics[width=\textwidth]{fig/a0_ring0.png}
+\end{column}
+\begin{column}{0.55\textwidth}
+%% Figure
+\label{sec-3-3-1-1-2}
+
+\centering
+a\_1(TS4) in HE 17:20
+\includegraphics[width=\textwidth]{fig/a0_ring1.png}
+\end{column}
+\end{columns}
+%% Text
+\label{sec-3-3-1-2}
+\begin{itemize}
+
+\item Fit with exponential + polynomial:\\
+\label{sec-3-3-1-2-1}%
+\resizebox{0.8\textwidth}{!}{
+\begin{equation*}
+a\_1(\text{TS4}) = [0] + [1]\cdot\text{TS4} + \text{Exp}\left([2] + [3]\cdot\text{TS4}\right)
+\end{equation*}
+}
+\end{itemize} % ends low level
+\end{frame}
+\subsection{a1(TS4) in the QCD sample}
+\label{sec-3-4}
+\begin{frame}
+\frametitle{a1(TS4) in the QCD sample}
+\label{sec-3-4-1}
+\begin{columns} % Columns
+\label{sec-3-4-1-1}
+\begin{column}{0.5\textwidth}
+%% Figure
+\label{sec-3-4-1-1-1}
+
+\centering
+a1(TS4) in HB
+\includegraphics[width=\textwidth]{fig/a1_ring0.png}
+\end{column}
+\begin{column}{0.5\textwidth}
+%% Figure
+\label{sec-3-4-1-1-2}
+
+\centering
+a1(TS4) in HE 17:20
+\includegraphics[width=\textwidth]{fig/a1_ring1.png}
+\end{column}
+\end{columns}
+%% Text
+\label{sec-3-4-1-2}
+\begin{itemize}
+
+\item Fit with multiple polynomials (same shape as in data)
+\label{sec-3-4-1-2-1}%
+
+\item Fit function describes the shape well
+\label{sec-3-4-1-2-2}%
+
+\item Numeric results and data comparison next slide
+\label{sec-3-4-1-2-3}%
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{a1(TS4) in the QCD sample: HB}
+\label{sec-3-4-2}
+%% Table
+\label{sec-3-4-2-1}
+
+\begin{center}
+\resizebox*{!}{0.75\textheight}{
+\input{tex/a1_ring0.tex}
+}
+\end{center}
+\end{frame}
+\begin{frame}
+\frametitle{a1(TS4) in the QCD sample: HE 17:20}
+\label{sec-3-4-3}
+%% Table
+\label{sec-3-4-3-1}
+
+\begin{center}
+\resizebox*{!}{0.75\textheight}{
+\input{tex/a1_ring1.tex}
+}
+\end{center}
+\end{frame}
+\begin{frame}
+\frametitle{a1(TS4) Data vs QCD MC}
+\label{sec-3-4-4}
+%% Figure
+\label{sec-3-4-4-1}
+
+\centering
+a1(TS4) Data vs Monte Carlo in HB
+\includegraphics[width=0.6\textwidth]{fig/a1_ring0_daata.png}
+%% Text
+\label{sec-3-4-4-2}
+\begin{itemize}
+
+\item Blue points: MC
+\label{sec-3-4-4-2-1}%
+
+\item Red line: MC fit
+\label{sec-3-4-4-2-2}%
+
+\item Black line: data fit (from Alexandre)
+\label{sec-3-4-4-2-3}%
+\end{itemize} % ends low level
+\end{frame}
+\subsection{a2(TS4) in the QCD sample}
+\label{sec-3-5}
+\begin{frame}
+\frametitle{a2(TS4) in the QCD sample}
+\label{sec-3-5-1}
+\begin{columns} % Columns
+\label{sec-3-5-1-1}
+\begin{column}{0.55\textwidth}
+%% Figure
+\label{sec-3-5-1-1-1}
+
+\centering
+a2(TS4) in HB
+\includegraphics[width=\textwidth]{fig/a2_ring0.png}
+\end{column}
+\begin{column}{0.55\textwidth}
+%% Figure
+\label{sec-3-5-1-1-2}
+
+\centering
+a2(TS4) in HE 17:20
+\includegraphics[width=\textwidth]{fig/a2_ring1.png}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}
+\frametitle{a2(TS4) in the QCD sample: HB}
+\label{sec-3-5-2}
+%% Table
+\label{sec-3-5-2-1}
+
+\begin{center}
+\resizebox*{!}{0.75\textheight}{
+\input{tex/a2_ring0.tex}
+}
+\end{center}
+\end{frame}
+\begin{frame}
+\frametitle{a2(TS4) in the QCD sample: HE 17:20}
+\label{sec-3-5-3}
+%% Table
+\label{sec-3-5-3-1}
+
+\begin{center}
+\resizebox*{!}{0.75\textheight}{
+\input{tex/a2_ring1.tex}
+}
+\end{center}
+\end{frame}
+\begin{frame}
+\frametitle{a2(TS4) Data vs QCD MC}
+\label{sec-3-5-4}
+%% Figure
+\label{sec-3-5-4-1}
+
+\centering
+a2(TS4) Data vs Monte Carlo in HB
+\includegraphics[width=0.6\textwidth]{fig/a2_ring0_daata.png}
+%% Text
+\label{sec-3-5-4-2}
+\begin{itemize}
+
+\item Blue points: MC
+\label{sec-3-5-4-2-1}%
+
+\item Red line: MC fit
+\label{sec-3-5-4-2-2}%
+
+\item Black line: data fit (from Alexandre)
+\label{sec-3-5-4-2-3}%
+\end{itemize} % ends low level
+\end{frame}
+\subsection{a3(TS4) in the QCD sample}
+\label{sec-3-6}
+\begin{frame}
+\frametitle{a3(TS4) in the QCD sample}
+\label{sec-3-6-1}
+\begin{columns} % Columns
+\label{sec-3-6-1-1}
+\begin{column}{0.55\textwidth}
+%% Figure
+\label{sec-3-6-1-1-1}
+
+\centering
+a3(TS4) in HB
+\includegraphics[width=1.0\textwidth]{fig/a3_ring0.png}
+\end{column}
+\begin{column}{0.55\textwidth}
+%% Figure
+\label{sec-3-6-1-1-2}
+
+\centering
+a3(TS4) in HE 17:20
+\includegraphics[width=1.0\textwidth]{fig/a3_ring1.png}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}
+\frametitle{a3(TS4) in the QCD sample: HB}
+\label{sec-3-6-2}
+%% Table
+\label{sec-3-6-2-1}
+
+\begin{center}
+\resizebox*{!}{0.75\textheight}{
+\input{tex/a2_ring0.tex}
+}
+\end{center}
+\end{frame}
+\begin{frame}
+\frametitle{a3(TS4) in the QCD sample: HE 17:20}
+\label{sec-3-6-3}
+%% Table
+\label{sec-3-6-3-1}
+
+\begin{center}
+\resizebox*{!}{0.75\textheight}{
+\input{tex/a2_ring1.tex}
+}
+\end{center}
+\end{frame}
+\begin{frame}
+\frametitle{a3(TS4) Data vs QCD MC}
+\label{sec-3-6-4}
+%% Figure
+\label{sec-3-6-4-1}
+
+\centering
+a3(TS4) Data vs Monte Carlo in HB
+\includegraphics[width=0.6\textwidth]{fig/a2_ring0_daata.png}
+%% Text
+\label{sec-3-6-4-2}
+\begin{itemize}
+
+\item Blue points: MC
+\label{sec-3-6-4-2-1}%
+
+\item Red line: MC fit
+\label{sec-3-6-4-2-2}%
+
+\item Black line: data fit (from Alexandre)
+\label{sec-3-6-4-2-3}%
+\end{itemize} % ends low level
+\end{frame}
+\section{Conclusion}
+\label{sec-4}
+\subsection{Conclusion}
+\label{sec-4-1}
+\begin{frame}
+\frametitle{Conclusion}
+\label{sec-4-1-1}
+\begin{itemize}
+
+\item Processed zero-pileup samples adequate for studies
+\label{sec-4-1-1-1}%
+
+\item Preliminary results ready using Alexandre's method
+\label{sec-4-1-1-2}%
+\begin{itemize}
+
+\item Fit functions used for data model MC pulse shape well
+\label{sec-4-1-1-2-1}%
+
+\item Final fit parameters (i.e. pulse shapes) are significantly different between data and MC
+\label{sec-4-1-1-2-2}%
+\end{itemize} % ends low level
+
+\item Working on validating results to put into CMSSW in time for 710
+\label{sec-4-1-1-3}%
+\end{itemize} % ends low level
+\end{frame}
+
+\end{document}
