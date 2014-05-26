@@ -1,0 +1,727 @@
+% Created 2014-05-16 Fri 18:14
+\documentclass[bigger]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\mode<beamer>{\usetheme[compress]{Berlin}}
+\usepackage{multirow}
+\input{tex/header.tex}
+\input{tex/macros.tex}
+\input{tex/toolbox.tex}
+\mode<beamer>{\usecolortheme{bear}}
+\mode<beamer>{\titlegraphic{\includegraphics[width=0.2\textwidth]{brown-logo}}}
+\institute[Brown University]{\inst{1} Brown University}
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{HCAL Reconstruction: \newline MC Correction Functions Update}
+\author{Edmund Berry}
+\date{Friday, May 16, 2014}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.8.11}}
+
+\author[Edmund Berry]{\alert{Edmund Berry}\inst{1}}
+\begin{document}
+
+\maketitle
+
+
+\section{Introduction}
+\label{sec-1}
+\subsection{Introduction}
+\label{sec-1-1}
+\begin{frame}
+\frametitle{Introduction}
+\label{sec-1-1-1}
+\begin{itemize}
+
+\item Have derived (\alert{improved}) MC correction functions for OOT PU
+\label{sec-1-1-1-1}%
+
+\item Same derivation method as used for data
+\label{sec-1-1-1-2}%
+
+\item Procedure:
+\label{sec-1-1-1-3}%
+\begin{itemize}
+
+\item Run Alexandre's ratio method on zero PU MC
+\label{sec-1-1-1-3-1}%
+
+\item Derive correction functions based on the pulse shape
+\label{sec-1-1-1-3-2}%
+
+\item Use the same definitions, fits, and methods as in data
+\label{sec-1-1-1-3-3}%
+
+\item \alert{Validate results on MC with OOT PU}
+\label{sec-1-1-1-3-4}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+\section{Validation procedure}
+\label{sec-2}
+\subsection{Method}
+\label{sec-2-1}
+\begin{frame}
+\frametitle{Method}
+\label{sec-2-1-1}
+\begin{itemize}
+
+\item Process a high-$p_{\text{T}}$ QCD sample in two ways:
+\label{sec-2-1-1-1}%
+\begin{itemize}
+
+\item No pileup: for MC truth comparison (DONE)
+\label{sec-2-1-1-1-1}%
+
+\item With pileup: for validation (Processing)
+\label{sec-2-1-1-1-2}%
+\end{itemize} % ends low level
+
+\item Compare results event-by-event, channel-by-channel:
+\label{sec-2-1-1-2}%
+\begin{itemize}
+
+\item No pileup
+\label{sec-2-1-1-2-1}%
+
+\item vs. with pileup and no corrections
+\label{sec-2-1-1-2-2}%
+
+\item vs. with pileup and corrections
+\label{sec-2-1-1-2-3}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+\subsection{Datasets}
+\label{sec-2-2}
+\begin{frame}
+\frametitle{Datasets}
+\label{sec-2-2-1}
+\begin{itemize}
+
+\item Consider three \texttt{GEN-SIM} datasets (no PU) at \texttt{T1\_US\_FNAL}:\\
+\label{sec-2-2-1-1}%
+\resizebox{0.9\textwidth}{!}{
+\begin{tabular}{l|l}
+\hline\hline
+Dataset & Production release \\
+\hline\hline
+\texttt{/MinBias\_TuneZ2star\_13TeV-pythia6/Summer13-START53\_V7C-v1/GEN-SIM} & \texttt{CMSSW\_5\_3\_10\_patch2} \\
+\texttt{/QCD\_Pt-1800\_TuneZ2star\_13TeV\_pythia6/Fall13-POSTLS162\_V1-v1/GEN-SIM} & \texttt{CMSSW\_6\_2\_0\_patch1} \\
+\texttt{/QCD\_Pt-80to120\_TuneZ2star\_13TeV\_pythia6/Fall13-POSTLS162\_V1-v1/GEN-SIM} & \texttt{CMSSW\_6\_2\_0\_patch1} \\
+\hline\hline
+\end{tabular}
+}
+
+\item \texttt{QCD\_Pt-1800} dataset:
+\label{sec-2-2-1-2}%
+\begin{itemize}
+
+\item HcalNoiseAnalyzer ntuples on FNAL EOS: \texttt{/eos/uscms/store/user/eberry/QCD1800MC/}
+\label{sec-2-2-1-2-1}%
+\end{itemize} % ends low level
+
+\item \texttt{QCD\_Pt-80to120} dataset:
+\label{sec-2-2-1-3}%
+\begin{itemize}
+
+\item HcalNoiseAnalyzer ntuples on FNAL EOS: \texttt{/eos/uscms/store/user/eberry/QCD80to120MC/}
+\label{sec-2-2-1-3-1}%
+\end{itemize} % ends low level
+
+\item \texttt{MinBias} dataset:
+\label{sec-2-2-1-4}%
+\begin{itemize}
+
+\item HcalNoiseAnalyzer ntuples on FNAL EOS: \texttt{/eos/uscms/store/user/eberry/MinBiasMC/}
+\label{sec-2-2-1-4-1}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Comparison in ieta}
+\label{sec-2-2-2}
+%% Figure
+\label{sec-2-2-2-1}
+
+\centering
+\includegraphics[width=0.8\textwidth]{fig/ieta_comparison_scaled.png}
+%% Text
+\label{sec-2-2-2-2}
+\begin{itemize}
+
+\item \texttt{QCD\_Pt-80to120} dataset more focused on HE (good)
+\label{sec-2-2-2-2-1}%
+\end{itemize} % ends low level
+\end{frame}
+\subsection{Processing}
+\label{sec-2-3}
+\begin{frame}
+\frametitle{Processing pileup sample}
+\label{sec-2-3-1}
+\begin{itemize}
+
+\item Need to overlay \texttt{QCD} with \texttt{MinBias}
+\label{sec-2-3-1-1}%
+
+\item Use \texttt{MixingModule} in \texttt{CMSSW\_6\_2\_8}
+\label{sec-2-3-1-2}%
+
+\item Pileup scenario: \texttt{AVE\_50\_BX\_25ns}
+\label{sec-2-3-1-3}%
+
+\item Two stages:
+\label{sec-2-3-1-4}%
+\begin{itemize}
+
+\item 1) \texttt{DIGI}, \texttt{L1}, \texttt{DIGI2RAW}, \texttt{HLT}
+\label{sec-2-3-1-4-1}%
+
+\item 2) \texttt{RAW2DIGI} \texttt{L1Reco} \texttt{RECO}
+\label{sec-2-3-1-4-2}%
+\end{itemize} % ends low level
+
+\item Stage 1 all done: \href{https://github.com/edmundaberry/HcalReco/blob/master/test/hcalNoise_fromGEN-SIM_toGEN-SIM-RAW_62X_withMixer_cmsDriver.sh}{\alert{cmsDriver}} and \href{https://github.com/edmundaberry/HcalReco/blob/master/test/hcalNoise_fromGEN-SIM_toGEN-SIM-RAW_62X_withMixer_cfg.py}{\alert{python cfg}}
+\label{sec-2-3-1-5}%
+
+\item Stage 2 all done: \href{https://github.com/edmundaberry/HcalReco/blob/master/test/hcalNoise_fromGEN-SIM-RAW_62X_cmsDriver.sh}{\alert{cmsDriver}} and \href{https://github.com/edmundaberry/HcalReco/blob/master/test/hcalNoise_fromGEN-SIM-RAW_62X_cfg.py}{\alert{python cfg}}
+\label{sec-2-3-1-6}%
+
+\item High PU is \alert{VERY} CPU intensive: 2 minutes/event
+\label{sec-2-3-1-7}%
+\end{itemize} % ends low level
+\end{frame}
+\section{Validation results}
+\label{sec-3}
+\subsection{Single DIGI comparison}
+\label{sec-3-1}
+\begin{frame}
+\frametitle{PU vs. No PU single digi comparison}
+\label{sec-3-1-1}
+\begin{columns} % Columns
+\label{sec-3-1-1-1}
+\begin{column}{0.55\textwidth}
+%% Figure
+\label{sec-3-1-1-1-1}
+
+\centering
+single DIGI comparison: HB
+\includegraphics[width=\textwidth]{fig_old/pulse_QCD1800MC_PU_vs_NoPU.png}
+\end{column}
+\begin{column}{0.55\textwidth}
+%% Figure
+\label{sec-3-1-1-1-2}
+
+\centering
+single DIGI comparison: HE
+\includegraphics[width=\textwidth]{fig_old/pulse_QCD1800MC_PU_vs_NoPU_HE.png}
+\end{column}
+\end{columns}
+%% Text
+\label{sec-3-1-1-2}
+\begin{itemize}
+
+\item HE as expected.
+\label{sec-3-1-1-2-1}%
+
+\item HB as expected in TS3.  Strangeness in TS4 + TS5.
+\label{sec-3-1-1-2-2}%
+
+\item \alert{Focusing on HE}
+\label{sec-3-1-1-2-3}%
+\end{itemize} % ends low level
+\end{frame}
+\subsection{Fitting and sanity-checking function on low-PU sample}
+\label{sec-3-2}
+\begin{frame}
+\frametitle{Fits}
+\label{sec-3-2-1}
+\begin{itemize}
+
+\item Fits have been improved! Better agreement now.
+\label{sec-3-2-1-1}%
+
+\item Parameters available on \href{https://github.com/edmundaberry/HcalReco/blob/master/analysis/src/fitResults.C}{\alert{GitHub}}
+\label{sec-3-2-1-2}%
+
+\item Same functions as Alexandre for a1, a2, a3
+\label{sec-3-2-1-3}%
+\begin{itemize}
+
+\item 6 polynomials: 1 for each of 6 regions
+\label{sec-3-2-1-3-1}%
+\end{itemize} % ends low level
+
+\item For a\_1, this function works better on MC:\\
+\label{sec-3-2-1-4}%
+\centering
+\begin{tabular}{cl}
+if $x < [6]$: & $f(x) = [0] \cdot \text{Exp}([1] + [2] \cdot x) + [3] + [4] \cdot x$ \\
+if $x > [6]$: & $f(x) = [5] \cdot ( x - [6] ) + c $\\
+\end{tabular}
+
+\item $c$ is chosen to ensure continuity of $f(x)$ at $[6]$
+\label{sec-3-2-1-5}%
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Function fitting on zero pileup sample: a\_1}
+\label{sec-3-2-2}
+\begin{columns} % Columns
+\label{sec-3-2-2-1}
+\begin{column}{0.55\textwidth}
+%% Linear
+\label{sec-3-2-2-1-1}
+
+\centering
+Fit of a\_1 in HB (lin)
+\includegraphics[width=\textwidth]{fig/a0_ring0_lin.png}
+\end{column}
+\begin{column}{0.55\textwidth}
+%% Log
+\label{sec-3-2-2-1-2}
+
+\centering
+Fit of a\_1 in HB (log)
+\includegraphics[width=\textwidth]{fig/a0_ring0_log.png}
+\end{column}
+\end{columns}
+%% Text
+\label{sec-3-2-2-2}
+\begin{itemize}
+
+\item Fit done on zero pileup sample: \alert{use only green line}
+\label{sec-3-2-2-2-1}%
+
+\item Fits now extend to TS4 = \alert{3000 fC}
+\label{sec-3-2-2-2-2}%
+
+\item Parameters available on \href{https://github.com/edmundaberry/HcalReco/blob/master/analysis/src/fitResults.C}{\alert{GitHub}}
+\label{sec-3-2-2-2-3}%
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Function validation on zero pileup sample: a\_1}
+\label{sec-3-2-3}
+\begin{columns} % Columns
+\label{sec-3-2-3-1}
+\begin{column}{0.55\textwidth}
+%% Full
+\label{sec-3-2-3-1-1}
+
+\centering
+Validation of a\_1 in HB \\ (TS4 > 0 fC)
+\includegraphics[width=0.8\textwidth]{fig/crosscheck_a0_0.png}
+\end{column}
+\begin{column}{0.55\textwidth}
+%% TS4 > 500 fC
+\label{sec-3-2-3-1-2}
+
+\centering
+Validation of a\_1 in HB \\ (TS4 > 500 fC)
+\includegraphics[width=0.8\textwidth]{fig/crosscheck_over500_a0_0.png}
+\end{column}
+\end{columns}
+%% Text
+\label{sec-3-2-3-2}
+\begin{itemize}
+
+\item Done on zero pileup sample
+\label{sec-3-2-3-2-1}%
+
+\item $y$-axis: (TS3 true - TS3 pred.) / TS3 true
+\label{sec-3-2-3-2-2}%
+
+\item $x$-axis: TS4 true
+\label{sec-3-2-3-2-3}%
+
+\item Spread all at low energy
+\label{sec-3-2-3-2-4}%
+
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Function fitting on zero pileup sample: a1}
+\label{sec-3-2-4}
+\begin{columns} % Columns
+\label{sec-3-2-4-1}
+\begin{column}{0.55\textwidth}
+%% Linear
+\label{sec-3-2-4-1-1}
+
+\centering
+Fit of a1 in HB (lin)
+\includegraphics[width=\textwidth]{fig/a1_ring0_lin.png}
+\end{column}
+\begin{column}{0.55\textwidth}
+%% Log
+\label{sec-3-2-4-1-2}
+
+\centering
+Fit of a1 in HB (log)
+\includegraphics[width=\textwidth]{fig/a1_ring0_log.png}
+\end{column}
+\end{columns}
+%% Text
+\label{sec-3-2-4-2}
+\begin{itemize}
+
+\item Fit done on zero pileup sample
+\label{sec-3-2-4-2-1}%
+
+\item Red lines correspond to fit ranges (Alexandre's functions)
+\label{sec-3-2-4-2-2}%
+
+\item Parameters available on \href{https://github.com/edmundaberry/HcalReco/blob/master/analysis/src/fitResults.C}{\alert{GitHub}}
+\label{sec-3-2-4-2-3}%
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Function validation on zero pileup sample: a1}
+\label{sec-3-2-5}
+\begin{columns} % Columns
+\label{sec-3-2-5-1}
+\begin{column}{0.55\textwidth}
+%% Full
+\label{sec-3-2-5-1-1}
+
+\centering
+Validation of a1 in HB \\ (TS4 > 0 fC)
+\includegraphics[width=0.8\textwidth]{fig/crosscheck_a1_0.png}
+\end{column}
+\begin{column}{0.55\textwidth}
+%% TS4 > 500 fC
+\label{sec-3-2-5-1-2}
+
+\centering
+Validation of a1 in HB \\ (TS4 > 500 fC)
+\includegraphics[width=0.8\textwidth]{fig/crosscheck_over500_a1_0.png}
+\end{column}
+\end{columns}
+%% Text
+\label{sec-3-2-5-2}
+\begin{itemize}
+
+\item Done on zero pileup sample
+\label{sec-3-2-5-2-1}%
+
+\item $y$-axis: (TS5 true - TS5 pred.) / TS5 true
+\label{sec-3-2-5-2-2}%
+
+\item $x$-axis: TS4 true
+\label{sec-3-2-5-2-3}%
+
+\item Better performance than a\_1
+\label{sec-3-2-5-2-4}%
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Function fitting on zero pileup sample: a2}
+\label{sec-3-2-6}
+\begin{columns} % Columns
+\label{sec-3-2-6-1}
+\begin{column}{0.55\textwidth}
+%% Linear
+\label{sec-3-2-6-1-1}
+
+\centering
+Fit of a2 in HB (lin)
+\includegraphics[width=\textwidth]{fig/a2_ring0_lin.png}
+\end{column}
+\begin{column}{0.55\textwidth}
+%% Log
+\label{sec-3-2-6-1-2}
+
+\centering
+Fit of a2 in HB (log)
+\includegraphics[width=\textwidth]{fig/a2_ring0_log.png}
+\end{column}
+\end{columns}
+%% Text
+\label{sec-3-2-6-2}
+\begin{itemize}
+
+\item Fit done on zero pileup sample
+\label{sec-3-2-6-2-1}%
+
+\item Red lines correspond to fit ranges (Alexandre's functions)
+\label{sec-3-2-6-2-2}%
+
+\item Parameters available on \href{https://github.com/edmundaberry/HcalReco/blob/master/analysis/src/fitResults.C}{\alert{GitHub}}
+\label{sec-3-2-6-2-3}%
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Function validation on zero pileup sample: a2}
+\label{sec-3-2-7}
+\begin{columns} % Columns
+\label{sec-3-2-7-1}
+\begin{column}{0.55\textwidth}
+%% Full
+\label{sec-3-2-7-1-1}
+
+\centering
+Validation of a2 in HB \\ (TS4 > 0 fC)
+\includegraphics[width=0.8\textwidth]{fig/crosscheck_a2_0.png}
+\end{column}
+\begin{column}{0.55\textwidth}
+%% TS4 > 500 fC
+\label{sec-3-2-7-1-2}
+
+\centering
+Validation of a2 in HB \\ (TS4 > 500 fC)
+\includegraphics[width=0.8\textwidth]{fig/crosscheck_over500_a2_0.png}
+\end{column}
+\end{columns}
+%% Text
+\label{sec-3-2-7-2}
+\begin{itemize}
+
+\item Done on zero pileup sample
+\label{sec-3-2-7-2-1}%
+
+\item $y$-axis: (TS6 true - TS6 pred.) / TS6 true
+\label{sec-3-2-7-2-2}%
+
+\item $x$-axis: TS4 true
+\label{sec-3-2-7-2-3}%
+
+\item Better performance than a\_1
+\label{sec-3-2-7-2-4}%
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Function fitting on zero pileup sample: a3}
+\label{sec-3-2-8}
+\begin{columns} % Columns
+\label{sec-3-2-8-1}
+\begin{column}{0.55\textwidth}
+%% Linear
+\label{sec-3-2-8-1-1}
+
+\centering
+Fit of a3 in HB (lin)
+\includegraphics[width=\textwidth]{fig/a3_ring0_lin.png}
+\end{column}
+\begin{column}{0.55\textwidth}
+%% Log
+\label{sec-3-2-8-1-2}
+
+\centering
+Fit of a3 in HB (log)
+\includegraphics[width=\textwidth]{fig/a3_ring0_log.png}
+\end{column}
+\end{columns}
+%% Text
+\label{sec-3-2-8-2}
+\begin{itemize}
+
+\item Fit done on zero pileup sample
+\label{sec-3-2-8-2-1}%
+
+\item Red lines correspond to fit ranges (Alexandre's functions)
+\label{sec-3-2-8-2-2}%
+
+\item Parameters available on \href{https://github.com/edmundaberry/HcalReco/blob/master/analysis/src/fitResults.C}{\alert{GitHub}}
+\label{sec-3-2-8-2-3}%
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Function validation on zero pileup sample: a3}
+\label{sec-3-2-9}
+\begin{columns} % Columns
+\label{sec-3-2-9-1}
+\begin{column}{0.55\textwidth}
+%% Full
+\label{sec-3-2-9-1-1}
+
+\centering
+Validation of a3 in HB \\ (TS4 > 0 fC)
+\includegraphics[width=0.8\textwidth]{fig/crosscheck_a3_0.png}
+\end{column}
+\begin{column}{0.55\textwidth}
+%% TS4 > 500 fC
+\label{sec-3-2-9-1-2}
+
+\centering
+Validation of a3 in HB \\ (TS4 > 500 fC)
+\includegraphics[width=0.8\textwidth]{fig/crosscheck_over500_a3_0.png}
+\end{column}
+\end{columns}
+%% Text
+\label{sec-3-2-9-2}
+\begin{itemize}
+
+\item Done on zero pileup sample
+\label{sec-3-2-9-2-1}%
+
+\item $y$-axis: (TS7 true - TS7 pred.) / TS7 true
+\label{sec-3-2-9-2-2}%
+
+\item $x$-axis: TS4 true
+\label{sec-3-2-9-2-3}%
+
+\item Better performance than a\_1
+\label{sec-3-2-9-2-4}%
+\end{itemize} % ends low level
+\end{frame}
+\subsection{Validating on high-PU sample}
+\label{sec-3-3}
+\begin{frame}
+\frametitle{Results in HB}
+\label{sec-3-3-1}
+\begin{columns} % Columns
+\label{sec-3-3-1-1}
+\begin{column}{0.55\textwidth}
+%% Figure
+\label{sec-3-3-1-1-1}
+
+\centering
+No correction applied
+\includegraphics[width=0.8\textwidth]{fig/delta_uncorrected_ring_0.png}
+\end{column}
+\begin{column}{0.55\textwidth}
+%% Figure
+\label{sec-3-3-1-1-2}
+
+\centering
+With correction applied
+\includegraphics[width=0.8\textwidth]{fig/delta_corrected_ring_0.png}
+\end{column}
+\end{columns}
+%% Text
+\label{sec-3-3-1-2}
+\begin{itemize}
+
+\item Done on high pileup sample
+\label{sec-3-3-1-2-1}%
+
+\item $y$-axis: (TS45 true - TS45 pred.) / TS45 true
+\label{sec-3-3-1-2-2}%
+
+\item $x$-axis: TS45 true
+\label{sec-3-3-1-2-3}%
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Results in HE: 17:20}
+\label{sec-3-3-2}
+\begin{columns} % Columns
+\label{sec-3-3-2-1}
+\begin{column}{0.55\textwidth}
+%% Figure
+\label{sec-3-3-2-1-1}
+
+\centering
+No correction applied
+\includegraphics[width=0.8\textwidth]{fig/delta_uncorrected_ring_1.png}
+\end{column}
+\begin{column}{0.55\textwidth}
+%% Figure
+\label{sec-3-3-2-1-2}
+
+\centering
+With correction applied
+\includegraphics[width=0.8\textwidth]{fig/delta_corrected_ring_1.png}
+\end{column}
+\end{columns}
+%% Text
+\label{sec-3-3-2-2}
+\begin{itemize}
+
+\item Done on high pileup sample
+\label{sec-3-3-2-2-1}%
+
+\item $y$-axis: (TS45 true - TS45 pred.) / TS45 true
+\label{sec-3-3-2-2-2}%
+
+\item $x$-axis: TS45 true
+\label{sec-3-3-2-2-3}%
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Results in HE: 28:28}
+\label{sec-3-3-3}
+\begin{columns} % Columns
+\label{sec-3-3-3-1}
+\begin{column}{0.55\textwidth}
+%% Figure
+\label{sec-3-3-3-1-1}
+
+\centering
+No correction applied
+\includegraphics[width=0.8\textwidth]{fig/delta_uncorrected_ring_5.png}
+\end{column}
+\begin{column}{0.55\textwidth}
+%% Figure
+\label{sec-3-3-3-1-2}
+
+\centering
+With correction applied
+\includegraphics[width=0.8\textwidth]{fig/delta_corrected_ring_5.png}
+\end{column}
+\end{columns}
+%% Text
+\label{sec-3-3-3-2}
+\begin{itemize}
+
+\item Done on high pileup sample
+\label{sec-3-3-3-2-1}%
+
+\item $y$-axis: (TS45 true - TS45 pred.) / TS45 true
+\label{sec-3-3-3-2-2}%
+
+\item $x$-axis: TS45 true
+\label{sec-3-3-3-2-3}%
+\end{itemize} % ends low level
+\end{frame}
+\section{Conclusion}
+\label{sec-4}
+\subsection{Conclusion}
+\label{sec-4-1}
+\begin{frame}
+\frametitle{Conclusion}
+\label{sec-4-1-1}
+\begin{itemize}
+
+\item Processed zero-PU samples: OK for shape studies
+\label{sec-4-1-1-1}%
+
+\item Processed high-PU samples: OK for validation
+\label{sec-4-1-1-2}%
+
+\item Fit functions \href{https://github.com/edmundaberry/HcalReco/blob/master/analysis/src/fitResults.C}{\alert{ready to go}} using Alexandre's method:
+\label{sec-4-1-1-3}%
+\begin{itemize}
+
+\item Improved over fit functions from earlier talks
+\label{sec-4-1-1-3-1}%
+
+\item Fit functions model the zero-PU pulse shapes well
+\label{sec-4-1-1-3-2}%
+
+\item Fit functions now predict the high-PU pulses well
+\label{sec-4-1-1-3-3}%
+\end{itemize} % ends low level
+
+\item Pictures of all fits available \href{http://eberry.web.cern.ch/eberry/Hcal25nsFits/Hcal25nsFits.pdf}{\alert{here}}
+\label{sec-4-1-1-4}%
+\end{itemize} % ends low level
+\end{frame}
+
+\end{document}

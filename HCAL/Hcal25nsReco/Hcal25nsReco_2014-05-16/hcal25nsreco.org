@@ -1,0 +1,535 @@
+#+TITLE:     HCAL Reconstruction: \newline MC Correction Functions Update
+#+EMAIL:     Edmund.A.Berry@cern.ch
+#+DATE:      Friday, May 16, 2014
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [bigger]
+#+BEAMER_FRAME_LEVEL: 3
+#+latex_header: \mode<beamer>{\usetheme[compress]{Berlin}}
+#+latex_header: \usepackage{multirow}
+#+latex_header: \input{tex/header.tex}
+#+latex_header: \input{tex/macros.tex}
+#+latex_header: \input{tex/toolbox.tex}
+#+latex_header: \mode<beamer>{\usecolortheme{bear}}
+#+latex_header: \mode<beamer>{\titlegraphic{\includegraphics[width=0.2\textwidth]{brown-logo}}}
+#+latex_header: \institute[Brown University]{\inst{1} Brown University}
+#+beamer_header_extra: \author[Edmund Berry]{\alert{Edmund Berry}\inst{1}}
+
+* Introduction
+** Introduction
+*** Introduction
+**** Have derived (\alert{improved}) MC correction functions for OOT PU
+**** Same derivation method as used for data
+**** Procedure:
+***** Run Alexandre's ratio method on zero PU MC
+***** Derive correction functions based on the pulse shape
+***** Use the same definitions, fits, and methods as in data
+***** \alert{Validate results on MC with OOT PU}
+* Validation procedure
+** Method
+*** Method
+**** Process a high-$p_{\text{T}}$ QCD sample in two ways:
+***** No pileup: for MC truth comparison (DONE)
+***** With pileup: for validation (Processing)
+**** Compare results event-by-event, channel-by-channel:
+***** No pileup
+***** vs. with pileup and no corrections
+***** vs. with pileup and corrections
+** Datasets
+*** Datasets
+**** Consider three \texttt{GEN-SIM} datasets (no PU) at \texttt{T1\_US\_FNAL}:
+#+BEGIN_LaTeX
+\resizebox{0.9\textwidth}{!}{
+\begin{tabular}{l|l}
+\hline\hline
+Dataset & Production release \\
+\hline\hline
+\texttt{/MinBias\_TuneZ2star\_13TeV-pythia6/Summer13-START53\_V7C-v1/GEN-SIM} & \texttt{CMSSW\_5\_3\_10\_patch2} \\
+\texttt{/QCD\_Pt-1800\_TuneZ2star\_13TeV\_pythia6/Fall13-POSTLS162\_V1-v1/GEN-SIM} & \texttt{CMSSW\_6\_2\_0\_patch1} \\
+\texttt{/QCD\_Pt-80to120\_TuneZ2star\_13TeV\_pythia6/Fall13-POSTLS162\_V1-v1/GEN-SIM} & \texttt{CMSSW\_6\_2\_0\_patch1} \\
+\hline\hline
+\end{tabular}
+}
+#+END_LaTeX
+**** \texttt{QCD\_Pt-1800} dataset:
+***** HcalNoiseAnalyzer ntuples on FNAL EOS: \texttt{/eos/uscms/store/user/eberry/QCD1800MC/}
+**** \texttt{QCD\_Pt-80to120} dataset:
+***** HcalNoiseAnalyzer ntuples on FNAL EOS: \texttt{/eos/uscms/store/user/eberry/QCD80to120MC/}
+**** \texttt{MinBias} dataset:
+***** HcalNoiseAnalyzer ntuples on FNAL EOS: \texttt{/eos/uscms/store/user/eberry/MinBiasMC/}
+*** Comparison in ieta
+**** Figure                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:fig/ieta_comparison_scaled.png]]
+**** Text                                                :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+***** \texttt{QCD\_Pt-80to120} dataset more focused on HE (good)
+** Processing
+*** Processing pileup sample
+**** Need to overlay \texttt{QCD} with \texttt{MinBias}
+**** Use \texttt{MixingModule} in \texttt{CMSSW\_6\_2\_8}
+**** Pileup scenario: \texttt{AVE\_50\_BX\_25ns}
+**** Two stages:
+***** 1) \texttt{DIGI}, \texttt{L1}, \texttt{DIGI2RAW}, \texttt{HLT}
+***** 2) \texttt{RAW2DIGI} \texttt{L1Reco} \texttt{RECO}
+**** Stage 1 all done: [[https://github.com/edmundaberry/HcalReco/blob/master/test/hcalNoise_fromGEN-SIM_toGEN-SIM-RAW_62X_withMixer_cmsDriver.sh][\alert{cmsDriver}]] and [[https://github.com/edmundaberry/HcalReco/blob/master/test/hcalNoise_fromGEN-SIM_toGEN-SIM-RAW_62X_withMixer_cfg.py][\alert{python cfg}]]
+**** Stage 2 all done: [[https://github.com/edmundaberry/HcalReco/blob/master/test/hcalNoise_fromGEN-SIM-RAW_62X_cmsDriver.sh][\alert{cmsDriver}]] and [[https://github.com/edmundaberry/HcalReco/blob/master/test/hcalNoise_fromGEN-SIM-RAW_62X_cfg.py][\alert{python cfg}]]
+**** High PU is \alert{VERY} CPU intensive: 2 minutes/event
+* Validation results
+** Single DIGI comparison
+*** PU vs. No PU single digi comparison
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Figure                                      :B_ignoreheading:BMCOL:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:BEAMER_col: 0.55
+:END:
+#+BEGIN_LaTeX
+\centering
+single DIGI comparison: HB
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig_old/pulse_QCD1800MC_PU_vs_NoPU.png]]
+***** Figure                                      :B_ignoreheading:BMCOL:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:BEAMER_col: 0.55
+:END:
+#+BEGIN_LaTeX
+\centering
+single DIGI comparison: HE
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig_old/pulse_QCD1800MC_PU_vs_NoPU_HE.png]]
+**** Text                                                :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+***** HE as expected.
+***** HB as expected in TS3.  Strangeness in TS4 + TS5.
+***** \alert{Focusing on HE}
+** Fitting and sanity-checking function on low-PU sample
+*** Fits
+**** Fits have been improved! Better agreement now.
+**** Parameters available on [[https://github.com/edmundaberry/HcalReco/blob/master/analysis/src/fitResults.C][\alert{GitHub}]]
+**** Same functions as Alexandre for a1, a2, a3
+***** 6 polynomials: 1 for each of 6 regions
+**** For a\_1, this function works better on MC:
+#+BEGIN_LaTeX
+\centering
+\begin{tabular}{cl}
+if $x < [6]$: & $f(x) = [0] \cdot \text{Exp}([1] + [2] \cdot x) + [3] + [4] \cdot x$ \\
+if $x > [6]$: & $f(x) = [5] \cdot ( x - [6] ) + c $\\
+\end{tabular}
+#+END_LaTeX
+**** $c$ is chosen to ensure continuity of $f(x)$ at $[6]$
+*** Function fitting on zero pileup sample: a\_1
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Linear                                          :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Fit of a\_1 in HB (lin)
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/a0_ring0_lin.png]]
+***** Log                                             :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Fit of a\_1 in HB (log)
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/a0_ring0_log.png]]
+**** Text                                                :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+***** Fit done on zero pileup sample: \alert{use only green line}
+***** Fits now extend to TS4 = \alert{3000 fC}
+***** Parameters available on [[https://github.com/edmundaberry/HcalReco/blob/master/analysis/src/fitResults.C][\alert{GitHub}]]
+*** Function validation on zero pileup sample: a\_1
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Full                                            :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Validation of a\_1 in HB \\ (TS4 > 0 fC)
+#+END_LaTeX
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:fig/crosscheck_a0_0.png]]
+***** TS4 > 500 fC                                    :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Validation of a\_1 in HB \\ (TS4 > 500 fC)
+#+END_LaTeX
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:fig/crosscheck_over500_a0_0.png]]
+**** Text                                                :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+***** Done on zero pileup sample
+***** $y$-axis: (TS3 true - TS3 pred.) / TS3 true
+***** $x$-axis: TS4 true
+***** Spread all at low energy
+
+*** Function fitting on zero pileup sample: a1
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Linear                                          :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Fit of a1 in HB (lin)
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/a1_ring0_lin.png]]
+***** Log                                             :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Fit of a1 in HB (log)
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/a1_ring0_log.png]]
+**** Text                                                :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+***** Fit done on zero pileup sample
+***** Red lines correspond to fit ranges (Alexandre's functions)
+***** Parameters available on [[https://github.com/edmundaberry/HcalReco/blob/master/analysis/src/fitResults.C][\alert{GitHub}]]
+*** Function validation on zero pileup sample: a1
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Full                                            :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Validation of a1 in HB \\ (TS4 > 0 fC)
+#+END_LaTeX
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:fig/crosscheck_a1_0.png]]
+***** TS4 > 500 fC                                    :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Validation of a1 in HB \\ (TS4 > 500 fC)
+#+END_LaTeX
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:fig/crosscheck_over500_a1_0.png]]
+**** Text                                                :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+***** Done on zero pileup sample
+***** $y$-axis: (TS5 true - TS5 pred.) / TS5 true
+***** $x$-axis: TS4 true
+***** Better performance than a\_1
+*** Function fitting on zero pileup sample: a2
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Linear                                          :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Fit of a2 in HB (lin)
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/a2_ring0_lin.png]]
+***** Log                                             :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Fit of a2 in HB (log)
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/a2_ring0_log.png]]
+**** Text                                                :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+***** Fit done on zero pileup sample
+***** Red lines correspond to fit ranges (Alexandre's functions)
+***** Parameters available on [[https://github.com/edmundaberry/HcalReco/blob/master/analysis/src/fitResults.C][\alert{GitHub}]]
+*** Function validation on zero pileup sample: a2
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Full                                            :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Validation of a2 in HB \\ (TS4 > 0 fC)
+#+END_LaTeX
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:fig/crosscheck_a2_0.png]]
+***** TS4 > 500 fC                                    :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Validation of a2 in HB \\ (TS4 > 500 fC)
+#+END_LaTeX
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:fig/crosscheck_over500_a2_0.png]]
+**** Text                                                :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+***** Done on zero pileup sample
+***** $y$-axis: (TS6 true - TS6 pred.) / TS6 true
+***** $x$-axis: TS4 true
+***** Better performance than a\_1
+*** Function fitting on zero pileup sample: a3
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Linear                                          :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Fit of a3 in HB (lin)
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/a3_ring0_lin.png]]
+***** Log                                             :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Fit of a3 in HB (log)
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/a3_ring0_log.png]]
+**** Text                                                :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+***** Fit done on zero pileup sample
+***** Red lines correspond to fit ranges (Alexandre's functions)
+***** Parameters available on [[https://github.com/edmundaberry/HcalReco/blob/master/analysis/src/fitResults.C][\alert{GitHub}]]
+*** Function validation on zero pileup sample: a3
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Full                                            :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Validation of a3 in HB \\ (TS4 > 0 fC)
+#+END_LaTeX
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:fig/crosscheck_a3_0.png]]
+***** TS4 > 500 fC                                    :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Validation of a3 in HB \\ (TS4 > 500 fC)
+#+END_LaTeX
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:fig/crosscheck_over500_a3_0.png]]
+**** Text                                                :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+***** Done on zero pileup sample
+***** $y$-axis: (TS7 true - TS7 pred.) / TS7 true
+***** $x$-axis: TS4 true
+***** Better performance than a\_1
+** Validating on high-PU sample
+*** Results in HB
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Figure                                      :B_ignoreheading:BMCOL:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:BEAMER_col: 0.55
+:END:
+#+BEGIN_LaTeX
+\centering
+No correction applied
+#+END_LaTeX
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:fig/delta_uncorrected_ring_0.png]]
+***** Figure                                      :B_ignoreheading:BMCOL:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:BEAMER_col: 0.55
+:END:
+#+BEGIN_LaTeX
+\centering
+With correction applied
+#+END_LaTeX
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:fig/delta_corrected_ring_0.png]]
+**** Text                                                :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+***** Done on high pileup sample
+***** $y$-axis: (TS45 true - TS45 pred.) / TS45 true
+***** $x$-axis: TS45 true
+*** Results in HE: 17:20
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Figure                                      :B_ignoreheading:BMCOL:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:BEAMER_col: 0.55
+:END:
+#+BEGIN_LaTeX
+\centering
+No correction applied
+#+END_LaTeX
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:fig/delta_uncorrected_ring_1.png]]
+***** Figure                                      :B_ignoreheading:BMCOL:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:BEAMER_col: 0.55
+:END:
+#+BEGIN_LaTeX
+\centering
+With correction applied
+#+END_LaTeX
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:fig/delta_corrected_ring_1.png]]
+**** Text                                                :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+***** Done on high pileup sample
+***** $y$-axis: (TS45 true - TS45 pred.) / TS45 true
+***** $x$-axis: TS45 true
+*** Results in HE: 28:28
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Figure                                      :B_ignoreheading:BMCOL:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:BEAMER_col: 0.55
+:END:
+#+BEGIN_LaTeX
+\centering
+No correction applied
+#+END_LaTeX
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:fig/delta_uncorrected_ring_5.png]]
+***** Figure                                      :B_ignoreheading:BMCOL:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:BEAMER_col: 0.55
+:END:
+#+BEGIN_LaTeX
+\centering
+With correction applied
+#+END_LaTeX
+#+ATTR_LATEX: width=0.8\textwidth
+[[file:fig/delta_corrected_ring_5.png]]
+**** Text                                                :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+***** Done on high pileup sample
+***** $y$-axis: (TS45 true - TS45 pred.) / TS45 true
+***** $x$-axis: TS45 true
+* Conclusion
+** Conclusion
+*** Conclusion
+**** Processed zero-PU samples: OK for shape studies
+**** Processed high-PU samples: OK for validation
+**** Fit functions [[https://github.com/edmundaberry/HcalReco/blob/master/analysis/src/fitResults.C][\alert{ready to go}]] using Alexandre's method:
+***** Improved over fit functions from earlier talks
+***** Fit functions model the zero-PU pulse shapes well
+***** Fit functions now predict the high-PU pulses well
+**** Pictures of all fits available [[http://eberry.web.cern.ch/eberry/Hcal25nsFits/Hcal25nsFits.pdf][\alert{here}]]
