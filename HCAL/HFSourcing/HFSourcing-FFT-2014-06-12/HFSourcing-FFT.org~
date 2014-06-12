@@ -1,0 +1,48 @@
+#+TITLE:     HF Sourcing: \newline FFTs on Sourcing Data
+#+EMAIL:     Edmund.A.Berry@cern.ch
+#+DATE:      Thursday, June 12, 2014
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [bigger]
+#+BEAMER_FRAME_LEVEL: 3
+#+latex_header: \mode<beamer>{\usetheme[compress]{Berlin}}
+#+latex_header: \usepackage{multirow}
+#+latex_header: \input{tex/header.tex}
+#+latex_header: \input{tex/macros.tex}
+#+latex_header: \input{tex/toolbox.tex}
+#+latex_header: \mode<beamer>{\usecolortheme{bear}}
+#+latex_header: \mode<beamer>{\titlegraphic{\includegraphics[width=0.2\textwidth]{brown-logo}}}
+#+latex_header: \institute[Brown University]{\inst{1} Brown University}
+#+beamer_header_extra: \author[Edmund Berry]{\alert{Edmund Berry}\inst{1}}
+
+* Introduction
+** Introduction
+*** Fourier transforms reminder
+**** Fourier transform (FT) definition
+***** \(F(u) = \int_{-\infty}^{+\infty}f(t)e^{-2\pi i u t} dt\)
+**** FTs have real and imaginary components
+***** Real: \(\mathcal{R}(F)\)
+***** Imaginary: \(\mathcal{I}(F)\)
+**** FTs have magnitude and phase in complex space:
+***** Magnitude: \(|F| = |\mathcal{R}(F)^{2} + \mathcal{I}(F)^{2}|^{1/2}\)
+***** Phase: \(\phi(F) = \tan^{-1}\frac{\mathcal{R(F)}}{\mathcal{I(F)}}\)
+* FFT test on sine functions
+** FFT test on sine functions
+*** FFT test on sine functions
+**** Fill a histogram using linear combo of sine functions:
+***** \(f(t) = \sum_{i = 0}^3 A_{i} \cdot \sin (2\pi \cdot \omega_{i} \cdot t)\)
+***** \(A_{i} = \{1.0, 2.0, 0.5\}\) 
+***** \(\omega_{i} = \{0.5, 1.0, 2.0\}\) [Hz]
+**** Figure
+***** 
+* Ffts on data
+* Conclusion

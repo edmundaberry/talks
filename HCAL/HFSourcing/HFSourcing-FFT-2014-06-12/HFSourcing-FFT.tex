@@ -1,0 +1,364 @@
+% Created 2014-06-13 Fri 00:01
+\documentclass[bigger]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\mode<beamer>{\usetheme[compress]{Berlin}}
+\usepackage{multirow}
+\input{tex/header.tex}
+\input{tex/macros.tex}
+\input{tex/toolbox.tex}
+\mode<beamer>{\usecolortheme{bear}}
+\mode<beamer>{\titlegraphic{\includegraphics[width=0.2\textwidth]{brown-logo}}}
+\institute[Brown University]{\inst{1} Brown University}
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{HF Sourcing: \newline FFTs on Sourcing Data}
+\author{Edmund Berry}
+\date{Thursday, June 12, 2014}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.8.11}}
+
+\author[Edmund Berry]{\alert{Edmund Berry}\inst{1}}
+\begin{document}
+
+\maketitle
+
+
+\section{Introduction}
+\label{sec-1}
+\subsection{Introduction}
+\label{sec-1-1}
+\begin{frame}
+\frametitle{Fourier transforms reminder}
+\label{sec-1-1-1}
+\begin{itemize}
+
+\item Fourier transform (FT) definition
+\label{sec-1-1-1-1}%
+\begin{itemize}
+
+\item \(F(u) = \int_{-\infty}^{+\infty}f(t)e^{-2\pi i u t} dt\)
+\label{sec-1-1-1-1-1}%
+\end{itemize} % ends low level
+
+\item FTs have real and imaginary components
+\label{sec-1-1-1-2}%
+\begin{itemize}
+
+\item Real: \(\mathcal{R}(F)\)
+\label{sec-1-1-1-2-1}%
+
+\item Imaginary: \(\mathcal{I}(F)\)
+\label{sec-1-1-1-2-2}%
+\end{itemize} % ends low level
+
+\item FTs have magnitude and phase in complex space:
+\label{sec-1-1-1-3}%
+\begin{itemize}
+
+\item Magnitude: \(|F| = |\mathcal{R}(F)^{2} + \mathcal{I}(F)^{2}|^{1/2}\)
+\label{sec-1-1-1-3-1}%
+
+\item Phase: \(\phi(F) = \tan^{-1}\frac{\mathcal{R(F)}}{\mathcal{I(F)}}\)
+\label{sec-1-1-1-3-2}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Method}
+\label{sec-1-1-2}
+\begin{itemize}
+
+\item Two very simple steps
+\label{sec-1-1-2-1}%
+\begin{enumerate}
+\item Use sine functions to test ROOT FFT software
+\item Use ROOT FFT software to analyze sourcing data
+\end{enumerate}
+
+\item All of this code is on git:
+\label{sec-1-1-2-2}%
+\begin{enumerate}
+\item \href{https://github.com/HCALPFG/HcalFFT/blob/master/FFT_tutorial.py}{\alert{Link to code}} for testing FFTs
+\item \href{https://github.com/HCALPFG/HcalFFT/blob/master/FFT.py}{\alert{Link to code}} for running FFTs on sourcing data
+\end{enumerate}
+\end{itemize} % ends low level
+\end{frame}
+\section{FFT test on sine functions}
+\label{sec-2}
+\subsection{FFT test on sine functions}
+\label{sec-2-1}
+\begin{frame}
+\frametitle{FFT test on sine functions}
+\label{sec-2-1-1}
+%% Figure
+\label{sec-2-1-1-1}
+
+\centering
+\includegraphics[width=0.6\textwidth]{fig/tutorial_original_histogram.png}
+\begin{itemize}
+
+\item Fill a histogram using linear combo of sine functions:
+\label{sec-2-1-1-2}%
+\begin{itemize}
+
+\item \(f(t) = \sum_{i = 0}^3 A_{i} \cdot \sin (2\pi \cdot \omega_{i} \cdot t)\)
+\label{sec-2-1-1-2-1}%
+
+\item \(A_{i} = \{1.0, 2.0, 0.5\}\) [A.U.]
+\label{sec-2-1-1-2-2}%
+
+\item \(\omega_{i} = \{0.5, 1.0, 2.0\}\) [Hz]
+\label{sec-2-1-1-2-3}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Look at magnitude of FFT}
+\label{sec-2-1-2}
+%% Figure
+\label{sec-2-1-2-1}
+
+\centering
+\includegraphics[width=0.6\textwidth]{fig/tutorial_FFT_magnitude.png}
+\begin{itemize}
+
+\item Recall original linear combo of sine functions:
+\label{sec-2-1-2-2}%
+\begin{itemize}
+
+\item \(f(t) = \sum_{i = 0}^3 A_{i} \cdot \sin (2\pi \cdot \omega_{i} \cdot t)\)
+\label{sec-2-1-2-2-1}%
+
+\item \(A_{i} = \{1.0, 2.0, 0.5\}\) [A.U.]
+\label{sec-2-1-2-2-2}%
+
+\item \(\omega_{i} = \{0.5, 1.0, 2.0\}\) [Hz]
+\label{sec-2-1-2-2-3}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Look at magnitude of FFT (left side of function)}
+\label{sec-2-1-3}
+%% Figure
+\label{sec-2-1-3-1}
+
+\centering
+\includegraphics[width=0.6\textwidth]{fig/tutorial_FFT_magnitude_scaled.png}
+\begin{itemize}
+
+\item Magnitude (even function) returns \(A_{i}\) and \(\omega_{i}\)
+\label{sec-2-1-3-2}%
+\begin{itemize}
+
+\item \(f(t) = \sum_{i = 0}^3 A_{i} \cdot \sin (2\pi \cdot \omega_{i} \cdot t)\)
+\label{sec-2-1-3-2-1}%
+
+\item \(A_{i} = \{1.0, 2.0, 0.5\}\) [A.U.]
+\label{sec-2-1-3-2-2}%
+
+\item \(\omega_{i} = \{0.5, 1.0, 2.0\}\) [Hz]
+\label{sec-2-1-3-2-3}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Look at phase of FFT}
+\label{sec-2-1-4}
+%% Figure
+\label{sec-2-1-4-1}
+
+\centering
+\includegraphics[width=0.6\textwidth]{fig/tutorial_FFT_phase.png}
+\begin{itemize}
+
+\item Phase information not useful for our purposes\ldots{}
+\label{sec-2-1-4-2}%
+\begin{itemize}
+
+\item \(f(t) = \sum_{i = 0}^3 A_{i} \cdot \sin (2\pi \cdot \omega_{i} \cdot t)\)
+\label{sec-2-1-4-2-1}%
+
+\item \(A_{i} = \{1.0, 2.0, 0.5\}\) [A.U.]
+\label{sec-2-1-4-2-2}%
+
+\item \(\omega_{i} = \{0.5, 1.0, 2.0\}\) [Hz]
+\label{sec-2-1-4-2-3}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Conclusion of test:}
+\label{sec-2-1-5}
+\begin{itemize}
+
+\item Can use ROOT FFT software
+\label{sec-2-1-5-1}%
+
+\item ROOT FFT software can reconstruct parameters of sines
+\label{sec-2-1-5-2}%
+\begin{itemize}
+
+\item FT magnitude contains useful information for analysis
+\label{sec-2-1-5-2-1}%
+
+\item FT phase not useful for this analysis (?)
+\label{sec-2-1-5-2-2}%
+
+\item Can use FT phase to reconstruct original function (inverse FFT)
+\label{sec-2-1-5-2-3}%
+\end{itemize} % ends low level
+
+\item Ready to try sourcing data
+\label{sec-2-1-5-3}%
+\end{itemize} % ends low level
+\end{frame}
+\section{FFTs on data}
+\label{sec-3}
+\subsection{FFTs on data}
+\label{sec-3-1}
+\begin{frame}
+\frametitle{Look at sourcing data}
+\label{sec-3-1-1}
+\begin{itemize}
+
+\item histogram name:\\
+\label{sec-3-1-1-1}%
+``\texttt{HFP13\_ETA38\_PHI25\_T10\_SRCTUBE\_} \newline{}
+\texttt{Ieta38\_Iphi25\_Depth2}  \newline{}
+\texttt{Run 221509reelPosition}''
+
+\item $x$-axis: Reel [mm]
+\label{sec-3-1-1-2}%
+
+\item $y$-axis: Histogram mean [linear ADC]
+\label{sec-3-1-1-3}%
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Look at sourcing data: full range of Reel values}
+\label{sec-3-1-2}
+%% Figure
+\label{sec-3-1-2-1}
+
+\centering
+\includegraphics[width=0.6\textwidth]{fig/sourcing_unzoomed_plot.png}
+\begin{itemize}
+
+\item Next: focus on \(\text{Reel } \epsilon \text{ } [5800, 6800] \text{ [mm]}\)
+\label{sec-3-1-2-2}%
+
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Look at sourcing data: zoomed Reel values (graph)}
+\label{sec-3-1-3}
+%% Figure
+\label{sec-3-1-3-1}
+
+\centering
+\includegraphics[width=0.6\textwidth]{fig/sourcing_zoomed_plot.png}
+\begin{itemize}
+
+\item Next: make a histogram from this TGraph
+\label{sec-3-1-3-2}%
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Look at sourcing data: zoomed Reel values (hist)}
+\label{sec-3-1-4}
+%% Figure
+\label{sec-3-1-4-1}
+
+\centering
+\includegraphics[width=0.6\textwidth]{fig/original_histogram.png}
+\begin{itemize}
+
+\item If 2 points have same $x$-value, use mean $y$-value on $y$-axis \newline{}\\
+\label{sec-3-1-4-2}%
+Next: do FFT on this histogram
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Look at sourcing data: FFT magnitude}
+\label{sec-3-1-5}
+%% Figure
+\label{sec-3-1-5-1}
+
+\centering
+\includegraphics[width=0.6\textwidth]{fig/FFT_magnitude.png}
+\begin{itemize}
+
+\item ``Spike'' at zero is from $y$-axis of original histogram being centered at $y \neq 0$.  You can remove it.
+\label{sec-3-1-5-2}%
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Look at sourcing data: FFT magnitude, no first bin}
+\label{sec-3-1-6}
+%% Figure
+\label{sec-3-1-6-1}
+
+\centering
+\includegraphics[width=0.6\textwidth]{fig/FFT_magnitude_zeroFirstBin.png}
+\begin{itemize}
+
+\item ``Frequency'' peaks around 0.02 - 0.03 [1/mm]
+\label{sec-3-1-6-2}%
+\end{itemize} % ends low level
+\end{frame}
+\section{Conclusion}
+\label{sec-4}
+\subsection{Conclusion}
+\label{sec-4-1}
+\begin{frame}
+\frametitle{Conclusion}
+\label{sec-4-1-1}
+\begin{itemize}
+
+\item We can use ROOT software to do FFTs
+\label{sec-4-1-1-1}%
+\begin{itemize}
+
+\item Tests done on sine waves in time / frequency space
+\label{sec-4-1-1-1-1}%
+
+\item Prelim. results on data in reel / ``reel frequency'' space
+\label{sec-4-1-1-1-2}%
+\end{itemize} % ends low level
+
+\item Prelim. results show peak in ``reel frequency''
+\label{sec-4-1-1-2}%
+\begin{itemize}
+
+\item Around 0.02 - 0.03 [1/mm]
+\label{sec-4-1-1-2-1}%
+\end{itemize} % ends low level
+
+\item Would be nice to repeat the study on sourcing data in time (OrN)
+\label{sec-4-1-1-3}%
+\begin{itemize}
+
+\item Need plots for this
+\label{sec-4-1-1-3-1}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+
+\end{document}

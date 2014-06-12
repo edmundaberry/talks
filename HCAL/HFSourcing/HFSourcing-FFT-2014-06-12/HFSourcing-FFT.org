@@ -1,0 +1,185 @@
+#+TITLE:     HF Sourcing: \newline FFTs on Sourcing Data
+#+EMAIL:     Edmund.A.Berry@cern.ch
+#+DATE:      Thursday, June 12, 2014
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [bigger]
+#+BEAMER_FRAME_LEVEL: 3
+#+latex_header: \mode<beamer>{\usetheme[compress]{Berlin}}
+#+latex_header: \usepackage{multirow}
+#+latex_header: \input{tex/header.tex}
+#+latex_header: \input{tex/macros.tex}
+#+latex_header: \input{tex/toolbox.tex}
+#+latex_header: \mode<beamer>{\usecolortheme{bear}}
+#+latex_header: \mode<beamer>{\titlegraphic{\includegraphics[width=0.2\textwidth]{brown-logo}}}
+#+latex_header: \institute[Brown University]{\inst{1} Brown University}
+#+beamer_header_extra: \author[Edmund Berry]{\alert{Edmund Berry}\inst{1}}
+
+* Introduction
+** Introduction
+*** Fourier transforms reminder
+**** Fourier transform (FT) definition
+***** \(F(u) = \int_{-\infty}^{+\infty}f(t)e^{-2\pi i u t} dt\)
+**** FTs have real and imaginary components
+***** Real: \(\mathcal{R}(F)\)
+***** Imaginary: \(\mathcal{I}(F)\)
+**** FTs have magnitude and phase in complex space:
+***** Magnitude: \(|F| = |\mathcal{R}(F)^{2} + \mathcal{I}(F)^{2}|^{1/2}\)
+***** Phase: \(\phi(F) = \tan^{-1}\frac{\mathcal{R(F)}}{\mathcal{I(F)}}\)
+*** Method
+**** Two very simple steps
+1) Use sine functions to test ROOT FFT software
+2) Use ROOT FFT software to analyze sourcing data
+**** All of this code is on git:
+1) [[https://github.com/HCALPFG/HcalFFT/blob/master/FFT_tutorial.py][\alert{Link to code}]] for testing FFTs
+2) [[https://github.com/HCALPFG/HcalFFT/blob/master/FFT.py][\alert{Link to code}]] for running FFTs on sourcing data
+* FFT test on sine functions
+** FFT test on sine functions
+*** FFT test on sine functions
+**** Figure                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:fig/tutorial_original_histogram.png]]
+**** Fill a histogram using linear combo of sine functions:
+***** \(f(t) = \sum_{i = 0}^3 A_{i} \cdot \sin (2\pi \cdot \omega_{i} \cdot t)\)
+***** \(A_{i} = \{1.0, 2.0, 0.5\}\) [A.U.]
+***** \(\omega_{i} = \{0.5, 1.0, 2.0\}\) [Hz]
+*** Look at magnitude of FFT 
+**** Figure                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:fig/tutorial_FFT_magnitude.png]]
+**** Recall original linear combo of sine functions:
+***** \(f(t) = \sum_{i = 0}^3 A_{i} \cdot \sin (2\pi \cdot \omega_{i} \cdot t)\)
+***** \(A_{i} = \{1.0, 2.0, 0.5\}\) [A.U.]
+***** \(\omega_{i} = \{0.5, 1.0, 2.0\}\) [Hz]
+*** Look at magnitude of FFT (left side of function)
+**** Figure                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:fig/tutorial_FFT_magnitude_scaled.png]]
+**** Magnitude (even function) returns \(A_{i}\) and \(\omega_{i}\)
+***** \(f(t) = \sum_{i = 0}^3 A_{i} \cdot \sin (2\pi \cdot \omega_{i} \cdot t)\)
+***** \(A_{i} = \{1.0, 2.0, 0.5\}\) [A.U.]
+***** \(\omega_{i} = \{0.5, 1.0, 2.0\}\) [Hz]
+*** Look at phase of FFT
+**** Figure                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:fig/tutorial_FFT_phase.png]]
+**** Phase information not useful for our purposes...
+***** \(f(t) = \sum_{i = 0}^3 A_{i} \cdot \sin (2\pi \cdot \omega_{i} \cdot t)\)
+***** \(A_{i} = \{1.0, 2.0, 0.5\}\) [A.U.]
+***** \(\omega_{i} = \{0.5, 1.0, 2.0\}\) [Hz]
+*** Conclusion of test:
+**** Can use ROOT FFT software
+**** ROOT FFT software can reconstruct parameters of sines
+***** FT magnitude contains useful information for analysis
+***** FT phase not useful for this analysis (?)
+***** Can use FT phase to reconstruct original function (inverse FFT)
+**** Ready to try sourcing data
+* FFTs on data
+** FFTs on data
+*** Look at sourcing data
+**** histogram name:
+"\texttt{HFP13\_ETA38\_PHI25\_T10\_SRCTUBE\_} \newline{}
+\texttt{Ieta38\_Iphi25\_Depth2}  \newline{}
+\texttt{Run 221509reelPosition}"
+**** $x$-axis: Reel [mm]
+**** $y$-axis: Histogram mean [linear ADC]
+*** Look at sourcing data: full range of Reel values
+**** Figure                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:fig/sourcing_unzoomed_plot.png]]
+**** Next: focus on \(\text{Reel } \epsilon \text{ } [5800, 6800] \text{ [mm]}\)
+
+*** Look at sourcing data: zoomed Reel values (graph)
+**** Figure                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:fig/sourcing_zoomed_plot.png]]
+**** Next: make a histogram from this TGraph
+*** Look at sourcing data: zoomed Reel values (hist)
+**** Figure                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:fig/original_histogram.png]]
+**** If 2 points have same $x$-value, use mean $y$-value on $y$-axis \newline{}
+Next: do FFT on this histogram
+*** Look at sourcing data: FFT magnitude
+**** Figure                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:fig/FFT_magnitude.png]]
+**** "Spike" at zero is from $y$-axis of original histogram being centered at $y \neq 0$.  You can remove it.
+*** Look at sourcing data: FFT magnitude, no first bin
+**** Figure                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:fig/FFT_magnitude_zeroFirstBin.png]]
+**** "Frequency" peaks around 0.02 - 0.03 [1/mm]
+* Conclusion
+** Conclusion
+*** Conclusion
+**** We can use ROOT software to do FFTs
+***** Tests done on sine waves in time / frequency space
+***** Prelim. results on data in reel / "reel frequency" space
+**** Prelim. results show peak in "reel frequency"
+***** Around 0.02 - 0.03 [1/mm]
+**** Would be nice to repeat the study on sourcing data in time (OrN)
+***** Need plots for this
