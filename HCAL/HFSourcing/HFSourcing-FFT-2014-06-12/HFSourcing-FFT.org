@@ -116,7 +116,7 @@
 \texttt{Run 221509reelPosition}"
 **** $x$-axis: Reel [mm]
 **** $y$-axis: Histogram mean [linear ADC]
-*** Look at sourcing data: full range of Reel values
+*** Look at sourcing data: full range of reel vals
 **** Figure                                              :B_ignoreheading:
 :PROPERTIES:
 :BEAMER_env: ignoreheading
@@ -126,8 +126,8 @@
 #+END_LaTeX
 #+ATTR_LATEX: width=0.6\textwidth
 [[file:fig/sourcing_unzoomed_plot.png]]
-**** Next: focus on \(\text{Reel } \epsilon \text{ } [5800, 6800] \text{ [mm]}\), where amplitude is stable
-*** Look at sourcing data: zoomed Reel values (hist)
+**** Next: focus on \(\text{reel } \epsilon \text{ } [5800, 6800] \text{ [mm]}\), where amplitude is stable
+*** Look at sourcing data: zoomed reel vals (TGraph)
 **** Figure                                              :B_ignoreheading:
 :PROPERTIES:
 :BEAMER_env: ignoreheading
@@ -139,7 +139,7 @@
 [[file:fig/sourcing_zoomed_plot.png]]
 **** This looks stable.  We can do our FFT on this data.
 **** Next: zoom in even further \(([6000,6050])\) to see what frequency we suspect naively
-*** Look at sourcing data: zoomed Reel values (hist)
+*** Look at sourcing data: zoomed reel vals (TGraph)
 **** Figure                                              :B_ignoreheading:
 :PROPERTIES:
 :BEAMER_env: ignoreheading
@@ -153,7 +153,7 @@
 ***** \(T = 50 \text{ [mm]}/ 7 = 7.14 \text{ [mm]} \)
 ***** \(f = 1/T = 0.14 \text{ [1/mm]}\)
 **** Only a naive guess for the frequency!
-*** Look at sourcing data: zoomed Reel values (hist)
+*** Look at sourcing data: zoomed reel vals (TH1F)
 **** Figure                                              :B_ignoreheading:
 :PROPERTIES:
 :BEAMER_env: ignoreheading
@@ -163,7 +163,7 @@
 #+END_LaTeX
 #+ATTR_LATEX: width=0.6\textwidth
 [[file:fig/original_histogram.png]]
-**** Now make a histogram from the TGraph
+**** Now make a histogram from the TGraph (result above)
 ***** If multiple points in TGraph have the same $x$-value, use their mean $y$-value on $y$-axis for histogram
 **** Next: do FFT on this histogram
 *** Look at sourcing data: FFT magnitude
@@ -200,7 +200,7 @@
 #+END_LaTeX
 #+ATTR_LATEX: width=0.6\textwidth
 [[file:fig/FFT_magnitude_zeroFirstBin_upperHalf.png]]
-**** FFT magnitude peaks between "Reel frequency"
+**** FFT magnitude peaks between "reel frequency"
 (in [1/mm]) of 0.12 and 0.13 
 **** Roughly matches our naive guess (0.14)
 * Conclusion
