@@ -149,7 +149,7 @@
 #+END_LaTeX
 #+ATTR_LATEX: width=0.6\textwidth
 [[file:fig/sourcing_very_zoomed_plot.png]]
-**** 7 troughs in 50mm:
+**** 7 periods in 50mm:
 ***** \(T = 50 \text{ [mm]}/ 7 = 7.14 \text{ [mm]} \)
 ***** \(f = 1/T = 0.14 \text{ [1/mm]}\)
 **** Only a naive guess for the frequency!
