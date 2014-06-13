@@ -55,9 +55,9 @@
 #+ATTR_LATEX: width=0.6\textwidth
 [[file:fig/tutorial_original_histogram.png]]
 **** Fill a histogram using linear combo of sine functions:
-***** \(f(t) = \sum_{i = 0}^3 A_{i} \cdot \sin (2\pi \cdot \omega_{i} \cdot t)\)
+***** \(f(t) = \sum_{i = 0}^3 A_{i} \cdot \sin (2\pi \cdot f_{i} \cdot t)\)
 ***** \(A_{i} = \{1.0, 2.0, 0.5\}\) [A.U.]
-***** \(\omega_{i} = \{0.5, 1.0, 2.0\}\) [Hz]
+***** \(f_{i} = \{0.5, 1.0, 2.0\}\) [Hz]
 *** Look at magnitude of FFT 
 **** Figure                                              :B_ignoreheading:
 :PROPERTIES:
@@ -69,9 +69,9 @@
 #+ATTR_LATEX: width=0.6\textwidth
 [[file:fig/tutorial_FFT_magnitude.png]]
 **** Recall original linear combo of sine functions:
-***** \(f(t) = \sum_{i = 0}^3 A_{i} \cdot \sin (2\pi \cdot \omega_{i} \cdot t)\)
+***** \(f(t) = \sum_{i = 0}^3 A_{i} \cdot \sin (2\pi \cdot f_{i} \cdot t)\)
 ***** \(A_{i} = \{1.0, 2.0, 0.5\}\) [A.U.]
-***** \(\omega_{i} = \{0.5, 1.0, 2.0\}\) [Hz]
+***** \(f_{i} = \{0.5, 1.0, 2.0\}\) [Hz]
 *** Look at magnitude of FFT (left side of function)
 **** Figure                                              :B_ignoreheading:
 :PROPERTIES:
@@ -82,10 +82,10 @@
 #+END_LaTeX
 #+ATTR_LATEX: width=0.6\textwidth
 [[file:fig/tutorial_FFT_magnitude_scaled.png]]
-**** Magnitude (even function) returns \(A_{i}\) and \(\omega_{i}\)
-***** \(f(t) = \sum_{i = 0}^3 A_{i} \cdot \sin (2\pi \cdot \omega_{i} \cdot t)\)
+**** Magnitude (even function) returns \(A_{i}\) and \(f_{i}\)
+***** \(f(t) = \sum_{i = 0}^3 A_{i} \cdot \sin (2\pi \cdot f_{i} \cdot t)\)
 ***** \(A_{i} = \{1.0, 2.0, 0.5\}\) [A.U.]
-***** \(\omega_{i} = \{0.5, 1.0, 2.0\}\) [Hz]
+***** \(f_{i} = \{0.5, 1.0, 2.0\}\) [Hz]
 *** Look at phase of FFT
 **** Figure                                              :B_ignoreheading:
 :PROPERTIES:
@@ -97,9 +97,9 @@
 #+ATTR_LATEX: width=0.6\textwidth
 [[file:fig/tutorial_FFT_phase.png]]
 **** Phase information not useful for our purposes...
-***** \(f(t) = \sum_{i = 0}^3 A_{i} \cdot \sin (2\pi \cdot \omega_{i} \cdot t)\)
+***** \(f(t) = \sum_{i = 0}^3 A_{i} \cdot \sin (2\pi \cdot f_{i} \cdot t)\)
 ***** \(A_{i} = \{1.0, 2.0, 0.5\}\) [A.U.]
-***** \(\omega_{i} = \{0.5, 1.0, 2.0\}\) [Hz]
+***** \(f_{i} = \{0.5, 1.0, 2.0\}\) [Hz]
 *** Conclusion of test:
 **** Can use ROOT FFT software
 **** ROOT FFT software can reconstruct parameters of sines
@@ -126,9 +126,8 @@
 #+END_LaTeX
 #+ATTR_LATEX: width=0.6\textwidth
 [[file:fig/sourcing_unzoomed_plot.png]]
-**** Next: focus on \(\text{Reel } \epsilon \text{ } [5800, 6800] \text{ [mm]}\)
-
-*** Look at sourcing data: zoomed Reel values (graph)
+**** Next: focus on \(\text{Reel } \epsilon \text{ } [5800, 6800] \text{ [mm]}\), where amplitude is stable
+*** Look at sourcing data: zoomed Reel values (hist)
 **** Figure                                              :B_ignoreheading:
 :PROPERTIES:
 :BEAMER_env: ignoreheading
@@ -138,7 +137,22 @@
 #+END_LaTeX
 #+ATTR_LATEX: width=0.6\textwidth
 [[file:fig/sourcing_zoomed_plot.png]]
-**** Next: make a histogram from this TGraph
+**** This looks stable.  We can do our FFT on this data.
+**** Next: zoom in even further \(([6000,6050])\) to see what frequency we suspect naively
+*** Look at sourcing data: zoomed Reel values (hist)
+**** Figure                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:fig/sourcing_very_zoomed_plot.png]]
+**** 7 troughs in 50mm:
+***** \(T = 50 \text{ [mm]}/ 7 = 7.14 \text{ [mm]} \)
+***** \(f = 1/T = 0.14 \text{ [1/mm]}\)
+**** Only a naive guess for the frequency!
 *** Look at sourcing data: zoomed Reel values (hist)
 **** Figure                                              :B_ignoreheading:
 :PROPERTIES:
@@ -149,8 +163,9 @@
 #+END_LaTeX
 #+ATTR_LATEX: width=0.6\textwidth
 [[file:fig/original_histogram.png]]
-**** If 2 points have same $x$-value, use mean $y$-value on $y$-axis \newline{}
-Next: do FFT on this histogram
+**** Now make a histogram from the TGraph
+***** If multiple points in TGraph have the same $x$-value, use their mean $y$-value on $y$-axis for histogram
+**** Next: do FFT on this histogram
 *** Look at sourcing data: FFT magnitude
 **** Figure                                              :B_ignoreheading:
 :PROPERTIES:
@@ -161,7 +176,8 @@ Next: do FFT on this histogram
 #+END_LaTeX
 #+ATTR_LATEX: width=0.6\textwidth
 [[file:fig/FFT_magnitude.png]]
-**** "Spike" at zero is from $y$-axis of original histogram being centered at $y \neq 0$.  You can remove it.
+**** Magnitude at zero is very large, because $y$-values of the original histogram are not centered at zero
+**** Next: remove bin at Frequency = 0
 *** Look at sourcing data: FFT magnitude, no first bin
 **** Figure                                              :B_ignoreheading:
 :PROPERTIES:
@@ -172,7 +188,21 @@ Next: do FFT on this histogram
 #+END_LaTeX
 #+ATTR_LATEX: width=0.6\textwidth
 [[file:fig/FFT_magnitude_zeroFirstBin.png]]
-**** "Frequency" peaks around 0.02 - 0.03 [1/mm]
+**** Now we can see the structure of the FFT magnitude
+**** Next: consider only the upper "half" of the magnitude's range
+*** Look at sourcing data: FFT magnitude, upper half
+**** Figure                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:fig/FFT_magnitude_zeroFirstBin_upperHalf.png]]
+**** FFT magnitude peaks between "Reel frequency"
+(in [1/mm]) of 0.12 and 0.13 
+**** Roughly matches our naive guess (0.14)
 * Conclusion
 ** Conclusion
 *** Conclusion
@@ -180,6 +210,6 @@ Next: do FFT on this histogram
 ***** Tests done on sine waves in time / frequency space
 ***** Prelim. results on data in reel / "reel frequency" space
 **** Prelim. results show peak in "reel frequency"
-***** Around 0.02 - 0.03 [1/mm]
+***** Around 0.12 - 0.13 [1/mm]
 **** Would be nice to repeat the study on sourcing data in time (OrN)
 ***** Need plots for this

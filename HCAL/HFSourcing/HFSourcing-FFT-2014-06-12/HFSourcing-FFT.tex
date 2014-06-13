@@ -1,4 +1,4 @@
-% Created 2014-06-13 Fri 00:01
+% Created 2014-06-13 Fri 11:43
 \documentclass[bigger]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -117,13 +117,13 @@
 \label{sec-2-1-1-2}%
 \begin{itemize}
 
-\item \(f(t) = \sum_{i = 0}^3 A_{i} \cdot \sin (2\pi \cdot \omega_{i} \cdot t)\)
+\item \(f(t) = \sum_{i = 0}^3 A_{i} \cdot \sin (2\pi \cdot f_{i} \cdot t)\)
 \label{sec-2-1-1-2-1}%
 
 \item \(A_{i} = \{1.0, 2.0, 0.5\}\) [A.U.]
 \label{sec-2-1-1-2-2}%
 
-\item \(\omega_{i} = \{0.5, 1.0, 2.0\}\) [Hz]
+\item \(f_{i} = \{0.5, 1.0, 2.0\}\) [Hz]
 \label{sec-2-1-1-2-3}%
 \end{itemize} % ends low level
 \end{itemize} % ends low level
@@ -142,13 +142,13 @@
 \label{sec-2-1-2-2}%
 \begin{itemize}
 
-\item \(f(t) = \sum_{i = 0}^3 A_{i} \cdot \sin (2\pi \cdot \omega_{i} \cdot t)\)
+\item \(f(t) = \sum_{i = 0}^3 A_{i} \cdot \sin (2\pi \cdot f_{i} \cdot t)\)
 \label{sec-2-1-2-2-1}%
 
 \item \(A_{i} = \{1.0, 2.0, 0.5\}\) [A.U.]
 \label{sec-2-1-2-2-2}%
 
-\item \(\omega_{i} = \{0.5, 1.0, 2.0\}\) [Hz]
+\item \(f_{i} = \{0.5, 1.0, 2.0\}\) [Hz]
 \label{sec-2-1-2-2-3}%
 \end{itemize} % ends low level
 \end{itemize} % ends low level
@@ -163,17 +163,17 @@
 \includegraphics[width=0.6\textwidth]{fig/tutorial_FFT_magnitude_scaled.png}
 \begin{itemize}
 
-\item Magnitude (even function) returns \(A_{i}\) and \(\omega_{i}\)
+\item Magnitude (even function) returns \(A_{i}\) and \(f_{i}\)
 \label{sec-2-1-3-2}%
 \begin{itemize}
 
-\item \(f(t) = \sum_{i = 0}^3 A_{i} \cdot \sin (2\pi \cdot \omega_{i} \cdot t)\)
+\item \(f(t) = \sum_{i = 0}^3 A_{i} \cdot \sin (2\pi \cdot f_{i} \cdot t)\)
 \label{sec-2-1-3-2-1}%
 
 \item \(A_{i} = \{1.0, 2.0, 0.5\}\) [A.U.]
 \label{sec-2-1-3-2-2}%
 
-\item \(\omega_{i} = \{0.5, 1.0, 2.0\}\) [Hz]
+\item \(f_{i} = \{0.5, 1.0, 2.0\}\) [Hz]
 \label{sec-2-1-3-2-3}%
 \end{itemize} % ends low level
 \end{itemize} % ends low level
@@ -192,13 +192,13 @@
 \label{sec-2-1-4-2}%
 \begin{itemize}
 
-\item \(f(t) = \sum_{i = 0}^3 A_{i} \cdot \sin (2\pi \cdot \omega_{i} \cdot t)\)
+\item \(f(t) = \sum_{i = 0}^3 A_{i} \cdot \sin (2\pi \cdot f_{i} \cdot t)\)
 \label{sec-2-1-4-2-1}%
 
 \item \(A_{i} = \{1.0, 2.0, 0.5\}\) [A.U.]
 \label{sec-2-1-4-2-2}%
 
-\item \(\omega_{i} = \{0.5, 1.0, 2.0\}\) [Hz]
+\item \(f_{i} = \{0.5, 1.0, 2.0\}\) [Hz]
 \label{sec-2-1-4-2-3}%
 \end{itemize} % ends low level
 \end{itemize} % ends low level
@@ -261,13 +261,12 @@
 \includegraphics[width=0.6\textwidth]{fig/sourcing_unzoomed_plot.png}
 \begin{itemize}
 
-\item Next: focus on \(\text{Reel } \epsilon \text{ } [5800, 6800] \text{ [mm]}\)
+\item Next: focus on \(\text{Reel } \epsilon \text{ } [5800, 6800] \text{ [mm]}\), where amplitude is stable
 \label{sec-3-1-2-2}%
-
 \end{itemize} % ends low level
 \end{frame}
 \begin{frame}
-\frametitle{Look at sourcing data: zoomed Reel values (graph)}
+\frametitle{Look at sourcing data: zoomed Reel values (hist)}
 \label{sec-3-1-3}
 %% Figure
 \label{sec-3-1-3-1}
@@ -276,8 +275,11 @@
 \includegraphics[width=0.6\textwidth]{fig/sourcing_zoomed_plot.png}
 \begin{itemize}
 
-\item Next: make a histogram from this TGraph
+\item This looks stable.  We can do our FFT on this data.
 \label{sec-3-1-3-2}%
+
+\item Next: zoom in even further \(([6000,6050])\) to see what frequency we suspect naively
+\label{sec-3-1-3-3}%
 \end{itemize} % ends low level
 \end{frame}
 \begin{frame}
@@ -287,40 +289,96 @@
 \label{sec-3-1-4-1}
 
 \centering
-\includegraphics[width=0.6\textwidth]{fig/original_histogram.png}
+\includegraphics[width=0.6\textwidth]{fig/sourcing_very_zoomed_plot.png}
 \begin{itemize}
 
-\item If 2 points have same $x$-value, use mean $y$-value on $y$-axis \newline{}\\
+\item 7 troughs in 50mm:
 \label{sec-3-1-4-2}%
-Next: do FFT on this histogram
+\begin{itemize}
+
+\item \(T = 50 \text{ [mm]}/ 7 = 7.14 \text{ [mm]} \)
+\label{sec-3-1-4-2-1}%
+
+\item \(f = 1/T = 0.14 \text{ [1/mm]}\)
+\label{sec-3-1-4-2-2}%
+\end{itemize} % ends low level
+
+\item Only a naive guess for the frequency!
+\label{sec-3-1-4-3}%
 \end{itemize} % ends low level
 \end{frame}
 \begin{frame}
-\frametitle{Look at sourcing data: FFT magnitude}
+\frametitle{Look at sourcing data: zoomed Reel values (hist)}
 \label{sec-3-1-5}
 %% Figure
 \label{sec-3-1-5-1}
 
 \centering
-\includegraphics[width=0.6\textwidth]{fig/FFT_magnitude.png}
+\includegraphics[width=0.6\textwidth]{fig/original_histogram.png}
 \begin{itemize}
 
-\item ``Spike'' at zero is from $y$-axis of original histogram being centered at $y \neq 0$.  You can remove it.
+\item Now make a histogram from the TGraph
 \label{sec-3-1-5-2}%
+\begin{itemize}
+
+\item If multiple points in TGraph have the same $x$-value, use their mean $y$-value on $y$-axis for histogram
+\label{sec-3-1-5-2-1}%
+\end{itemize} % ends low level
+
+\item Next: do FFT on this histogram
+\label{sec-3-1-5-3}%
 \end{itemize} % ends low level
 \end{frame}
 \begin{frame}
-\frametitle{Look at sourcing data: FFT magnitude, no first bin}
+\frametitle{Look at sourcing data: FFT magnitude}
 \label{sec-3-1-6}
 %% Figure
 \label{sec-3-1-6-1}
 
 \centering
+\includegraphics[width=0.6\textwidth]{fig/FFT_magnitude.png}
+\begin{itemize}
+
+\item Magnitude at zero is very large, because $y$-values of the original histogram are not centered at zero
+\label{sec-3-1-6-2}%
+
+\item Next: remove bin at Frequency = 0
+\label{sec-3-1-6-3}%
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Look at sourcing data: FFT magnitude, no first bin}
+\label{sec-3-1-7}
+%% Figure
+\label{sec-3-1-7-1}
+
+\centering
 \includegraphics[width=0.6\textwidth]{fig/FFT_magnitude_zeroFirstBin.png}
 \begin{itemize}
 
-\item ``Frequency'' peaks around 0.02 - 0.03 [1/mm]
-\label{sec-3-1-6-2}%
+\item Now we can see the structure of the FFT magnitude
+\label{sec-3-1-7-2}%
+
+\item Next: consider only the upper ``half'' of the magnitude's range
+\label{sec-3-1-7-3}%
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Look at sourcing data: FFT magnitude, upper half}
+\label{sec-3-1-8}
+%% Figure
+\label{sec-3-1-8-1}
+
+\centering
+\includegraphics[width=0.6\textwidth]{fig/FFT_magnitude_zeroFirstBin_upperHalf.png}
+\begin{itemize}
+
+\item FFT magnitude peaks between ``Reel frequency''\\
+\label{sec-3-1-8-2}%
+(in [1/mm]) of 0.12 and 0.13 
+
+\item Roughly matches our naive guess (0.14)
+\label{sec-3-1-8-3}%
 \end{itemize} % ends low level
 \end{frame}
 \section{Conclusion}
@@ -347,7 +405,7 @@ Next: do FFT on this histogram
 \label{sec-4-1-1-2}%
 \begin{itemize}
 
-\item Around 0.02 - 0.03 [1/mm]
+\item Around 0.12 - 0.13 [1/mm]
 \label{sec-4-1-1-2-1}%
 \end{itemize} % ends low level
 
