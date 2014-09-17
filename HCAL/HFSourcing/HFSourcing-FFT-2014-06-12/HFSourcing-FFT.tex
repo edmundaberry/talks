@@ -1,4 +1,4 @@
-% Created 2014-06-13 Fri 12:06
+% Created 2014-06-16 Mon 22:27
 \documentclass[bigger]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -41,10 +41,10 @@
 
 \section{Introduction}
 \label{sec-1}
-\subsection{Introduction}
+\subsection{Review of Fourier transforms}
 \label{sec-1-1}
 \begin{frame}
-\frametitle{Fourier transforms reminder}
+\frametitle{Review of continuous Fourier transforms:}
 \label{sec-1-1-1}
 \begin{itemize}
 
@@ -74,25 +74,119 @@
 \item Magnitude: \(|F| = |\mathcal{R}(F)^{2} + \mathcal{I}(F)^{2}|^{1/2}\)
 \label{sec-1-1-1-3-1}%
 
-\item Phase: \(\phi(F) = \tan^{-1}\frac{\mathcal{R(F)}}{\mathcal{I(F)}}\)
+\item Phase: \(\phi(F) = \tan^{-1}\frac{\mathcal{R}(F)}{\mathcal{I}(F)}\)
 \label{sec-1-1-1-3-2}%
 \end{itemize} % ends low level
 \end{itemize} % ends low level
 \end{frame}
 \begin{frame}
-\frametitle{Method}
+\frametitle{Review of discrete, fast Fourier transforms:}
 \label{sec-1-1-2}
 \begin{itemize}
 
-\item Two very simple steps
+\item ROOT can run fast Fourier transforms (FFTs) with \texttt{fftw}
 \label{sec-1-1-2-1}%
+
+\item Notes from \texttt{fftw} \href{http://www.fftw.org/}{\alert{online documentation}}:
+\label{sec-1-1-2-2}%
+\begin{itemize}
+
+\item We want to do a 1D discrete Fourier transform (\href{http://www.fftw.org/doc/Introduction.html}{\alert{DFT}})
+\label{sec-1-1-2-2-1}%
+
+\item We want a transform from real to complex space (\href{http://www.fftw.org/doc/One_002dDimensional-DFTs-of-Real-Data.html}{\alert{R2C}})
+\label{sec-1-1-2-2-2}%
+
+\item For a 1D R2C DFT on an input with $n$ bins, \texttt{fftw} \href{http://www.fftw.org/doc/The-1d-Discrete-Fourier-Transform-_0028DFT_0029.html}{\alert{calculates the following}}:
+\label{sec-1-1-2-2-3}%
+\begin{equation*}
+Y_{k} = \sum_{j=0}^{n-1} X_{j} e^{-2\pi j k \sqrt{-1}/n}
+\end{equation}
+Where:
+\begin{itemize}
+
+\item $n$ is the number of bins in the input histogram
+\label{sec-1-1-2-2-3-1}%
+
+\item $Y_k$ is the FFT output (content of output bin $k$)
+\label{sec-1-1-2-2-3-2}%
+
+\item $X_j$ is the original input (content of input bin $j$)
+\label{sec-1-1-2-2-3-3}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Review of discrete, fast Fourier transforms:}
+\label{sec-1-1-3}
+\begin{itemize}
+
+\item For an input histogram with $n$ bins, \texttt{fftw} outputs a vector of \(\frac{n}{2}+1\) complex elements (\(\frac{n}{2}\) rounds down):
+\label{sec-1-1-3-1}%
+\begin{itemize}
+
+\item 0th element is the ``\href{http://www.fftw.org/doc/One_002dDimensional-DFTs-of-Real-Data.html}{\alert{DC}}'': purely real (omitted from plots)
+\label{sec-1-1-3-1-1}%
+
+\item \(\frac{n}{2}\)th element is the ``\href{http://www.fftw.org/doc/One_002dDimensional-DFTs-of-Real-Data.html}{\alert{Nyquist}}'' frequency: purely real
+\label{sec-1-1-3-1-2}%
+
+\item All elements have \href{http://www.fftw.org/doc/The-1d-Real_002ddata-DFT.html}{\alert{Hermitian symmetry}}: \(Y_{k} = Y_{n-k}^{*}\)
+\label{sec-1-1-3-1-3}%
+\end{itemize} % ends low level
+
+\item Performing the transform \href{http://www.fftw.org/doc/The-1d-Real_002ddata-DFT.html}{\alert{introduces a factor of \(\sqrt{n}\)}}, which must be divided out by the user
+\label{sec-1-1-3-2}%
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Review of discrete, fast Fourier transforms:}
+\label{sec-1-1-4}
+\begin{itemize}
+
+\item Just like continuous FTs, we're interested in the real and imaginary components of \texttt{fftw} output
+\label{sec-1-1-4-1}%
+
+\item Consider real and imaginary output from \texttt{fftw} (\(Y_{k}\))
+\label{sec-1-1-4-2}%
+\begin{itemize}
+
+\item Real: \(\mathcal{R}(Y_{k})\)
+\label{sec-1-1-4-2-1}%
+
+\item Imaginary: \(\mathcal{I}(Y_{k})\)
+\label{sec-1-1-4-2-2}%
+\end{itemize} % ends low level
+
+\item Consider magnitude and phase in complex space:
+\label{sec-1-1-4-3}%
+\begin{itemize}
+
+\item Magnitude: \(|Y_{k}| = |\mathcal{R}(Y_{k})^{2} + \mathcal{I}(Y_{k})^{2}|^{1/2}\)
+\label{sec-1-1-4-3-1}%
+
+\item Phase: \(\phi(Y_{k}) = \tan^{-1}\frac{\mathcal{R}(Y_{k})}{\mathcal{I}(Y_{k})}\)
+\label{sec-1-1-4-3-2}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+\subsection{Method}
+\label{sec-1-2}
+\begin{frame}
+\frametitle{Method}
+\label{sec-1-2-1}
+\begin{itemize}
+
+\item Two very simple steps
+\label{sec-1-2-1-1}%
 \begin{enumerate}
 \item Use sine functions to test ROOT FFT software
 \item Use ROOT FFT software to analyze sourcing data
 \end{enumerate}
 
 \item All of this code is on git:
-\label{sec-1-1-2-2}%
+\label{sec-1-2-1-2}%
 \begin{enumerate}
 \item \href{https://github.com/HCALPFG/HcalFFT/blob/master/FFT_tutorial.py}{\alert{Link to code}} for testing FFTs
 \item \href{https://github.com/HCALPFG/HcalFFT/blob/master/FFT.py}{\alert{Link to code}} for running FFTs on sourcing data
@@ -138,7 +232,7 @@
 \includegraphics[width=0.6\textwidth]{fig/tutorial_FFT_magnitude.png}
 \begin{itemize}
 
-\item Recall original linear combo of sine functions:
+\item Magnitude (even function) returns \(A_{i}\) and \(f_{i}\)
 \label{sec-2-1-2-2}%
 \begin{itemize}
 
@@ -154,16 +248,16 @@
 \end{itemize} % ends low level
 \end{frame}
 \begin{frame}
-\frametitle{Look at magnitude of FFT (left side of function)}
+\frametitle{Look at phase of FFT}
 \label{sec-2-1-3}
 %% Figure
 \label{sec-2-1-3-1}
 
 \centering
-\includegraphics[width=0.6\textwidth]{fig/tutorial_FFT_magnitude_scaled.png}
+\includegraphics[width=0.6\textwidth]{fig/tutorial_FFT_phase.png}
 \begin{itemize}
 
-\item Magnitude (even function) returns \(A_{i}\) and \(f_{i}\)
+\item Phase information not useful for our purposes\ldots{}
 \label{sec-2-1-3-2}%
 \begin{itemize}
 
@@ -179,16 +273,30 @@
 \end{itemize} % ends low level
 \end{frame}
 \begin{frame}
-\frametitle{Look at phase of FFT}
+\frametitle{Look at real and imaginary components of FFT:}
 \label{sec-2-1-4}
-%% Figure
+\begin{columns} % Columns
 \label{sec-2-1-4-1}
+\begin{column}{0.55\textwidth}
+%% Column 1
+\label{sec-2-1-4-1-1}
 
 \centering
-\includegraphics[width=0.6\textwidth]{fig/tutorial_FFT_phase.png}
+Real component
+\includegraphics[width=\textwidth]{fig/tutorial_FFT_real.png}
+\end{column}
+\begin{column}{0.55\textwidth}
+%% Column 2
+\label{sec-2-1-4-1-2}
+
+\centering
+Imaginary component
+\includegraphics[width=\textwidth]{fig/tutorial_FFT_imag.png}
+\end{column}
+\end{columns}
 \begin{itemize}
 
-\item Phase information not useful for our purposes\ldots{}
+\item Real/imaginary components similar to magnitude:
 \label{sec-2-1-4-2}%
 \begin{itemize}
 
@@ -339,46 +447,40 @@
 \includegraphics[width=0.6\textwidth]{fig/FFT_magnitude.png}
 \begin{itemize}
 
-\item Magnitude at zero is very large, because $y$-values of the original histogram are not centered at zero
+\item FFT magnitude peaks between ``reel frequency''\\
 \label{sec-3-1-6-2}%
+(in [1/mm]) of |0.10| and |0.20|
 
-\item Next: remove bin at Frequency = 0
+\item Roughly matches our naive guess (0.14)
 \label{sec-3-1-6-3}%
 \end{itemize} % ends low level
 \end{frame}
 \begin{frame}
-\frametitle{Look at sourcing data: FFT magnitude, no first bin}
+\frametitle{Look at sourcing data: FFT real \& imaginary}
 \label{sec-3-1-7}
-%% Figure
+\begin{columns} % Columns
 \label{sec-3-1-7-1}
+\begin{column}{0.55\textwidth}
+%% Column 1
+\label{sec-3-1-7-1-1}
 
 \centering
-\includegraphics[width=0.6\textwidth]{fig/FFT_magnitude_zeroFirstBin.png}
+Real component
+\includegraphics[width=\textwidth]{fig/FFT_real.png}
+\end{column}
+\begin{column}{0.55\textwidth}
+%% Column 2
+\label{sec-3-1-7-1-2}
+
+\centering
+Imaginary component
+\includegraphics[width=\textwidth]{fig/FFT_imag.png}
+\end{column}
+\end{columns}
 \begin{itemize}
 
-\item Now we can see the structure of the FFT magnitude
+\item Real/imaginary components similar to magnitude
 \label{sec-3-1-7-2}%
-
-\item Next: consider only the upper ``half'' of the magnitude's range
-\label{sec-3-1-7-3}%
-\end{itemize} % ends low level
-\end{frame}
-\begin{frame}
-\frametitle{Look at sourcing data: FFT magnitude, upper half}
-\label{sec-3-1-8}
-%% Figure
-\label{sec-3-1-8-1}
-
-\centering
-\includegraphics[width=0.6\textwidth]{fig/FFT_magnitude_zeroFirstBin_upperHalf.png}
-\begin{itemize}
-
-\item FFT magnitude peaks between ``reel frequency''\\
-\label{sec-3-1-8-2}%
-(in [1/mm]) of 0.12 and 0.13 
-
-\item Roughly matches our naive guess (0.14)
-\label{sec-3-1-8-3}%
 \end{itemize} % ends low level
 \end{frame}
 \section{Conclusion}

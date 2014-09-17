@@ -25,8 +25,8 @@
 #+beamer_header_extra: \author[Edmund Berry]{\alert{Edmund Berry}\inst{1}}
 
 * Introduction
-** Introduction
-*** Fourier transforms reminder
+** Review of Fourier transforms
+*** Review of continuous Fourier transforms:
 **** Fourier transform (FT) definition
 ***** \(F(u) = \int_{-\infty}^{+\infty}f(t)e^{-2\pi i u t} dt\)
 **** FTs have real and imaginary components
@@ -34,7 +34,37 @@
 ***** Imaginary: \(\mathcal{I}(F)\)
 **** FTs have magnitude and phase in complex space:
 ***** Magnitude: \(|F| = |\mathcal{R}(F)^{2} + \mathcal{I}(F)^{2}|^{1/2}\)
-***** Phase: \(\phi(F) = \tan^{-1}\frac{\mathcal{R(F)}}{\mathcal{I(F)}}\)
+***** Phase: \(\phi(F) = \tan^{-1}\frac{\mathcal{R}(F)}{\mathcal{I}(F)}\)
+*** Review of discrete, fast Fourier transforms:
+**** ROOT can run fast Fourier transforms (FFTs) with \texttt{fftw}
+**** Notes from \texttt{fftw} [[http://www.fftw.org/][\alert{online documentation}]]:
+***** We want to do a 1D discrete Fourier transform ([[http://www.fftw.org/doc/Introduction.html][\alert{DFT}]])
+***** We want a transform from real to complex space ([[http://www.fftw.org/doc/One_002dDimensional-DFTs-of-Real-Data.html][\alert{R2C}]])
+***** For a 1D R2C DFT on an input with $n$ bins, \texttt{fftw} [[http://www.fftw.org/doc/The-1d-Discrete-Fourier-Transform-_0028DFT_0029.html][\alert{calculates the following}]]:
+#+BEGIN_LaTeX
+\begin{equation*}
+Y_{k} = \sum_{j=0}^{n-1} X_{j} e^{-2\pi j k \sqrt{-1}/n}
+\end{equation}
+#+END_LaTeX
+Where:
+****** $n$ is the number of bins in the input histogram
+****** $Y_k$ is the FFT output (content of output bin $k$)
+****** $X_j$ is the original input (content of input bin $j$)
+*** Review of discrete, fast Fourier transforms:
+**** For an input histogram with $n$ bins, \texttt{fftw} outputs a vector of \(\frac{n}{2}+1\) complex elements (\(\frac{n}{2}\) rounds down):
+***** 0th element is the "[[http://www.fftw.org/doc/One_002dDimensional-DFTs-of-Real-Data.html][\alert{DC}]]": purely real (omitted from plots)
+***** \(\frac{n}{2}\)th element is the "[[http://www.fftw.org/doc/One_002dDimensional-DFTs-of-Real-Data.html][\alert{Nyquist}]]" frequency: purely real
+***** All elements have [[http://www.fftw.org/doc/The-1d-Real_002ddata-DFT.html][\alert{Hermitian symmetry}]]: \(Y_{k} = Y_{n-k}^{*}\)
+**** Performing the transform [[http://www.fftw.org/doc/The-1d-Real_002ddata-DFT.html][\alert{introduces a factor of \(\sqrt{n}\)}]], which must be divided out by the user
+*** Review of discrete, fast Fourier transforms:
+**** Just like continuous FTs, we're interested in the real and imaginary components of \texttt{fftw} output
+**** Consider real and imaginary output from \texttt{fftw} (\(Y_{k}\))
+***** Real: \(\mathcal{R}(Y_{k})\)
+***** Imaginary: \(\mathcal{I}(Y_{k})\)
+**** Consider magnitude and phase in complex space:
+***** Magnitude: \(|Y_{k}| = |\mathcal{R}(Y_{k})^{2} + \mathcal{I}(Y_{k})^{2}|^{1/2}\)
+***** Phase: \(\phi(Y_{k}) = \tan^{-1}\frac{\mathcal{R}(Y_{k})}{\mathcal{I}(Y_{k})}\)
+** Method
 *** Method
 **** Two very simple steps
 1) Use sine functions to test ROOT FFT software
@@ -68,20 +98,6 @@
 #+END_LaTeX
 #+ATTR_LATEX: width=0.6\textwidth
 [[file:fig/tutorial_FFT_magnitude.png]]
-**** Recall original linear combo of sine functions:
-***** \(f(t) = \sum_{i = 0}^3 A_{i} \cdot \sin (2\pi \cdot f_{i} \cdot t)\)
-***** \(A_{i} = \{1.0, 2.0, 0.5\}\) [A.U.]
-***** \(f_{i} = \{0.5, 1.0, 2.0\}\) [Hz]
-*** Look at magnitude of FFT (left side of function)
-**** Figure                                              :B_ignoreheading:
-:PROPERTIES:
-:BEAMER_env: ignoreheading
-:END:
-#+BEGIN_LaTeX
-\centering
-#+END_LaTeX
-#+ATTR_LATEX: width=0.6\textwidth
-[[file:fig/tutorial_FFT_magnitude_scaled.png]]
 **** Magnitude (even function) returns \(A_{i}\) and \(f_{i}\)
 ***** \(f(t) = \sum_{i = 0}^3 A_{i} \cdot \sin (2\pi \cdot f_{i} \cdot t)\)
 ***** \(A_{i} = \{1.0, 2.0, 0.5\}\) [A.U.]
@@ -97,6 +113,37 @@
 #+ATTR_LATEX: width=0.6\textwidth
 [[file:fig/tutorial_FFT_phase.png]]
 **** Phase information not useful for our purposes...
+***** \(f(t) = \sum_{i = 0}^3 A_{i} \cdot \sin (2\pi \cdot f_{i} \cdot t)\)
+***** \(A_{i} = \{1.0, 2.0, 0.5\}\) [A.U.]
+***** \(f_{i} = \{0.5, 1.0, 2.0\}\) [Hz]
+*** Look at real and imaginary components of FFT:
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Column 1                                    :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Real component
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/tutorial_FFT_real.png]]
+***** Column 2                                        :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Imaginary component
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/tutorial_FFT_imag.png]]
+**** Real/imaginary components similar to magnitude:
 ***** \(f(t) = \sum_{i = 0}^3 A_{i} \cdot \sin (2\pi \cdot f_{i} \cdot t)\)
 ***** \(A_{i} = \{1.0, 2.0, 0.5\}\) [A.U.]
 ***** \(f_{i} = \{0.5, 1.0, 2.0\}\) [Hz]
@@ -176,33 +223,37 @@
 #+END_LaTeX
 #+ATTR_LATEX: width=0.6\textwidth
 [[file:fig/FFT_magnitude.png]]
-**** Magnitude at zero is very large, because $y$-values of the original histogram are not centered at zero
-**** Next: remove bin at Frequency = 0
-*** Look at sourcing data: FFT magnitude, no first bin
-**** Figure                                              :B_ignoreheading:
-:PROPERTIES:
-:BEAMER_env: ignoreheading
-:END:
-#+BEGIN_LaTeX
-\centering
-#+END_LaTeX
-#+ATTR_LATEX: width=0.6\textwidth
-[[file:fig/FFT_magnitude_zeroFirstBin.png]]
-**** Now we can see the structure of the FFT magnitude
-**** Next: consider only the upper "half" of the magnitude's range
-*** Look at sourcing data: FFT magnitude, upper half
-**** Figure                                              :B_ignoreheading:
-:PROPERTIES:
-:BEAMER_env: ignoreheading
-:END:
-#+BEGIN_LaTeX
-\centering
-#+END_LaTeX
-#+ATTR_LATEX: width=0.6\textwidth
-[[file:fig/FFT_magnitude_zeroFirstBin_upperHalf.png]]
 **** FFT magnitude peaks between "reel frequency"
-(in [1/mm]) of 0.12 and 0.13 
+(in [1/mm]) of |0.10| and |0.20|
 **** Roughly matches our naive guess (0.14)
+*** Look at sourcing data: FFT real \& imaginary
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Column 1                                    :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Real component
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/FFT_real.png]]
+***** Column 2                                        :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Imaginary component
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/FFT_imag.png]]
+**** Real/imaginary components similar to magnitude
 * Conclusion
 ** Conclusion
 *** Conclusion
