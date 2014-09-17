@@ -1,0 +1,368 @@
+#+TITLE:     Data Analysis Jamboree: HCAL
+#+EMAIL:     Edmund.A.Berry@cern.ch
+#+DATE:      Tuesday, September 16, 2014
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:vt LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [bigger]
+#+BEAMER_FRAME_LEVEL: 3
+#+latex_header: \mode<beamer>{\usetheme[compress]{Berlin}}
+#+latex_header: \usepackage{graphicx}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{lmodern}
+#+latex_header: \usepackage{ifmtarg}
+#+latex_header: \usepackage{tikz}
+#+latex_header: \usetikzlibrary{calc}
+#+latex_header: \input{tex/toolbox.tex}
+#+latex_header: \input{tex/header.tex}
+#+latex_header: \input{tex/macros.tex}
+#+latex_header: \mode<beamer>{\usecolortheme{bear}}
+#+latex_header: \mode<beamer>{\titlegraphic{\includegraphics[width=0.2\textwidth]{brown-logo}}}
+#+latex_header: \institute[Brown University]{}
+#+latex_header: \AtBeginSection{\frame{\sectionpage}}
+#+beamer_header_extra: \author[Edmund A. Berry]{\alert{Edmund A. Berry}}
+
+* Introduction
+** Introduction
+*** Introduction
+**** Last few months have been very useful for HCAL
+**** In addition to MWGR participation, several projects involving local running
+**** I will focus on three major efforts:                        :B_block:
+:PROPERTIES:
+:BEAMER_env: block
+:END:
+1. HB sourcing
+2. HF commissioning
+3. Laser commissioning
+* HB sourcing
+** Introduction to sourcing
+*** What is sourcing?
+**** Figure                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LaTeX width=\textwidth
+[[file:fig/sourcing/sourcing_schematic.png]]
+*** Why sourcing?
+**** HF: PMTs are being replaced, so sourcing old and new PMT readouts can give us first calibrations
+***** Sourcing done
+***** Analysis ongoing
+**** HB/HE: Study radiation damage, comparing with sourcing before Run 1
+***** Laser in HB only probes 1 layer (9)
+***** Laser in HE only probes 2 layers (1, 7)
+***** Sourcing can probe all layers and look for layer-dependent radiation damage
+**** \alert{Focus of this discussion is HB sourcing}
+**** Sourcing contact: [[mailto:seth.cooper@cern.ch][\underline{\alert{S. Cooper}}]]
+**** Analysis contact: [[mailto:andrei.gribushin@cern.ch][\underline{\alert{A. Gribushin}}]]
+** Sourcing analysis
+*** Sourcing analysis 
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Figure 1                                    :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Normal HF output \\(same principle for HB)
+#+END_LaTeX
+#+ATTR_LaTeX: width=0.8\textwidth
+[[file:fig/sourcing/sourcing_explain_1.png]]
+***** Figure 2                                    :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Histogram output for sourcing \\(from HCAL HTR FW)
+#+END_LaTeX
+#+ATTR_LaTeX: width=0.8\textwidth
+[[file:fig/sourcing/sourcing_explain_2.png]]
+**** Normally, DIGIs are read out at 40 MHz
+**** Source signal is small, so fill histograms at 40 MHz & read histograms at O(100) Hz
+*** Sourcing analysis 
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Figure 1                                    :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Ratio of 2005 vs. 2014 sourcing\\
+from \alert{first 2014} HB sourcing
+#+END_LaTeX
+#+ATTR_LaTeX: width=\textwidth
+[[file:fig/sourcing/sourcing_raddam.png]]
+***** Figure 2                                    :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Example sourcing signal \\
+from \alert{latest 2014} HB sourcing
+#+END_LaTeX
+#+ATTR_LaTeX: width=0.85\textwidth
+[[file:fig/sourcing/sourcing_recent.png]]
+**** First HB sourcing campaign suggests layer-dependent radiation damage of approximately 5%
+**** Latest HB sourcing campaign adds 4 more HB wedges: \alert{analysis ongoing}
+* HF commissioning 
+** Introduction to HF improvements
+*** What improvements have been made to HF?
+**** Why change?
+***** Punch-through
+***** Cerenkov light in PMT glass
+**** What has changed already?
+***** New PMTs: thick glass & single anode \to \\ thin glass & multi-anode
+***** New readout cables capable of 2-channel readout
+**** What is still coming?
+***** Upgrade of HF backend uTCA readout (review today)
+**** Analysis contact: [[mailto:katharina.bierwagen@cern.ch][\underline{\alert{K. Bierwagen}}]]
+*** What improvements have been made to HF?
+**** Figure                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LaTeX: width=0.75\textwidth
+[[file:fig/hf_local/hf_commissioning.png]]
+** HF analysis
+*** HF analysis: LED gain measurement
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Figure                                      :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+[[file:fig/hf_local/hf_gain.png]]
+***** Text                                        :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+****** Mean gain: ~127k
+****** Gain RMS: ~12%
+****** Saturation: ~8 TeV
+*** PMT base board (BB) groupings
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Figure 1                                    :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.75
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LaTeX: width=\textwidth
+[[file:fig/hf_local/hf_bb_1.png]]
+***** Figure 2                                    :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.35
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LaTeX: width=\textwidth
+[[file:fig/hf_local/hf_bb_2.png]]
+*** HF analysis: self trigger rate
+**** Figure 1                                            :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LaTeX: width=0.75\textwidth
+[[file:fig/hf_local/self_trigger_1.png]]
+**** Figure 2                                            :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LaTeX: width=0.75\textwidth
+[[file:fig/hf_local/self_trigger_2.png]]
+*** HF analysis: after pulse rate
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Text                                        :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.60
+:BEAMER_env: ignoreheading
+:END:
+****** \alert{After pulses} (APs) are spurious pulses which appear in the tail of real pulses
+******* Elastic scat. e's \to \\
+APs with short delays
+******* Positive ions \to \\
+APs with long delays
+****** Look for APs within 0.25 us and 0.5 us by studying 20 TS
+******* Inject light in 1st 10 TS
+******* Look for effect in 2nd 10 TS
+***** Figure                                      :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.50
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Theoretical picture
+#+END_LaTeX
+#+ATTR_LaTeX: width=\textwidth
+[[file:fig/hf_local/after_pulse_intro.png]]
+*** HF analysis: after pulse rate
+**** Figure 1                                            :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LaTeX: width=0.75\textwidth
+[[file:fig/hf_local/after_pulse_1.png]]
+**** Figure 2                                            :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LaTeX: width=0.75\textwidth
+[[file:fig/hf_local/after_pulse_2.png]]
+*** HF analysis: rate numeric results
+**** Self trigger rate (thr. ET = 2 GeV):
+***** ~8 Hz for BB1
+***** ~90 Hz for BB2
+***** ~320 Hz for BB3
+**** After pulse rate (thr. ET = 2 GeV)
+***** ~0.02 Hz for BB1
+***** ~1 Hz for BB2
+***** ~14 Hz for BB3
+* Laser commissioning
+** Introduction to laser commissioning
+*** Introduction to laser commissioning
+**** HCAL laser can track radiation damage (RADDAM) in the HBHE and HF (critical in R1)
+**** Laser light to megatiles excites scintillator of a particular HCAL layer
+**** Laser pulse is timed to simulate actual time calorimeter signals arrive from particles produced by pp collisions at the center of CMS
+**** New laser installed for 2014 to improve timing resolution
+**** Analysis contact: [[mailto:dmitry.vishnevskiy@cern.ch][\underline{\alert{D. Vishnevskiy}}]]
+** Laser commissioning analysis
+*** Timing improvement of new laser (HF shown)
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Column 1                                    :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+****** Figure 1                                        :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LaTeX: width=\textwidth
+[[file:fig/laser/laser_2012_1.png]]
+****** Figure 2                                        :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LaTeX: width=\textwidth
+[[file:fig/laser/laser_2012_2.png]]
+***** Column 2                                    :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+****** Figure 3                                        :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LaTeX: width=\textwidth
+[[file:fig/laser/laser_new.png]]
+****** Old laser:\\
+unstable timing and jitter
+****** New laser: ~2.4 ns jitter
+****** Stability is being monitored
+*** Radiation damage monitoring
+**** Figure                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LaTeX: width=0.8\textwidth
+[[file:fig/laser/hf_raddam_explanation.png]]
+**** Principle of RADDAM monitoring is to measure S1/S2
+**** S1/S2 varies as a function of phase (laser - TTC)
+**** Need to find a region of phase where S1/S2 is stable
+*** Phase scan needed
+**** Figure                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LaTeX: width=0.8\textwidth
+[[file:fig/laser/laser_plateau.png]]
+**** Lack of plateau region shows laser is not timed in
+**** Phase scan needed
+* Conclusion
+** To-do list & Conclusion
+*** Partial to-do list
+1. Complete sourcing analysis
+   * start-up calibration of HF
+   * better understanding of radiation damage in HBHE
+2. Complete commissioning of Laser
+3. Continue taking/analyzing reg. local commissioning runs
+*** Conclusion
+**** HCAL has been very busy over the last few months
+**** These slides discuss three important campaigns \\ (among others):
+***** Analysis of HB sourcing data has already yielded interesting results.  More analysis is coming.
+***** HF installation and commissioning is finalized, and basic detector parameters have been established.  These include two PMT effects, which contribute  extra energy to the event
+***** A new laser with significantly improved timing resolution is being commissioned
