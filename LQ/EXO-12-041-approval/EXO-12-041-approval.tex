@@ -1,0 +1,1465 @@
+% Created 2014-06-24 Tue 16:31
+\documentclass[bigger]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\mode<beamer>{\usetheme[compress]{Berlin}}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{lmodern}
+\usepackage{ifmtarg}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\input{tex/toolbox.tex}
+\input{tex/header.tex}
+\input{tex/macros.tex}
+\mode<beamer>{\usecolortheme{bear}}
+\mode<beamer>{\titlegraphic{\includegraphics[width=0.2\textwidth]{brown-logo}}}
+\institute[Brown University]{\inst{1} Brown University \and \inst{2} University of Alabama \and \inst{3} Rome}
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{EXO-12-041 Approval}
+\author{Edmund Berry}
+\date{Tuesday, June 24, 2014}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.8.11}}
+
+\author[Edmund Berry]{\alert{E. Berry}\inst{1}, S. Cooper\inst{2}, P. Rumerio\inst{2}, F. Santanastasio\inst{3}}
+\begin{document}
+
+\maketitle
+
+
+\section{Introduction}
+\label{sec-1}
+\subsection{Documentation}
+\label{sec-1-1}
+\begin{frame}
+\frametitle{Analysis documentation}
+\label{sec-1-1-1}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+%% Text
+\label{sec-1-1-1-1}
+
+\begin{itemize}
+\item CADI: \\
+\href{http://cms.cern.ch/iCMS/jsp/analysis/admin/analysismanagement.jsp?ancode=EXO-12-041}{\alert{EXO-12-041}}
+\item Q/A twiki: \\
+\href{https://twiki.cern.ch/twiki/bin/viewauth/CMS/LQ1-EXO-12-041-QuestionsBeforePreapproval}{\alert{LQ1-EXO-12-041-QuestionsBeforePreapproval}}
+\item Targets:
+\begin{enumerate}
+\item Approval for ICHEP
+\item Combined paper with \href{http://cms.cern.ch/iCMS/jsp/analysis/admin/analysismanagement.jsp?ancode=EXO-12-042}{\alert{EXO-12-042}}, approved using same ntuples and similar methods
+\end{enumerate}
+\end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{block}{EXO-12-041}
+\label{sec-1-1-1-2}
+
+\centering
+\includegraphics[width=0.9\textwidth]{fig/an/an.png}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+\subsection{Theory}
+\label{sec-1-2}
+\begin{frame}
+\frametitle{Theory}
+\label{sec-1-2-1}
+\begin{columns}
+\begin{column}{0.6\textwidth}
+%% Text
+\label{sec-1-2-1-1}
+
+\footnotesize
+\begin{itemize}
+\item Search for a scalar boson carrying both baryon and lepton number and fractional charge
+\item Leptoquark searches are traditionally grouped into generations
+\item This search is for pair-production of \alert{first} generation leptoquarks
+\item $\beta = \text{BR}(\text{LQ} \rightarrow e^{\pm}q)$ is treated as a free parameter,
+leading to two separate analyses:
+\begin{itemize}
+\item \eejj: opt. for $\beta = 1.0$
+\item \enujj: opt for $\beta = 0.5$
+\end{itemize}
+\end{itemize}
+\normalsize
+\end{column}
+\begin{column}{0.5\textwidth}
+%% Figures
+\label{sec-1-2-1-2}
+%% eejj figure
+\label{sec-1-2-1-2-1}
+
+\centering
+\eejj final state
+\includegraphics[width=0.8\textwidth]{fig/feynman/LQ_pair_decay_eejj.pdf}
+%% enujj figure
+\label{sec-1-2-1-2-2}
+
+\centering
+\enujj final state
+\includegraphics[width=0.8\textwidth]{fig/feynman/LQ_pair_decay_enujj.pdf}
+\end{column}
+\end{columns}
+\end{frame}
+\subsection{Strategy}
+\label{sec-1-3}
+\begin{frame}
+\frametitle{Analysis strategy}
+\label{sec-1-3-1}
+
+\begin{itemize}
+\item Define SM-dominated preselection for each analysis
+\item Optimize final selection using $S/\sqrt{S+B}$
+\begin{itemize}
+\item Optimize a different selection for each LQ mass
+\end{itemize}
+\item For \eejj ($\beta = 1.0$) analysis, optimize cuts on:
+\begin{itemize}
+\item $\ST = \pt(e_1) + \pt(e_2) + \pt(j_1) + \pt(j_2)$
+\item \mejmin
+\item \mee
+\end{itemize}
+\item For \enujj ($\beta = 0.5$) analysis, optimize cuts on:
+\begin{itemize}
+\item $\ST = \pt(e) + \met + \pt(j_1) + \pt(j_2)$
+\item \mej
+\item \mt
+\item \met
+\end{itemize}
+\item Set limit in plane of $M_{LQ}$ vs. $\beta$
+\end{itemize}
+\end{frame}
+\subsection{Datasets}
+\label{sec-1-4}
+\begin{frame}
+\frametitle{Datasets: all 8 TeV data}
+\label{sec-1-4-1}
+%% Table
+\label{sec-1-4-1-1}
+
+\resizebox{\linewidth}{!}{
+\begin{tabular}{| l | c | c |}
+\hline
+\hline
+Run era                                                   & Run range               & $\mathcal{L}_{int}(\text{pb}^{-1})$ \\
+\hline
+\hline
+{\tt /Run2012A-recover-06Aug2012-v1/}      & 190782 - 190949         & 82   \\
+{\tt /Run2012A-13Jul2012-v1/}              & 190645 - 193621         & 808  \\
+{\tt /Run2012B-13Jul2012-v1/}              & 193834 - 196531         & 4430 \\
+{\tt /Run2012C-24Aug2012-v1/}              & 198049 - 198522         & 495  \\
+{\tt /Run2012C-EcalRecover\_11Dec2012-v1/} & 201191                  & 134  \\
+{\tt /Run2012C-PromptReco-v2/}             & 198941 - 203002         & 6390 \\
+{\tt /Run2012D-PromptReco-v1/}             & 203894 - 208686         & 7270 \\
+\hline
+\hline
+\multicolumn{2}{|r|}{Total integrated luminosity $(\mathcal{L}_{int}$)} & \alert{\intLumi} \\
+\hline
+\hline
+\end{tabular}
+}
+%% Text
+\label{sec-1-4-1-2}
+
+\resizebox*{!}{0.3\textheight}{\centering\vbox{
+Primary datasets include:
+\begin{itemize}
+\item {\tt/ElectronHad/} for LQ search
+\item {\tt/SingleMu/} for \ttbar bkgd in \eejj analysis only
+\item {\tt/Photon/} + {\tt/SinglePhoton/} for QCD bkgd
+\end{itemize}
+}}
+\end{frame}
+\begin{frame}
+\frametitle{Datasets: background Monte Carlo}
+\label{sec-1-4-2}
+%% Table
+\label{sec-1-4-2-1}
+
+\centering
+\resizebox*{!}{0.6\textheight}{
+\begin{tabular}{| l | c |}
+\hline
+\hline
+Dataset name & cross section [pb] \\
+\hline
+\hline
+{\tt /DY1JetsToLL\_M-50\_TuneZ2Star\_8TeV-madgraph/} &                  666.30 \\ 
+{\tt /DY2JetsToLL\_M-50\_TuneZ2Star\_8TeV-madgraph/} &                  214.97 \\ 
+{\tt /DY3JetsToLL\_M-50\_TuneZ2Star\_8TeV-madgraph/} &                  60.69  \\ 
+{\tt /DY4JetsToLL\_M-50\_TuneZ2Star\_8TeV-madgraph/} &                  27.36  \\ 
+\hline
+{\tt /W1JetsToLNu\_TuneZ2Star\_8TeV-madgraph/} &                        6663. \\ 
+{\tt /W2JetsToLNu\_TuneZ2Star\_8TeV-madgraph/} &                        2159. \\ 
+{\tt /W3JetsToLNu\_TuneZ2Star\_8TeV-madgraph/} &                        640. \\ 
+{\tt /W4JetsToLNu\_TuneZ2Star\_8TeV-madgraph/} &                        264. \\ 
+\hline
+{\tt /TTJets\_FullLeptMGDecays\_8TeV-madgraph/} &                       26.18 \\ 
+{\tt /TTJets\_SemiLeptMGDecays\_8TeV-madgraph/} &                       103.71 \\ 
+{\tt /TTJets\_HadronicMGDecays\_8TeV-madgraph/} &                       104.10 \\ 
+\hline
+{\tt /WW\_TuneZ2star\_8TeV\_pythia6\_tauola/} &                                 57.1 \\
+{\tt /WZ\_TuneZ2star\_8TeV\_pythia6\_tauola/} &                                 32.3 \\
+{\tt /ZZ\_TuneZ2star\_8TeV\_pythia6\_tauola/} &                                 8.26 \\
+\hline
+{\tt /Tbar\_tW-channel-DR\_TuneZ2star\_8TeV-powheg-tauola/} &           11.1 \\ 
+{\tt /Tbar\_t-channel\_TuneZ2star\_8TeV-powheg-tauola/} &               30.7 \\ 
+{\tt /Tbar\_s-channel\_TuneZ2star\_8TeV-powheg-tauola/} &               1.76  \\ 
+{\tt /T\_tW-channel-DR\_TuneZ2star\_8TeV-powheg-tauola/} &              11.1 \\ 
+{\tt /T\_t-channel\_TuneZ2star\_8TeV-powheg-tauola/}    &               56.4 \\  
+{\tt /T\_s-channel\_TuneZ2star\_8TeV-powheg-tauola/} &          3.79 \\
+\hline
+{\tt /G\_Pt-XtoY\_TuneZ2star\_8TeV\_pythia6/} &                         Various \\
+\hline
+\hline
+\end{tabular}
+}
+%% Notes
+\label{sec-1-4-2-2}
+
+\resizebox{!}{0.2\textheight}{\centering\vbox{
+\begin{itemize}
+\item From {\tt Summer12} MC production campaign
+\item Reweighted to model {\tt PU\_S10}
+\item Various generators (see dataset name), {\tt CTEQ6L1} PDFs
+\end{itemize}
+}}
+\end{frame}
+\begin{frame}
+\frametitle{Datasets: signal Monte Carlo}
+\label{sec-1-4-3}
+%% Table
+\label{sec-1-4-3-1}
+
+\centering
+\resizebox*{!}{0.6\textheight}{
+\begin{tabular}{|c|c|c|c|c|}
+\hline 
+\hline 
+$M_{\mathrm{LQ}}$ & $\sigma (\mu = M_{\mathrm{LQ}})$ & $\delta (PDF) $ & $\sigma (\mu = M_{\mathrm{LQ}}/2)$ & $\sigma (\mu = M_{\mathrm{LQ}} \times 2)$ \\ 
+(GeV) & [pb] & [pb] & [pb] & [pb] \\
+\hline \hline
+300 & 1.89 & 0.214 & 1.63 & 2.13  \\
+350 & 0.77 & 0.102 & 0.663 & 0.866  \\
+400 & 0.342 & 0.052 & 0.295 & 0.385  \\
+450 & 0.163 & 0.0278 & 0.14 & 0.183  \\
+500 & 0.082 & 0.0155 & 0.0704 & 0.0922  \\
+550 & 0.0431 & 0.00893 & 0.037 & 0.0485  \\
+600 & 0.0235 & 0.0053 & 0.0201 & 0.0265  \\
+650 & 0.0132 & 0.00322 & 0.0113 & 0.0149  \\
+700 & 0.00761 & 0.002 & 0.00648 & 0.00858  \\
+750 & 0.00448 & 0.00126 & 0.00381 & 0.00506  \\
+800 & 0.00269 & 0.00081 & 0.00228 & 0.00304  \\
+850 & 0.00164 & 0.000527 & 0.00139 & 0.00186  \\
+900 & 0.00101 & 0.000347 & 0.000856 & 0.00115  \\
+950 & 0.000634 & 0.000231 & 0.000534 & 0.000722  \\
+1000 & 0.000401 & 0.000155 & 0.000337 & 0.000458  \\
+1050 & 0.000256 & 0.000105 & 0.000214 & 0.000293  \\
+1100 & 0.000165 & 7.18e-05 & 0.000138 & 0.000189  \\
+1150 & 0.000107 & 4.92e-05 & 8.88e-05 & 0.000123  \\
+1200 & 6.96e-05 & 3.4e-05 & 5.77e-05 & 8.04e-05  \\ 
+\hline
+\hline
+\end{tabular}
+}
+%% Notes
+\label{sec-1-4-3-2}
+
+\resizebox{!}{0.2\textheight}{\centering\vbox{
+\begin{itemize}
+\item From {\tt Summer12} MC production campaign
+\item Reweighted to model {\tt PU\_S10}
+\item Generated with {\tt Pythia}, {\tt CTEQ6L1} PDFs, rescaled to NLO
+\end{itemize}
+}}
+\end{frame}
+\subsection{Objects}
+\label{sec-1-5}
+\begin{frame}
+\frametitle{Object selection}
+\label{sec-1-5-1}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+%% Column 1
+\label{sec-1-5-1-1}
+
+\begin{itemize}
+\item \href{https://twiki.cern.ch/twiki/bin/viewauth/CMS/HEEPElectronID}{\alert{Electrons}:} 
+\begin{itemize}
+\item HEEP v4.1 ID
+\end{itemize}
+\item \href{https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideMuonId\#Tight_Muon}{\alert{Muons}:}
+\begin{itemize}
+\item Tight ID
+\end{itemize}
+\item \href{https://twiki.cern.ch/twiki/bin/viewauth/CMS/JetID\#Recommendations_for_7_TeV_data_a}{\alert{Jets}:}
+\begin{itemize}
+\item Particle flow jets
+\item Anti-$k_{T}$, $R = 0.5$
+\item Particle flow loose ID 
+\end{itemize}
+\end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+%% Column 2
+\label{sec-1-5-1-2}
+
+\begin{itemize}
+\item \href{https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookMetAnalysis\#7_7_6_MET_Corrections}{\alert{\met}:}
+\begin{itemize}
+\item Particle flow \met
+\item \href{https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETOptionalFilters\#Analysis_Recommendations_for_any}{\alert{Recommended filters}}
+\item \href{https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookMetAnalysis\#7_7_6_MET_Corrections}{\alert{Corrections}:}
+\begin{itemize}
+\item Type-0 correction
+\item Type-1 correction
+\item $xy$-shift correction
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+\section{\eejj analysis}
+\label{sec-2}
+\subsection{\eejj preselection}
+\label{sec-2-1}
+\begin{frame}
+\frametitle{\eejj preselection definition}
+\label{sec-2-1-1}
+%% Notes
+\label{sec-2-1-1-1}
+
+\scriptsize
+\begin{itemize}
+\item Exactly two electrons: $\pt > 45$ GeV and  $|\eta| < 2.5$
+\item At least two jets
+\item $\pt(j_1) > 125$ GeV and $|\eta| < 2.4$
+\item $\pt(j_2) > 45$ GeV and $|\eta| < 2.4$
+\item $\mee > 50$ GeV
+\item $\ST = \pt(e_1) + \pt(e_2) + \pt(j_1) + \pt(j_2) > 300$ GeV
+\item Muon veto
+\item Trigger (efficiency, below, applied as scale factor to signal): \\ 97.4 ± 0.56\% (95.8 ± 1.35\%) efficient on HEEP electrons in barrel (endcap)
+\end{itemize}
+%% Trigger table
+\label{sec-2-1-1-2}
+
+\centering
+\resizebox*{!}{0.25\textheight}{
+\begin{tabular}{|l|c|}
+\hline
+\hline
+HLT path & Run range \\
+\hline
+\hline
+{\tt HLT\_Ele30\_CaloIdVT\_TrkIdT\_PFJet100\_PFJet25\_v3}       &  190456 - 190738 \\
+{\tt HLT\_Ele30\_CaloIdVT\_TrkIdT\_PFJet100\_PFJet25\_v4}       &  190782 - 191419 \\ 
+{\tt HLT\_Ele30\_CaloIdVT\_TrkIdT\_PFNoPUJet100\_PFNoPUJet25\_v4} & 191691 - 194225 \\   
+{\tt HLT\_Ele30\_CaloIdVT\_TrkIdT\_PFNoPUJet100\_PFNoPUJet25\_v5} & 194270 - 196531 \\   
+{\tt HLT\_Ele30\_CaloIdVT\_TrkIdT\_PFNoPUJet100\_PFNoPUJet25\_v6} & 198022 - 199608 \\   
+{\tt HLT\_Ele30\_CaloIdVT\_TrkIdT\_PFNoPUJet100\_PFNoPUJet25\_v7} & 199698 - 202504 \\   
+{\tt HLT\_Ele30\_CaloIdVT\_TrkIdT\_PFNoPUJet100\_PFNoPUJet25\_v8} & 202970 - 208686 \\ 
+\hline
+\hline
+\end{tabular}
+}
+\end{frame}
+\begin{frame}
+\frametitle{\eejj preselection: \mee}
+\label{sec-2-1-2}
+\begin{columns}
+\begin{column}{0.6\textwidth}
+%% Electron pair invariant mass
+\label{sec-2-1-2-1}
+
+\centering
+ee inv. mass, \alert{for approval}
+\includegraphics[width=\textwidth]{fig/ee/preselection_noRatio/Mee_PAS_eejj.pdf}
+\end{column}
+\begin{column}{0.6\textwidth}
+%% Electron pair invariant mass (zoomed)
+\label{sec-2-1-2-2}
+
+\centering
+Electron pair inv. mass (zoomed)
+\includegraphics[width=\textwidth]{fig/ee/preselection_noRatio/Mee_70_110_Preselection_eejj.pdf}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}
+\frametitle{\eejj preselection: \ST and \mej}
+\label{sec-2-1-3}
+\begin{columns}
+\begin{column}{0.6\textwidth}
+%% ST
+\label{sec-2-1-3-1}
+
+\centering
+$\ST$, \alert{for approval}
+\includegraphics[width=\textwidth]{fig/ee/preselection_noRatio/sT_PAS_eejj.pdf}
+\end{column}
+\begin{column}{0.6\textwidth}
+%% MEJ
+\label{sec-2-1-3-2}
+
+\centering
+\mej, \alert{for approval}
+\includegraphics[width=\textwidth]{fig/ee/preselection_noRatio/Mej_selected_avg_PAS_eejj.pdf}
+\end{column}
+\end{columns}
+\end{frame}
+\subsection{\eejj backgrounds}
+\label{sec-2-2}
+\begin{frame}
+\frametitle{\eejj backgrounds}
+\label{sec-2-2-1}
+\begin{block}{Backgrounds include:}
+\label{sec-2-2-1-1}
+\begin{itemize}
+
+\item \zjets: shape from MC, normalization from data \\ (dominant background)
+\label{sec-2-2-1-1-1}%
+
+\item \ttbar: shape and normalization from data
+\label{sec-2-2-1-1-2}%
+
+\item QCD multijets: shape and normalization from data
+\label{sec-2-2-1-1-3}%
+
+\item Other backgrounds: shape and normalization from MC
+\label{sec-2-2-1-1-4}%
+\end{itemize} % ends low level
+\end{block}
+\end{frame}
+\begin{frame}
+\frametitle{QCD background: overview}
+\label{sec-2-2-2}
+%% Text
+\label{sec-2-2-2-1}
+
+\begin{itemize}
+\item Similar to method used by \texttt{EXO-12-061} ($Z'\rightarrow ee$)
+\item Events are selected within the \texttt{Photon} primary dataset
+\begin{itemize}
+\item Prescaled single photon triggers select events online
+\item \eejj sample: two loose electrons, two jets
+\item \enujj sample: one loose electron, large \met, two jets
+\end{itemize}
+\item Selected events are weighted to estimate QCD bkgd:
+\end{itemize}
+\begin{align*}
+N_{eejj}^{QCD}  &= \sum_{\substack{\text{loose} \\\eejj \text{ events}}} P(e_{\text{1, tight}} | e_{\text{1, loose}}:\pt, \eta) \cdot P(e_{\text{2, tight}} | e_{\text{2, loose}}:\pt, \eta) \\
+N_{enujj}^{QCD} &= \sum_{\substack{\text{loose} \\\enujj \text{ events}}} P(e_{\text{1, tight}} | e_{\text{1, loose}}:\pt, \eta) 
+\end{align*}
+\end{frame}
+\begin{frame}
+\frametitle{QCD background: fake rate calculation}
+\label{sec-2-2-3}
+\begin{columns}
+\begin{column}{0.7\textwidth}
+%% Text
+\label{sec-2-2-3-1}
+
+\ChangeItemFont{\scriptsize}{\scriptsize}{\scriptsize}
+\begin{itemize}
+\item Define fake rate calculation sample:
+\begin{itemize}
+\item Single photon trigger (see backup)
+\item Exactly one loose electron
+\item $N(\text{jets})$ with $\pt > 40$ GeV,\\where $N(\text{jets}) = \{0, 1, 2, 3\}$
+\end{itemize}
+\item Fake rate = fraction of events with HEEP electron
+\begin{itemize}
+\item Non-QCD events subtracted using MC
+\end{itemize}
+\item Fake rate depends on: $\pt(e)$, $\eta(e)$, and $N(\text{jets})$
+\begin{itemize}
+\item Bin results in $\pt(e)$ and fit (see plot at right)
+\item Repeat study for $N(\text{jets}) = \{0, 1, 2, 3\}$
+\item Repeat study for barrel electrons,\\inner endcap electrons ($|\eta| < 2.0$), and \\
+outer endcap electrons ($|\eta| > 2.0$)
+\end{itemize}
+\item Closure test suggests uncertainty of 60\% (30\%) \\
+in the \eejj (\enujj) analysis
+\item Contribution from QCD is 1\% (3\%) of total background in the \eejj (\enujj) analysis
+\end{itemize}
+\end{column}
+\begin{column}{0.45\textwidth}
+%% Figure
+\label{sec-2-2-3-2}
+
+\scriptsize
+\centering
+Fake rate for loose electrons \\ in events with \\ 
+$N(\text{jets}) \geq 2$ and $|\eta(e)| > 2.0$
+\includegraphics[width=\textwidth]{fig/qcd/End2_2Jet_Pt1stEle_PAS.png}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}
+\frametitle{\ttbar background in \eejj analysis: overview}
+\label{sec-2-2-4}
+%% Text
+\label{sec-2-2-4-1}
+
+\begin{itemize}
+\item \ttbar background estimated using \emujj events in data
+\item Selected using single muon trigger (see backup)
+\item Events are scaled:
+\begin{equation*}
+  N_{eejj}^{\text{data}} = \mathcal{C} \times N_{e \mu jj}^{\text{data}} = \frac{1}{2} \times \frac{\epsilon^{\text{trigger}}_{ee}}{\epsilon^{\text{trigger}}_{e\mu}} \times \frac{\epsilon^{\text{reco} / \text{ID} / \text{Iso}}_{e}}{\epsilon^{\text{reco} / \text{ID} / \text{Iso}}_{\mu}} \times N_{e \mu jj}^{\text{data}}
+\end{equation*}
+\item $\epsilon^{\text{trigger}}_{ee} > 99.8\%$, taken as 1.0
+\item $\epsilon^{\text{trigger}}_{e\mu}$ varies with $|\eta(\mu)|$:
+\begin{itemize}
+\item $0.94$ for $0.0 < |\eta(\mu)| \leq 0.9$
+\item $0.84$ for $0.9 < |\eta(\mu)| \leq 1.2$
+\item $0.82$ for $1.2 < |\eta(\mu)| \leq 2.1$
+\end{itemize}
+\item $\frac{\epsilon^{\text{reco} / \text{ID} / \text{Iso}}_{e}}{\epsilon^{\text{reco} / \text{ID} / \text{Iso}}_{\mu}}$
+= $0.974 \pm 0.011$ (stat), taken from MC
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{\ttbar background in \eejj analysis: compare with MC}
+\label{sec-2-2-5}
+\begin{columns} % Columns
+\label{sec-2-2-5-1}
+\begin{column}{0.6\textwidth}
+%% ST
+\label{sec-2-2-5-1-1}
+
+\centering
+\ST, \alert{for approval}
+\includegraphics[width=\textwidth]{fig/emu/preselection_noRatio/sT_PAS_emujj.pdf}
+\end{column}
+\begin{column}{0.6\textwidth}
+%% Mej
+\label{sec-2-2-5-1-2}
+
+\centering
+\mee, \alert{for approval}
+\includegraphics[width=\textwidth]{fig/emu/preselection_noRatio/Mee_PAS_emujj.pdf}
+\end{column}
+\end{columns}
+%% Text
+\label{sec-2-2-5-2}
+
+\begin{itemize}
+\footnotesize
+\item \emujj data events predict $1579.6 \pm 29.3$ \ttbar events at preselection
+\item \eejj MC events predicts $1582.2 \pm 13.8$ \ttbar events at preselection
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{\zjets background in \eejj analysis}
+\label{sec-2-2-6}
+\begin{columns} % Columns
+\label{sec-2-2-6-1}
+\begin{column}{0.6\textwidth}
+%% Column 1: Text
+\label{sec-2-2-6-1-1}
+
+\begin{itemize}
+\item \zjets MC rescaled to fit data
+\item Select events passing \eejj preselection and $70 < \mee < 110$
+\item Hold all backgrounds fixed, except \zjets
+\item Rescale \zjets MC so that N(data) and N(MC) agree:
+\end{itemize}
+\end{column}
+\begin{column}{0.6\textwidth}
+%% Column 2: Figure
+\label{sec-2-2-6-1-2}
+
+\centering
+\zjets control region
+\includegraphics[width=\textwidth]{fig/ee/preselection_noRatio/Mee_70_110_Preselection_eejj.pdf}
+\end{column}
+\end{columns}
+%% Equation
+\label{sec-2-2-6-2}
+
+\resizebox{\textwidth}{!}{
+\begin{tabular}{c}
+$\mathcal{R}_{\text{Z}^{0}} = \frac{N_{\text{data}} - (N_{\text{Others}} + N_{\text{QCD}})}{N_{\text{Z}^{0}}} = \eejjZJetsMonteCarloScaleFactor$ \\
+\end{tabular}
+}
+\end{frame}
+\subsection{\eejj optimization}
+\label{sec-2-3}
+\begin{frame}
+\frametitle{\eejj final selection optimization table}
+\label{sec-2-3-1}
+%% Text
+\label{sec-2-3-1-1}
+
+\begin{itemize}
+\item Optimize \ST, \mejmin, \mee after \eejj preselection
+\begin{itemize}
+\item $e$-$j$ pairs are chosen to minimize the difference between the mass of each pair
+\item \mejmin is the smallest of the two mass pairs
+\end{itemize}
+\item Optimization figure of merit is $S/\sqrt{S+B}$
+\item Results:
+\end{itemize}
+%% Table
+\label{sec-2-3-1-2}
+
+\resizebox{\textwidth}{!}{
+\begin{tabular}{l|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\cline{2-16} 
+& \multicolumn{15}{c|}{LQ mass (\eejj)} \\ 
+\cline{2-16} 
+& 300 & 350 & 400 & 450 & 500 & 550 & 600 & 650 & 700 & 750 & 800 & 850 & 900 & 950 & $\geq 1000$ \\
+\hline 
+\hline 
+\multicolumn{1}{|c|}{\ST [GeV]}  & 435 & 485 & 535 & 595 & 650 & 715 & 780 & 850 & 920 & 1000 & 1075 & 1160 & 1245 & 1330 & 1425 \\
+\multicolumn{1}{|c|}{\mee [GeV]}  & 110 & 110 & 115 & 125 & 130 & 140 & 145 & 155 & 160 & 170 & 175 & 180 & 190 & 195 & 205 \\
+\multicolumn{1}{|c|}{\mejmin [GeV]}  & 50 & 105 & 160 & 205 & 250 & 290 & 325 & 360 & 390 & 415 & 435 & 450 & 465 & 470 & 475 \\
+\hline 
+\hline 
+\end{tabular}
+}%
+\end{frame}
+\subsection{\eejj final selection}
+\label{sec-2-4}
+\begin{frame}
+\frametitle{\eejj final selection table}
+\label{sec-2-4-1}
+%% Table
+\label{sec-2-4-1-1}
+
+\resizebox{\textwidth}{!}{
+\begin{tikzpicture}
+\node (table) {
+\begin{tabular}{| l | c | c | c | c | c | c | c |}
+\hline
+\hline
+$M_{LQ}$ & LQ Signal & \zjets & \ttbar (from data) & QCD (from data) & Other & Data &  Total background \\ 
+\hline 
+\hline 
+Presel & - &  $ 10538.4 \pm 35.8 $ & $ 1566.6 \pm 29.2 $ & $ 10.87 \pm 0.10 $ & $ 303.8 \pm 7.4 $ &12442 & $ 12419.6 \pm 46.8 $ \\ 
+\hline 
+300 &  $ 13560.2\pm 80.1 $ &  $ 462.2 \pm 7.4 $ & $ 724.3 \pm 19.8 $ & $ 5.282 \pm 0.052 $ & $ 62.1 \pm 4.6 $ & 1244 &  $ 1253.94 \pm 21.67 $ $ \pm $ $ 30.08 $ (syst) \\ 
+350 &  $ 6473.9\pm 33.3 $ &  $ 332.1 \pm 6.2 $ & $ 352.0 \pm 13.8 $ & $ 3.215 \pm 0.036 $ & $ 37.7 \pm 3.6 $ & 736 &  $ 725.10 \pm 15.57 $ $ \pm $ $ 24.99 $ (syst) \\ 
+400 &  $ 3089.3\pm 15.0 $ &  $ 203.2 \pm 4.8 $ & $ 153.7 \pm 9.1 $ & $ 1.696 \pm 0.023 $ & $ 23.8 \pm 2.9 $ & 389 &  $ 382.40 \pm 10.72 $ $ \pm $ $ 15.00 $ (syst) \\ 
+450 &  $ 1508.1\pm 7.2 $ &  $ 112.9 \pm 3.5 $ & $ 86.9 \pm 6.9 $ & $ 0.890 \pm 0.016 $ & $ 11.8 \pm 2.0 $ & 233 &  $ 212.44 \pm 7.99 $ $ \pm $ $ 13.33 $ (syst) \\ 
+500 &  $ 767.4\pm 3.6 $ &  $ 66.5 \pm 2.7 $ & $ 47.2 \pm 5.1 $ & $ 0.485 \pm 0.011 $ & $ 7.4 \pm 1.6 $ & 148 &  $ 121.61 \pm 5.96 $ $ \pm $ $ 6.03 $ (syst) \\ 
+550 &  $ 410.5\pm 1.9 $ &  $ 37.4 \pm 2.1 $ & $ 25.8 \pm 3.7 $ & $ 0.2758 \pm 0.0084 $ & $ 3.7 \pm 1.1 $ & 81 &  $ 67.24 \pm 4.40 $ $ \pm $ $ 3.39 $ (syst) \\ 
+600 &  $ 225.7\pm 1.0 $ &  $ 22.2 \pm 1.6 $ & $ 14.2 \pm 2.8 $ & $ 0.1527 \pm 0.0065 $ & $ 3.12 \pm 1.00 $ & 57 &  $ 39.66 \pm 3.35 $ $ \pm $ $ 2.42 $ (syst) \\ 
+650 &  $ 125.85\pm 0.58 $ &  $ 14.0 \pm 1.2 $ & $ 5.4 \pm 1.7 $ & $ 0.0760 \pm 0.0040 $ & $ 1.05 \pm 0.47 $ & 36 &  $ 20.49 \pm 2.14 $ $ \pm $ $ 2.45 $ (syst) \\ 
+700 &  $ 72.88\pm 0.33 $ &  $ 8.16 \pm 0.93 $ & $ 4.3 \pm 1.5 $ & $ 0.0448 \pm 0.0029 $ & $ 0.21 \pm 0.12 $ & 17 &  $ 12.74 \pm 1.80 $ $ \pm $ $ 2.15 $ (syst) \\ 
+750 &  $ 43.10\pm 0.20 $ &  $ 4.88 \pm 0.69 $ & $ 1.55 \pm 0.90 $ & $ 0.0258 \pm 0.0023 $ & $ 0.078 \pm 0.038 $ & 12 &  $ 6.53 \pm 1.13 $ $ \pm $ $ 1.09 $ (syst) \\ 
+800 &  $ 26.17\pm 0.12 $ &  $ 2.93 \pm 0.52 $ & $ 1.04 \pm 0.73 $ & $ 0.0193 \pm 0.0022 $ & $ 0.078 \pm 0.038 $ & 7 &  $ 4.06 \pm 0.90 $ $ \pm $ $ 0.89 $ (syst) \\ 
+850 &  $ 15.978\pm 0.072 $ &  $ 2.34 \pm 0.48 $ & $ 0.52 \pm 0.52 $ & $ 0.0111 \pm 0.0015 $ & $ 0.042 \pm 0.028 $ & 5 &  $ 2.91 \pm 0.71 $ $ \pm $ $ 0.71 $ (syst) \\ 
+900 &  $ 9.813\pm 0.044 $ &  $ 1.23 \pm 0.36 $ & $ 0.52 \pm 0.52 $ & $ 0.0069 \pm 0.0012 $ & $ 0.022 \pm 0.020 $ & 3 &  $ 1.77 \pm 0.63 $ $ \pm $ $ 0.37 $ (syst) \\ 
+950 &  $ 6.086\pm 0.028 $ &  $ 0.89 \pm 0.29 $ & $ 0.00000_{-0.00}^{+1.14000}$ &  $ 0.00451 \pm 0.00085 $ & $ 0.022 \pm 0.020 $ & 1 &  $ 0.912_{-0.295}^{+1.178}$ $ \pm $ $ 0.27 $ (syst)  \\ 
+1000 &  $ 3.860\pm 0.018 $ &  $ 0.56 \pm 0.22 $ & $ 0.00000_{-0.00}^{+1.14000}$ &  $ 0.00374 \pm 0.00082 $ & $ 0.0025 \pm 0.0025 $ & 1 &  $ 0.567_{-0.223}^{+1.162}$ $ \pm $ $ 0.17 $ (syst)  \\ 
+1050 &  $ 2.576\pm 0.011 $ &  $ 0.56 \pm 0.22 $ & $ 0.00000_{-0.00}^{+1.14000}$ &  $ 0.00374 \pm 0.00082 $ & $ 0.0025 \pm 0.0025 $ & 1 &  $ 0.567_{-0.223}^{+1.162}$ $ \pm $ $ 0.17 $ (syst)  \\ 
+1100 &  $ 1.6936\pm 0.0072 $ &  $ 0.56 \pm 0.22 $ & $ 0.00000_{-0.00}^{+1.14000}$ &  $ 0.00374 \pm 0.00082 $ & $ 0.0025 \pm 0.0025 $ & 1 &  $ 0.567_{-0.223}^{+1.162}$ $ \pm $ $ 0.17 $ (syst)  \\ 
+1150 &  $ 1.1272\pm 0.0047 $ &  $ 0.56 \pm 0.22 $ & $ 0.00000_{-0.00}^{+1.14000}$ &  $ 0.00374 \pm 0.00082 $ & $ 0.0025 \pm 0.0025 $ & 1 &  $ 0.567_{-0.223}^{+1.162}$ $ \pm $ $ 0.17 $ (syst)  \\ 
+1200 &  $ 0.7498\pm 0.0030 $ &  $ 0.56 \pm 0.22 $ & $ 0.00000_{-0.00}^{+1.14000}$ &  $ 0.00374 \pm 0.00082 $ & $ 0.0025 \pm 0.0025 $ & 1 &  $ 0.567_{-0.223}^{+1.162}$ $ \pm $ $ 0.17 $ (syst)  \\ 
+\hline
+\hline
+\end{tabular}
+};
+\draw [red,ultra thick,rounded corners]
+($(table.south west) !.52! (table.north west)$)
+rectangle 
+($(table.south east) !.57! (table.north east)$);    
+\draw [red,ultra thick,rounded corners]
+($(table.north east) !.30! (table.north west)$)
+rectangle 
+($(table.south east) !0.! (table.north west)$);    
+\end{tikzpicture}
+}%
+%% Text
+\label{sec-2-4-1-2}
+
+\begin{itemize}
+\item Broad excess of data w.r.t. total background
+\item Most significant for $M_{\text{LQ}} = 650$ GeV selection
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{\eejj final selection (450): \ST and \mejmin ($\beta = 1.0$)}
+\label{sec-2-4-2}
+\begin{columns}
+\begin{column}{0.6\textwidth}
+%% ST
+\label{sec-2-4-2-1}
+
+\centering
+$\ST$, \alert{for approval}
+\includegraphics[width=\textwidth]{fig/ee/finalSelection/sT_eejj_LQ450_eejj.pdf}
+\end{column}
+\begin{column}{0.6\textwidth}
+%% MEJ
+\label{sec-2-4-2-2}
+
+\centering
+\mejmin, \alert{for approval}
+\includegraphics[width=\textwidth]{fig/ee/finalSelection/Mej_selected_min_LQ450_eejj.pdf}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}
+\frametitle{\eejj final selection (650): \ST and \mejmin ($\beta = 1.0$)}
+\label{sec-2-4-3}
+\begin{columns}
+\begin{column}{0.6\textwidth}
+%% ST
+\label{sec-2-4-3-1}
+
+\centering
+$\ST$, \alert{for approval}
+\includegraphics[width=\textwidth]{fig/ee/finalSelection/sT_eejj_LQ650_eejj.pdf}
+\end{column}
+\begin{column}{0.6\textwidth}
+%% MEJ
+\label{sec-2-4-3-2}
+
+\centering
+\mejmin, \alert{for approval}
+\includegraphics[width=\textwidth]{fig/ee/finalSelection/Mej_selected_min_LQ650_eejj.pdf}
+\end{column}
+\end{columns}
+\end{frame}
+\section{\enujj analysis}
+\label{sec-3}
+\subsection{\enujj preselection}
+\label{sec-3-1}
+\begin{frame}
+\frametitle{\enujj preselection definition}
+\label{sec-3-1-1}
+%% Text
+\label{sec-3-1-1-1}
+
+\begin{itemize}
+\item Exactly one electron: $\pt > 45$ GeV and  $|\eta| < 2.2$
+\item $\met > 55$ GeV
+\item At least two jets
+\item $\pt(j_1) > 125$ GeV and $|\eta| < 2.4$
+\item $\pt(j_2) > 45$  GeV and $|\eta| < 2.4$
+\item $|\Delta\phi(e, \met)| > 0.5$
+\item $|\Delta\phi(j_1, \met)| > 0.5$
+\item $\mt > 50$ GeV
+\item $\ST = \pt(e_1) + \met + \pt(j_1) + \pt(j_2) > 300$ GeV
+\item Muon veto
+\item Same trigger as \eejj analysis
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{\enujj preselection: \met}
+\label{sec-3-1-2}
+\begin{columns} % Columns
+\label{sec-3-1-2-1}
+\begin{column}{0.6\textwidth}
+%% PFMET
+\label{sec-3-1-2-1-1}
+
+\centering
+\met \\ (as in analysis, \alert{app. plot in PAS})
+\includegraphics[width=\textwidth]{fig/enu/preselection/MET_PAS_enujj.pdf}
+\end{column}
+\begin{column}{0.6\textwidth}
+%% PFMET (reweighted)
+\label{sec-3-1-2-1-2}
+
+\centering
+\met \\ (after reweighting)
+\includegraphics[width=\textwidth]{fig/enu/reweight/MET_PAS_enujjMETandMTReweighted.pdf}
+\end{column}
+\end{columns}
+%% Note
+\label{sec-3-1-2-2}
+
+\small
+\centering
+Reweighting investigated but not used in main analysis (backup)
+\normalsize
+\end{frame}
+\begin{frame}
+\frametitle{\enujj preselection: $\phi$(\met)}
+\label{sec-3-1-3}
+\begin{columns} % Columns
+\label{sec-3-1-3-1}
+\begin{column}{0.6\textwidth}
+%% PFMET phi
+\label{sec-3-1-3-1-1}
+
+\centering
+$\phi(\met) \\ (as in analysis, \alert{app. plot in PAS})
+\includegraphics[width=\textwidth]{fig/enu/preselection/METPhi_PAS_enujj.pdf}
+\end{column}
+\begin{column}{0.6\textwidth}
+%% PFMET phi (reweighted)
+\label{sec-3-1-3-1-2}
+
+\centering
+$\phi(\met)$ \\ (after reweighting)
+\includegraphics[width=\textwidth]{fig/enu/reweight/METPhi_PAS_enujjMETandMTReweighted.png}
+\end{column}
+\end{columns}
+%% Note
+\label{sec-3-1-3-2}
+
+\small
+\centering
+Reweighting investigated but not used in main analysis (backup)
+\normalsize
+\end{frame}
+\begin{frame}
+\frametitle{\enujj preselection: \mt}
+\label{sec-3-1-4}
+\begin{columns} % Columns
+\label{sec-3-1-4-1}
+\begin{column}{0.6\textwidth}
+%% Electron-PFMET transverse mass
+\label{sec-3-1-4-1-1}
+
+\centering
+Electron-\met transverse mass \\ (as in analysis, \alert{app. plot in PAS})
+\includegraphics[width=\textwidth]{fig/enu/preselection/MTenu_PAS_enujj.pdf}
+\end{column}
+\begin{column}{0.6\textwidth}
+%% Electron-PFMET transverse mass (reweighted)
+\label{sec-3-1-4-1-2}
+
+\centering
+Electron-\met transverse mass \\ (after reweighting)
+\includegraphics[width=\textwidth]{fig/enu/reweight/MTenu_PAS_enujjMETandMTReweighted.pdf}
+\end{column}
+\end{columns}
+%% Note
+\label{sec-3-1-4-2}
+
+\small
+\centering
+Reweighting investigated but not used in main analysis (backup)
+\normalsize
+\end{frame}
+\begin{frame}
+\frametitle{\enujj preselection: \ST and \mej}
+\label{sec-3-1-5}
+\begin{columns}
+\begin{column}{0.6\textwidth}
+%% ST
+\label{sec-3-1-5-1}
+
+\centering
+$\ST$, \alert{for approval}
+\includegraphics[width=\textwidth]{fig/enu/preselection_noRatio/sT_PAS_enujj.pdf}
+\end{column}
+\begin{column}{0.6\textwidth}
+%% MEJ
+\label{sec-3-1-5-2}
+
+\centering
+\mej, \alert{for approval}
+\includegraphics[width=\textwidth]{fig/enu/preselection_noRatio/Mej_PAS_enujj.pdf}
+\end{column}
+\end{columns}
+\end{frame}
+\subsection{\enujj backgrounds}
+\label{sec-3-2}
+\begin{frame}
+\frametitle{\enujj backgrounds}
+\label{sec-3-2-1}
+\begin{block}{Backgrounds include:}
+\label{sec-3-2-1-1}
+\begin{itemize}
+
+\item \ttbar: shape from MC, normalization from data \\ (dominant background)
+\label{sec-3-2-1-1-1}%
+
+\item \wjets: shape from MC, normalization from data
+\label{sec-3-2-1-1-2}%
+
+\item QCD multijets: shape and normalization from data \\ (same as \eejj)
+\label{sec-3-2-1-1-3}%
+
+\item Other backgrounds: shape and normalization from MC
+\label{sec-3-2-1-1-4}%
+\end{itemize} % ends low level
+\end{block}
+\end{frame}
+\begin{frame}
+\frametitle{\wjets and \ttbar backgrounds in \enujj analysis}
+\label{sec-3-2-2}
+\begin{columns} % Columns
+\label{sec-3-2-2-1}
+\begin{column}{0.6\textwidth}
+%% Column 1: Text
+\label{sec-3-2-2-1-1}
+
+\begin{itemize}
+\item MC is rescaled to fit data
+\item Two selections:
+\begin{itemize}
+\item Sel. 1: \wjets dominates
+\begin{itemize}
+\item \enujj preselection
+\item $50 < \mt < 110$ GeV
+\item N(jets) $< 4$ 
+\end{itemize}
+\item Sel. 2: \ttbar dominates
+\begin{itemize}
+\item \enujj preselection
+\item $50 < \mt < 110$ GeV
+\item N(jets) $\geq 4$ 
+\end{itemize}
+\end{itemize}
+\item Solve system of equations:
+\end{itemize}
+\end{column}
+\begin{column}{0.6\textwidth}
+%% Column 2: Figure
+\label{sec-3-2-2-1-2}
+
+\centering
+\mej in selection 2
+\includegraphics[width=\textwidth]{fig/enu/rescale/Mej_MTenu_50_110_Njet_gte4_enujj.pdf}
+\end{column}
+\end{columns}
+%% Equation
+\label{sec-3-2-2-2}
+
+\resizebox{\textwidth}{!}{
+\begin{tabular}{ll}
+$N^{1}_{\text{data}} = \mathcal{R}_{\ttbar} N_{\ttbar}^{1} + \mathcal{R}_{W} N_{W}^{1}  + N_{\text{QCD}}^{1} + N_{\text{Others}}^{1}$ &
+$\mathcal{R}_{\ttbar} = \enujjTTBarMonteCarloScaleFactor$ \\
+$N^{2}_{\text{data}} = \mathcal{R}_{\ttbar} N_{\ttbar}^{2} + \mathcal{R}_{W} N_{W}^{2}  + N_{\text{QCD}}^{2} + N_{\text{Others}}^{2}$ &
+$\mathcal{R}_{\text{W}} = \enujjWJetsMonteCarloScaleFactor$ \\
+\end{tabular}
+}
+\end{frame}
+\subsection{\enujj optimization}
+\label{sec-3-3}
+\begin{frame}
+\frametitle{\enujj final selection optimization table}
+\label{sec-3-3-1}
+%% Text
+\label{sec-3-3-1-1}
+
+\begin{itemize}
+\item Optimize \ST, \mej, \mt, and \met after \eejj preselection
+\begin{itemize}
+\item $e$-$j$ and $\met$-$j$ pairs are chosen to minimize the difference between the transverse mass of each pair
+\item \mej is the mass of the $e$-$j$ pair
+\item \met is optimized to reduce QCD background
+\end{itemize}
+\item Optimization figure of merit is $S/\sqrt{S+B}$
+\item Results:
+\end{itemize}
+%% Table
+\label{sec-3-3-1-2}
+
+\resizebox{\textwidth}{!}{
+\begin{tabular}{l|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\cline{2-15} 
+& \multicolumn{14}{c|}{LQ Mass (evjj)} \\ 
+\cline{2-15} 
+& 300 & 350 & 400 & 450 & 500 & 550 & 600 & 650 & 700 & 750 & 800 & 850 & 900 & $\ge 950$ \\
+\hline 
+\hline 
+\multicolumn{1}{|c|}{\ST [GeV]}  & 495 & 570 & 645 & 720 & 800 & 880 & 960 & 1040 & 1120 & 1205 & 1290 & 1375 & 1460 & 1545 \\
+\multicolumn{1}{|c|}{\met [GeV]}  & 90 & 95 & 100 & 110 & 115 & 125 & 135 & 145 & 155 & 170 & 180 & 195 & 210 & 220 \\
+\multicolumn{1}{|c|}{\mej [GeV]}  & 195 & 250 & 300 & 355 & 405 & 455 & 505 & 555 & 600 & 645 & 695 & 740 & 780 & 825 \\
+\multicolumn{1}{|c|}{\mt [GeV]}  & 125 & 150 & 175 & 200 & 220 & 240 & 255 & 270 & 280 & 290 & 295 & 300 & 300 & 300 \\
+\hline 
+\end{tabular}            
+}%
+\end{frame}
+\subsection{\enujj final selection}
+\label{sec-3-4}
+\begin{frame}
+\frametitle{\enujj final selection table}
+\label{sec-3-4-1}
+%% Table
+\label{sec-3-4-1-1}
+
+\resizebox{\textwidth}{!}{
+\begin{tikzpicture}
+\node (table) {
+\begin{tabular}{| l | c | c | c | c | c | c | c |} 
+\hline 
+$M_{LQ} $ & LQ Signal & \wjets & \ttbar & QCD & Other & Data &  Total background \\ 
+\hline 
+\hline 
+Presel & - &  $ 58284.8 \pm 197.0 $ & $ 32196.7 \pm 69.8 $ & $ 5950.5 \pm 20.1 $ & $ 6590.8 \pm 231.6 $ &105164 & $ 103022.8 \pm 312.6 $ \\ 
+\hline 
+300 &  $ 4765.5\pm 51.1 $ &  $ 822.1 \pm 22.4 $ & $ 1191.3 \pm 12.0 $ & $ 117.9 \pm 1.5 $ & $ 210.5 \pm 7.7 $ & 2455 &  $ 2341.90
+ \pm 26.58 $ $ \pm $ $ 329.79 $ (syst) \\ 
+350 &  $ 2168.4\pm 21.6 $ &  $ 275.9 \pm 14.5 $ & $ 441.4 \pm 7.2 $ & $ 59.11 \pm 0.97 $ & $ 102.1 \pm 5.4 $ & 908 &  $ 878.55 \pm 17.08 $ $ \pm $ $ 122.13 $ (syst) \\ 
+400 &  $ 971.1\pm 9.6 $ &  $ 110.4 \pm 7.8 $ & $ 184.2 \pm 4.7 $ & $ 32.88 \pm 0.69 $ & $ 51.5 \pm 3.8 $ & 413 &  $ 378.98 \pm 9.91 $ $ \pm $ $ 51.38 $ (syst) \\ 
+450 &  $ 469.7\pm 4.6 $ &  $ 53.1 \pm 5.8 $ & $ 74.7 \pm 3.0 $ & $ 14.13 \pm 0.42 $ & $ 25.7 \pm 2.7 $ & 192 &  $ 167.64 \pm 7.06 $ $ \pm $ $ 21.33 $ (syst) \\ 
+500 &  $ 232.7\pm 2.3 $ &  $ 20.5 \pm 3.3 $ & $ 34.4 \pm 2.0 $ & $ 7.76 \pm 0.30 $ & $ 15.3 \pm 2.1 $ & 83 &  $ 77.99 \pm 4.41 $ $ \pm $ $ 9.77 $ (syst) \\ 
+550 &  $ 121.4\pm 1.2 $ &  $ 8.6 \pm 1.8 $ & $ 14.9 \pm 1.4 $ & $ 3.89 \pm 0.21 $ & $ 7.8 \pm 1.6 $ & 44 &  $ 35.24 \pm 2.76 $ $ \pm $ $ 4.31 $ (syst) \\ 
+600 &  $ 66.37\pm 0.66 $ &  $ 2.3 \pm 1.0 $ & $ 7.08 \pm 0.93 $ & $ 2.29 \pm 0.17 $ & $ 4.6 \pm 1.2 $ & 28 &  $ 16.27 \pm 1.84 $ $ \pm $ $ 2.03 $ (syst) \\ 
+650 &  $ 37.22\pm 0.37 $ &  $ 0.41 \pm 0.29 $ & $ 3.82 \pm 0.70 $ & $ 1.18 \pm 0.12 $ & $ 2.13 \pm 0.92 $ & 18 &  $ 7.54 \pm 1.20 $ $ \pm $ $ 1.07 $ (syst) \\ 
+700 &  $ 21.74\pm 0.21 $ &  $ 0.41 \pm 0.29 $ & $ 2.61 \pm 0.60 $ & $ 0.85 \pm 0.10 $ & $ 0.58 \pm 0.24 $ & 6 &  $ 4.45 \pm 0.71 $ $ \pm $ $ 0.74 $ (syst) \\ 
+750 &  $ 12.90\pm 0.13 $ &  $ 0.00_{-0.00}^{+0.94}$ &  $ 1.75 \pm 0.47 $ & $ 0.514 \pm 0.091 $ & $ 0.27 \pm 0.15 $ & 4 &  $ 2.535_{-0.504}^{+1.062}$ $ \pm $ $ 0.49 $ (syst)  \\ 
+800 &  $ 7.610\pm 0.075 $ &  $ 0.00_{-0.00}^{+0.94}$ &  $ 1.10 \pm 0.37 $ & $ 0.317 \pm 0.067 $ & $ 0.27 \pm 0.15 $ & 3 &  $ 1.696_{-0.404}^{+1.019}$ $ \pm $ $ 0.31 $ (syst)  \\ 
+850 &  $ 4.713\pm 0.046 $ &  $ 0.00_{-0.00}^{+0.94}$ &  $ 0.90 \pm 0.34 $ & $ 0.117 \pm 0.029 $ & $ 0.140 \pm 0.087 $ & 2 &  $ 1.153_{-0.353}^{+0.999}$ $ \pm $ $ 0.24 $ (syst)  \\ 
+900 &  $ 2.929\pm 0.028 $ &  $ 0.00_{-0.00}^{+0.94}$ &  $ 0.37 \pm 0.21 $ & $ 0.076 \pm 0.024 $ & $ 0.084 \pm 0.069 $ & 1 &  $ 0.530_{-0.226}^{+0.962}$ $ \pm $ $ 0.10 $ (syst)  \\ 
+950 &  $ 1.839\pm 0.018 $ &  $ 0.00_{-0.00}^{+0.94}$ &  $ 0.37 \pm 0.21 $ & $ 0.069 \pm 0.023 $ & $ 0.084 \pm 0.069 $ & 1 &  $ 0.524_{-0.226}^{+0.962}$ $ \pm $ $ 0.10 $ (syst)  \\ 
+1000 &  $ 1.306\pm 0.012 $ &  $ 0.00_{-0.00}^{+0.94}$ &  $ 0.37 \pm 0.21 $ & $ 0.069 \pm 0.023 $ & $ 0.084 \pm 0.069 $ & 1 &  $ 0.524_{-0.226}^{+0.962}$ $ \pm $ $ 0.10 $ (syst)  \\ 
+1050 &  $ 0.9022\pm 0.0076 $ &  $ 0.00_{-0.00}^{+0.94}$ &  $ 0.37 \pm 0.21 $ & $ 0.069 \pm 0.023 $ & $ 0.084 \pm 0.069 $ & 1 &  $ 0.524_{-0.226}^{+0.962}$ $ \pm $ $ 0.10 $ (syst)  \\ 
+1100 &  $ 0.6225\pm 0.0050 $ &  $ 0.00_{-0.00}^{+0.94}$ &  $ 0.37 \pm 0.21 $ & $ 0.069 \pm 0.023 $ & $ 0.084 \pm 0.069 $ & 1 &  $ 0.524_{-0.226}^{+0.962}$ $ \pm $ $ 0.10 $ (syst)  \\ 
+1150 &  $ 0.4308\pm 0.0032 $ &  $ 0.00_{-0.00}^{+0.94}$ &  $ 0.37 \pm 0.21 $ & $ 0.069 \pm 0.023 $ & $ 0.084 \pm 0.069 $ & 1 &  $ 0.524_{-0.226}^{+0.962}$ $ \pm $ $ 0.10 $ (syst)  \\ 
+1200 &  $ 0.2971\pm 0.0022 $ &  $ 0.00_{-0.00}^{+0.94}$ &  $ 0.37 \pm 0.21 $ & $ 0.069 \pm 0.023 $ & $ 0.084 \pm 0.069 $ & 1 &  $ 0.524_{-0.226}^{+0.962}$ $ \pm $ $ 0.10 $ (syst)  \\ 
+\hline 
+\end{tabular}
+};
+\draw [red,ultra thick,rounded corners]
+($(table.south west) !.52! (table.north west)$)
+rectangle 
+($(table.south east) !.57! (table.north east)$);    
+\draw [red,ultra thick,rounded corners]
+($(table.north east) !.322! (table.north west)$)
+rectangle 
+($(table.south east) !0.! (table.north west)$);    
+\end{tikzpicture}
+}%
+%% Text
+\label{sec-3-4-1-2}
+
+\begin{itemize}
+\item Broad excess of data w.r.t. total background (as in \eejj)
+\item Most significant for $M_{\text{LQ}} = 650$ GeV selection (as in \eejj)
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{\enujj final selection (450): \ST and \mej ($\beta = 0.5$)}
+\label{sec-3-4-2}
+\begin{columns}
+\begin{column}{0.6\textwidth}
+%% ST
+\label{sec-3-4-2-1}
+
+\centering
+\ST, \alert{for approval}
+\includegraphics[width=\textwidth]{fig/enu/finalSelection/sT_LQ450_enujj.pdf}
+\end{column}
+\begin{column}{0.6\textwidth}
+%% MEJ
+\label{sec-3-4-2-2}
+
+\centering
+\mej, \alert{for approval}
+\includegraphics[width=\textwidth]{fig/enu/finalSelection/Mej_LQ450_enujj.pdf}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}
+\frametitle{\enujj final selection (650): \ST and \mej ($\beta = 0.5$)}
+\label{sec-3-4-3}
+\begin{columns}
+\begin{column}{0.6\textwidth}
+%% ST
+\label{sec-3-4-3-1}
+
+\centering
+\ST, \alert{for approval}
+\includegraphics[width=\textwidth]{fig/enu/finalSelection/sT_LQ650_enujj.pdf}
+\end{column}
+\begin{column}{0.6\textwidth}
+%% MEJ
+\label{sec-3-4-3-2}
+
+\centering
+\mej, \alert{for approval}
+\includegraphics[width=\textwidth]{fig/enu/finalSelection/Mej_LQ650_enujj.pdf}
+\end{column}
+\end{columns}
+\end{frame}
+\section{Systematics}
+\label{sec-4}
+\subsection{Systematic uncertainties: overview}
+\label{sec-4-1}
+\begin{frame}
+\frametitle{Systematic uncertainties}
+\label{sec-4-1-1}
+\begin{columns} % Columns
+\label{sec-4-1-1-1}
+\begin{column}{0.55\textwidth}
+%% Column 1
+\label{sec-4-1-1-1-1}
+
+\ChangeItemFont{\footnotesize}{\footnotesize}{\footnotesize}
+\begin{itemize}
+\item Background MC shape (varies):
+\begin{itemize}
+\item \wjets and \ttbar in \enujj
+\item \zjets in \eejj
+\end{itemize}
+\item PDF (varies)
+\item Jet energy scale: \\
+taken from GlobalTag
+\item Jet energy resolution: \\
+eta-dependent, 5-30\%
+\item Electron energy scale: \\
+0.4\% barrel, 4.1\% endcap
+\item Electron energy resolution: \\
+0.6\% barrel, 1.5\% endcap
+\end{itemize}
+\end{column}
+\begin{column}{0.55\textwidth}
+%% Column 2
+\label{sec-4-1-1-1-2}
+
+\ChangeItemFont{\footnotesize}{\footnotesize}{\footnotesize}
+\begin{itemize}
+\item Background MC normalization:
+\begin{itemize}
+\item \wjets (2\%) in \enujj
+\item \ttbar (2\%) in \enujj
+\item \zjets (1\%) in \eejj
+\end{itemize}
+\item QCD normalization: \\
+60\% (30\%) in \eejj (\enujj)
+\item \ttbar normalization in \eejj: 2\%
+\item Electron reco/ID/Iso effi: \\
+4\% (2\%) in \eejj (\enujj) signal
+\item Pileup
+\item Luminosity: 2.6\%
+\item MC statistics: \alert{Dominates}
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+\subsection{Systematic uncertainties: \eejj}
+\label{sec-4-2}
+\begin{frame}
+\frametitle{Systematic uncertainties: \eejj for $M_{LQ} = 650$ GeV}
+\label{sec-4-2-1}
+%% Table
+\label{sec-4-2-1-1}
+
+\centering
+\resizebox*{!}{0.8\textheight}{
+\begin{tabular}{| l | c | c |}
+\hline 
+\hline 
+Systematic & Signal (\%) & Background (\%) \\ 
+\hline 
+\hline 
+Electron efficiency & 4.00\% & 0.00\% \\ 
+Electron energy scale & 0.33\% & 1.45\% \\ 
+Electron energy resolution & 0.02\% & 0.04\% \\ 
+Jet energy scale & 0.30\% & 0.52\% \\ 
+Jet energy resolution & 0.01\% & 0.23\% \\ 
+Pileup & 0.04\% & 0.38\% \\ 
+Luminosity & 2.60\% & 0.10\% \\ 
+Z normalization & 0.00\% & 0.75\% \\ 
+Z shape & 0.00\% & 11.62\% \\ 
+\ttbar estimate & 0.00\% & 0.52\% \\ 
+QCD multijet estimate & 0.00\% & 0.11\% \\ 
+PDF uncertainty & 2.00\% & 2.05\% \\ 
+\hline 
+\hline 
+Total & 5.19\% & 11.94\% \\ 
+\hline 
+\hline 
+\end{tabular}
+}
+\end{frame}
+\subsection{Systematic uncertainties: \enujj}
+\label{sec-4-3}
+\begin{frame}
+\frametitle{Systematic uncertainties: \enujj for $M_{LQ} = 650$ GeV}
+\label{sec-4-3-1}
+%% Table
+\label{sec-4-3-1-1}
+
+\centering
+\resizebox*{!}{0.8\textheight}{
+\begin{tabular}{| l | c | c |}
+\hline 
+\hline 
+Systematic & Signal (\%) & Background (\%) \\ 
+\hline 
+\hline 
+Electron efficiency & 2.00\% & 0.00\% \\ 
+Electron energy scale & 1.09\% & 1.38\% \\ 
+Electron energy resolution & 0.08\% & 0.68\% \\ 
+Jet energy scale & 1.56\% & 2.15\% \\ 
+Jet energy resolution & 0.09\% & 0.46\% \\ 
+Pileup & 0.14\% & 1.18\% \\ 
+Luminosity & 2.60\% & 0.47\% \\ 
+W normalization & 0.00\% & 0.12\% \\ 
+W shape & 0.00\% & 0.87\% \\ 
+\ttbar normalization & 0.00\% & 1.50\% \\ 
+\ttbar shape & 0.00\% & 3.00\% \\ 
+QCD multijet estimate & 0.00\% & 4.71\% \\ 
+PDF uncertainty & 3.00\% & 12.65\% \\ 
+\hline 
+\hline 
+Total & 4.84\% & 14.25\% \\ 
+\hline 
+\hline 
+\end{tabular}
+}
+\end{frame}
+\section{Results}
+\label{sec-5}
+\subsection{Standalone limits}
+\label{sec-5-1}
+\begin{frame}
+\frametitle{Results: standalone limits, including systematics}
+\label{sec-5-1-1}
+\begin{columns} % Plots
+\label{sec-5-1-1-1}
+\begin{column}{0.5\textwidth}
+%% eejj limit
+\label{sec-5-1-1-1-1}
+
+\centering
+$\beta = 1.0$, \alert{for approval}
+\includegraphics[width=0.875\textwidth]{fig/limits/BR_Sigma_EE.pdf}
+\end{column}
+\begin{column}{0.5\textwidth}
+%% enujj limit
+\label{sec-5-1-1-1-2}
+
+\centering
+$\beta = 0.5$, \alert{for approval}
+\includegraphics[width=0.875\textwidth]{fig/limits/BR_Sigma_ENu.pdf}
+\end{column}
+\end{columns}
+%% Notes
+\label{sec-5-1-1-2}
+
+\begin{itemize}
+\item Expected limits: $M_{LQ} < \eejjExpectedLimit$ $(\enujjExpectedLimit)$ GeV for \eejj (\enujj)
+\item Observed limits: $M_{LQ} < \eejjObservedLimit$ $(\enujjObservedLimit)$ GeV for \eejj (\enujj)
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Results: standalone limits, without systematics}
+\label{sec-5-1-2}
+\begin{columns} % Plots
+\label{sec-5-1-2-1}
+\begin{column}{0.5\textwidth}
+%% eejj limit, no syst
+\label{sec-5-1-2-1-1}
+
+\centering
+$\beta = 1.0$: \eejj analysis, no syst.
+\includegraphics[width=0.875\textwidth]{fig/limits/BR_Sigma_EE_noSyst.pdf}
+\end{column}
+\begin{column}{0.5\textwidth}
+%% enujj limit, no syst
+\label{sec-5-1-2-1-2}
+
+\centering
+$\beta = 0.5$: \enujj analysis, no syst.
+\includegraphics[width=0.875\textwidth]{fig/limits/BR_Sigma_ENu_noSyst.pdf}
+\end{column}
+\end{columns}
+%% Notes
+\label{sec-5-1-2-2}
+
+\begin{itemize}
+\item Expected limits: $M_{LQ} < \eejjExpectedLimitNoSyst$ $(\enujjExpectedLimitNoSyst)$ GeV for \eejj (\enujj)
+\item Observed limits: $M_{LQ} < \eejjObservedLimitNoSyst$ $(\enujjObservedLimitNoSyst)$ GeV for \eejj (\enujj)
+\end{itemize}
+\end{frame}
+\subsection{Combined limits}
+\label{sec-5-2}
+\begin{frame}
+\frametitle{Results: combined limits, including systematics}
+\label{sec-5-2-1}
+\begin{columns} % Columns
+\label{sec-5-2-1-1}
+\begin{column}{0.5\textwidth}
+%% Text
+\label{sec-5-2-1-1-1}
+
+\begin{itemize}
+\item Made with asymptotic CLs
+\item Obs. limits unchanged
+\item \enujj excess has strongest effect on combined limit discrepancy
+\item Limits at $\beta = 0.15$:
+\begin{itemize}
+\item Exp.: $M_{LQ} < \lowBetaExpectedLimit$ GeV
+\item Obs.: $M_{LQ} < \lowBetaObservedLimit$ GeV
+\end{itemize}
+\end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+%% Plot
+\label{sec-5-2-1-1-2}
+
+\centering
+\alert{for approval}
+\includegraphics[width=\textwidth]{fig/limits/LQ1Combination.pdf}
+\end{column}
+\end{columns}
+\end{frame}
+\subsection{Significance}
+\label{sec-5-3}
+\begin{frame}
+\frametitle{Results: significance (no look-elsewhere applied)}
+\label{sec-5-3-1}
+%% Plot
+\label{sec-5-3-1-1}
+
+\centering
+\includegraphics[width=0.7\textwidth]{fig/signif/signifs.pdf}
+\begin{itemize}
+
+\item Currently in PAS
+\label{sec-5-3-1-2}%
+
+\item Considering removing and putting numbers in table
+\label{sec-5-3-1-3}%
+\end{itemize} % ends low level
+\end{frame}
+\subsection{Beta = 0.15 N-1 plots}
+\label{sec-5-4}
+\begin{frame}
+\frametitle{Results: $\beta = 0.15$, $M_{LQ} = 650$ (1/3)}
+\label{sec-5-4-1}
+\begin{columns}
+\begin{column}{0.6\textwidth}
+%% ST
+\label{sec-5-4-1-1}
+
+\centering
+\ST
+\includegraphics[width=\textwidth]{fig/enu/nMinus1/ST_mtAndMetAndMejLQ650_enujj.pdf}
+\end{column}
+\begin{column}{0.6\textwidth}
+%% MEJ
+\label{sec-5-4-1-2}
+
+\centering
+\mej
+\includegraphics[width=\textwidth]{fig/enu/nMinus1/Mej_stAndMtAndMetLQ650_enujj.pdf}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}
+\frametitle{Results: $\beta = 0.15$, $M_{LQ} = 650$ (2/3)}
+\label{sec-5-4-2}
+\begin{columns}
+\begin{column}{0.6\textwidth}
+%% MET
+\label{sec-5-4-2-1}
+
+\centering
+\met
+\includegraphics[width=\textwidth]{fig/enu/nMinus1/MET_stAndMtAndMejLQ650_enujj.pdf}
+\end{column}
+\begin{column}{0.6\textwidth}
+%% MT
+\label{sec-5-4-2-2}
+
+\centering
+\mt
+\includegraphics[width=\textwidth]{fig/enu/nMinus1/MTenu_stAndMetAndMejLQ650_enujj.pdf}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}
+\frametitle{Results: $\beta = 0.15$, $M_{LQ} = 650$ (3/3)}
+\label{sec-5-4-3}
+\begin{columns}
+\begin{column}{0.6\textwidth}
+%% MT(j,nu)
+\label{sec-5-4-3-1}
+
+\centering
+\mtjnu
+\includegraphics[width=\textwidth]{fig/enu/finalSelection015/MTjnu_LQ650_enujj.pdf}
+\end{column}
+\end{columns}
+\end{frame}
+\subsection{Overview of checks}
+\label{sec-5-5}
+\begin{frame}
+\frametitle{Overview of checks}
+\label{sec-5-5-1}
+
+\tiny
+\begin{itemize}
+\item \textbf{Problem with analysis code?} \alert{No} \\ 
+$\text{W}_{\text{R}}$ analysis (\eejj final state) reproduced the excess (J. Pastika, B. Dahmes)
+\item \textbf{Problem with ECAL?} \alert{No} \\
+ECAL DPG says these events are ok.  Electrons are spread in $\eta$ and $\phi$.  See backup.
+\item \textbf{Problem with unstable running conditions?} \alert{No} \\ 
+Excesses are flat vs run period. See backup.
+\item \textbf{Problem with signal trigger?} \alert{No} \\ 
+\eejj excess persists with ${\tt HLT\_DoubleEle33\_CaolIdL\_GsfTrkIdVL}$.
+\item \textbf{Problem with single object mis-measurement (eejj analysis only)?} \alert{No} \\ 
+Events in \eejj excess do not have an excess of single objects (electrons, jets) aligned with \met.
+\item \textbf{Problem modeling \met and \mt (\enujj analysis only)?} \alert{...} \\
+Discrepancy between data and MC in \met and \mt distributions at \enujj preselection, but reweighting
+\mt and \met at preselection increases the final selection discrepancy.  See backup.
+\item \textbf{Problem with electrons from pileup?} \alert{No} \\ 
+Electrons in excess have low $d_{Z}$ w.r.t. primary vertex
+\item \textbf{Problem with data-driven \ttbar background estimate?} \alert{No} \\
+Results with $\ttbar \rightarrow \eejj$ MC agree within statistics
+\item \textbf{Problem with your data-driven QCD background estimate?} \alert{No} \\
+Excess is almost entirely OS electron pairs.  Contribution from QCD is predicted to be << 1 event.
+\item \textbf{Problem with your various MC background estimates?} \alert{No} \\
+Background for final selection optimized for $M_{LQ} = 650$ GeV is cross-checked using only data.  See backup.
+\end{itemize}
+\end{frame}
+\section{Conclusion}
+\label{sec-6}
+\subsection{Conclusion}
+\label{sec-6-1}
+\begin{frame}
+\frametitle{Conclusion}
+\label{sec-6-1-1}
+%% Text
+\label{sec-6-1-1-1}
+
+% \centering
+% \resizebox*{!}{0.8\textheight}{\vbox{
+\ChangeItemFont{\footnotesize}{\footnotesize}{\footnotesize}
+\begin{itemize}
+\item A search was carried out for first generation LQs in two channels:
+\begin{itemize}
+\item $\text{LQ}\overline{\text{LQ}}\rightarrow\eejj$  (optimized for $\beta = 1.0$)
+\item $\text{LQ}\overline{\text{LQ}}\rightarrow\enujj$ (optimized for $\beta = 0.5$)
+\end{itemize}
+\item Combination of the channels sets world's best limits on leptoquarks at 95\% CL:
+\begin{itemize}
+\item Exp. limits: $M_{LQ} < \eejjExpectedLimit$ $(\enujjExpectedLimit)$ GeV for $\beta = 1.0$ (0.5)
+\item Obs. limits: $M_{LQ} < \eejjObservedLimit$ $(\enujjObservedLimit)$ GeV for $\beta = 1.0$ (0.5)
+\end{itemize}
+\item With current data:
+\begin{itemize}
+\item We observe an excess of $3\sigma$
+\item We cannot exclude an LQ of mass 650 GeV with $\beta = 0.15$
+\end{itemize}
+\item Results have been extensively cross checked
+\item We ask for the approval of this analysis
+\end{itemize}
+% }}
+\end{frame}
+
+\end{document}

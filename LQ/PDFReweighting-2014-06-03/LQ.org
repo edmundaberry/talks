@@ -1,0 +1,218 @@
+#+TITLE:     PDF Uncertainties for LQ1 (EXO-12-041)
+#+EMAIL:     Edmund.A.Berry@cern.ch
+#+DATE:      Tuesday, June 3, 2014
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [bigger]
+#+BEAMER_FRAME_LEVEL: 3
+#+latex_header: \mode<beamer>{\usetheme[compress]{Berlin}}
+#+latex_header: \usepackage{multirow}
+#+latex_header: \input{tex/header.tex}
+#+latex_header: \input{tex/macros.tex}
+#+latex_header: \input{tex/toolbox.tex}
+#+latex_header: \mode<beamer>{\usecolortheme{bear}}
+#+latex_header: \mode<beamer>{\titlegraphic{\includegraphics[width=0.2\textwidth]{brown-logo}}}
+#+beamer_header_extra: \author[Edmund Berry]{\alert{Edmund Berry}}
+
+* Introduction
+** Introduction
+*** Introduction
+**** Slides show how to find PDF uncertainty on LQ signal
+**** Method follows from LQ3 analysis:
+***** [[http://cms.cern.ch/iCMS/jsp/analysis/admin/analysismanagement.jsp?ancode=EXO-12-030][\alert{EXO-12-030}]]
+**** LQ3 analysis method taken from prescription on arXiv:
+***** [[http://arxiv.org/abs/hep-ph/0605240][\alert{arXiv:hep-ph/0605240}]]
+***** [[http://arxiv.org/abs/1101.0538][\alert{arXiv:1101.0538}]]
+* Procedure
+** Variables
+*** Variables stored in ntuples
+**** Three vectors:
+***** \texttt{PDFCTEQWeights} (53 elements per event, \texttt{CTEQ})
+***** \texttt{PDFMSTWWeights} (41 elements per event, \texttt{MSTW})
+***** \texttt{PDFNNPDFWeights} (101 elements per event, \texttt{NNPDF})
+**** First element of vector: mean weight (\texttt{mean})
+**** Other elements of vector: varied weight (\texttt{varied})
+***** Each represents a weight from varying a parameter 
+**** For each vector element, $i \neq 0$ of each PDF:
+***** PDF weight = \texttt{varied} / \texttt{mean}
+*** Variables to be defined
+**** for LQ of mass $m$, define four N(event) quantities:
+***** $U_m^0$: N(\alert{unweighted} MC events) in sample initially
+***** $U_m^f$: N(\alert{unweighted} MC events) passing final selection
+***** $W_m^0$: N(\alert{PDF weighted} MC events) in sample initially
+***** $W_m^f$: N(\alert{PDF weighted} MC events) passing final selection
+**** Now define acceptance for LQ of mass $m$:
+***** $AU_m = \frac{U_m^f}{U_m^0}$
+***** $AW_m = \frac{W_m^f}{W_m^0}$
+**** We are interested in the % change in acceptance:
+***** $\Delta A = 100 \cdot \left[\left(\frac{AW_m}{AU_m} \right) - 1\right] = 100 \cdot \left[\left(\frac{W_m^f}{W_m^0} \cdot \frac{U_m^0}{U_m^f} \right) - 1\right]$
+** Plots
+*** Example values of $\Delta A$ for M(LQ) = 300, eejj
+**** Plot                                                   :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:fig/eejj_300_2D.pdf]]
+**** Text                                                :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+***** Pink: \texttt{CTEQ}, Red: \texttt{MSTW}, Blue: \texttt{NNPDF}
+***** $x$-axis: PDF parameter number
+***** $y$-axis: $\Delta A$ (defined last slide)
+* Results
+** Results
+*** PDF uncertainty: eejj signal
+**** Plot                                                   :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:fig/eejj_envelope.pdf]]
+**** Text                                                :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+***** $x$-axis: LQ mass
+***** $y$-axis mean: mean from plots similar to slide 5
+***** $y$-axis width: RMS from plots similar to slide 5
+
+*** Method for determining final uncertainty
+**** Quote one uncertainty for all LQ mass selections
+**** If there are no MC events passing a given selection, we can't evaluate PDF uncertainty at that selection level
+**** If there are MC events passing the selection at the LQ limit (1050 GeV for eejj, 850 GeV for evjj):
+***** Use the uncertainty evaluated \alert{at the LQ limit}
+**** Otherwise:
+***** Use the \alert{maximum} evaluated uncertainty 
+*** PDF uncertainty: eejj background
+**** Plots                                                     :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Plot 1                                      :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+$\text{Z}+\text{jets}$ MC
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/ZJet_Madgraph_eejj_envelope.pdf]]
+***** Plot 2                                      :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+$t\bar{t}$ MC (not used)
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/TTbar_Madgraph_eejj_envelope.pdf]]
+**** Text                                                :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+***** $x$-axis: LQ mass
+***** $y$-axis mean: mean from plots similar to slide 5
+***** $y$-axis width: RMS from plots similar to slide 5
+
+*** PDF uncertainty: evjj signal
+**** Plot                                                   :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LATEX: width=0.6\textwidth
+[[file:fig/enujj_envelope.pdf]]
+**** Text                                                :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+***** $x$-axis: LQ mass
+***** $y$-axis mean: mean from plots similar to slide 5
+***** $y$-axis width: RMS from plots similar to slide 5
+*** PDF uncertainty: evjj background
+**** Plots                                                     :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Plot 1                                      :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+$\text{W}+\text{jets}$ MC
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/WJet_Madgraph_enujj_envelope.pdf]]
+***** Plot 2                                      :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+$t\bar{t}$ MC
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/TTbar_Madgraph_enujj_envelope.pdf]]
+**** Text                                                :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+***** $x$-axis: LQ mass
+***** $y$-axis mean: mean from plots similar to slide 5
+***** $y$-axis width: RMS from plots similar to slide 5
+
+* Conclusion
+** Conclusion
+*** Conclusion
+**** Signal PDF uncertainties:
+***** eejj: 2\%
+***** evjj: 3\%
+**** Background PDF uncertainties:
+***** eejj $\text{Z}+\text{jets}$: 3\%
+***** evjj $\text{W}+\text{jets}$: 4\%
+***** evjj $t\bar{t}$: \alert{25\%}
+**** Why is the evjj $t\bar{t}$ uncertainty so high?  Possible answer:
+***** Final acceptance is \alert{very} low (but not zero) for $t\bar{t}$ MC
+***** Only 8 events pass M(LQ) = 850 selection (evjj limit)
+***** Extremely hard cuts imply larger PDF uncertainties
