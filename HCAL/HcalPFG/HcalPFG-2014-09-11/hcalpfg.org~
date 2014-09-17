@@ -1,0 +1,51 @@
+#+TITLE:     HCAL PFG status
+#+EMAIL:     Edmund.A.Berry@cern.ch
+#+DATE:      Monday, August 4, 2014
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [bigger]
+#+BEAMER_FRAME_LEVEL: 3
+#+latex_header: \mode<beamer>{\usetheme[compress]{Berlin}}
+#+latex_header: \usepackage{multirow}
+#+latex_header: \input{tex/header.tex}
+#+latex_header: \input{tex/macros.tex}
+#+latex_header: \input{tex/toolbox.tex}
+#+latex_header: \mode<beamer>{\usecolortheme{bear}}
+#+latex_header: \mode<beamer>{\titlegraphic{\includegraphics[width=0.2\textwidth]{brown-logo}}}
+#+beamer_header_extra: \author[Edmund Berry]{\alert{Edmund Berry}}
+
+* Status
+** Status
+*** Status
+**** Two main areas of focus for now:
+***** Broad focus: data validation
+***** Narrow focus: laser plots in DQM
+**** Other tasks will be posted here as they come in:
+***** [[https://twiki.cern.ch/twiki/bin/viewauth/CMS/HcalPromTaskList2014][\alert{HcalPromTaskList2014}]]
+*** Data validation
+**** Very broad task.
+***** E. Berry will work on this
+***** Others (Cukurova students, Pavel Bunin?) will join in 
+**** Goal: make a list of recipes and criteria for validating various forms of data
+**** Currently:
+***** Large scale task, working on many fronts
+***** Working to resurrect and update [[https://twiki.cern.ch/twiki/bin/viewauth/CMS/HcalPFGRecipesan][\alert{old validation code}]]
+***** Also, new code coming from subgroups:
+****** [[https://git.cern.ch/web/HO.git][\alert{Code}]] for validation from Keti Kaadze and HO group
+****** [[https://github.com/HCALPFG/RawAnalyzer][\alert{Tool}]] for analysis of RAW data from Drew Baden
+*** Laser plots in DQM
+**** More specific task.
+***** Fatma Boran (Cukurova) will work on this with E. Berry
+***** Have working code [[https://github.com/cms-sw/cmssw/tree/CMSSW_7_2_X/EventFilter/HcalRawToDigi/plugins][(\alert{updated to 72X})]] from Jeff Temple
+**** Goal: make DQM plots to detect events failing the laser filter requirements
+**** Currently: 
+***** Skimming dataset of 2012 laser events at FNAL for analyis & testing so that Fatma can begin learning and contributing

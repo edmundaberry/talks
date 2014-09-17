@@ -1,0 +1,108 @@
+#+TITLE:     HCAL Prompt Feedback Group (PFG)
+#+EMAIL:     Edmund.A.Berry@cern.ch
+#+DATE:      Thursday, September 11, 2014
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [bigger]
+#+BEAMER_FRAME_LEVEL: 3
+#+latex_header: \mode<beamer>{\usetheme[compress]{Berlin}}
+#+latex_header: \usepackage{multirow}
+#+latex_header: \input{tex/header.tex}
+#+latex_header: \input{tex/macros.tex}
+#+latex_header: \input{tex/toolbox.tex}
+#+latex_header: \mode<beamer>{\usecolortheme{bear}}
+#+latex_header: \mode<beamer>{\titlegraphic{\includegraphics[width=0.2\textwidth]{brown-logo}}}
+#+beamer_header_extra: \author[Edmund Berry]{\alert{Edmund Berry}}
+
+* HCAL PFG
+** Introduction
+*** What is the PFG?
+**** HCAL's "Prompt Feedback Group"
+**** Fills a gap in HCAL problem solving:
+***** Problems that can be solved by the DQM
+***** \alert{PFG sweet spot}
+***** Problems that must be solved by the PFG
+**** Twiki: [[https://twiki.cern.ch/twiki/bin/viewauth/CMS/HcalProm][\alert{\underline{HcalProm}}]]
+**** Task list: [[https://twiki.cern.ch/twiki/bin/viewauth/CMS/HcalPromTaskList2014][\alert{\underline{HcalPromTaskList2014}}]]
+*** What does the PFG do?
+**** Data certification
+**** Tracking/validation of calibration changes
+**** Tracking/validation of other database changes
+**** Maintaining/developing analysis and certification tools
+**** Maintaining/developing certain HCAL ops procedures 
+(e.g. the HF phase scan)
+**** \alert{And more!}
+*** PFG example: missing FEDs in HBHE laser runs
+**** Columns                                                      :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Column 1                                        :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+[[http://cmshcalweb01.cern.ch/DetDiag/Local_HTML/DQM_Hcal_R000224625_0/][\alert{Run 224625}]]
+[[file:fig/fed_occ_vs_event_Run224625.pdf]]
+***** Column 2                                        :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+[[http://cmshcalweb01.cern.ch/DetDiag/Local_HTML/DQM_Hcal_R000224625_0/][\alert{Run 224626}]]
+[[file:fig/fed_occ_vs_event_Run224626.pdf]]
+**** $x$-axis: Event number (1000 events in these runs)
+**** $y$-axis: FED numbers
+**** $z$-axis: Number of digis produced given FED & event
+*** PFG example: adding plots to DQM and DetDiag
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Column 1                                    :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:BEAMER_env: ignoreheading
+:END:
+****** Working with subsystems 
+(HO, HF) and DetDiag experts
+****** Goal is to make it easy to respond to subsystems when they request new monitoring tools
+***** Column 2                                    :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.50
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LaTeX width=\textwidth
+[[file:fig/led_energy_hbhehf.png]]
+**** Plenty to learn and the task is ongoing!
+*** What are the PFG's plans for the future?
+**** Recruiting!
+***** The PFG is an important group, and we need help
+***** Great way to get to know the detector
+***** Great way to interface with a variety of experts
+**** Stepping up validation (local and MWGR)
+***** We've been focusing on solving smaller-scale problems
+***** Long-term maintenance needs to become a priority
+**** Emphasis on reviving old and developing new tools
+For example:
+***** Re-analyzing 2012 data used to time-in HF
+***** Implimenting laser event detection in the DQM
+***** \alert{And more!}

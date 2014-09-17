@@ -1,0 +1,212 @@
+% Created 2014-09-11 Thu 22:05
+\documentclass[bigger]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\mode<beamer>{\usetheme[compress]{Berlin}}
+\usepackage{multirow}
+\input{tex/header.tex}
+\input{tex/macros.tex}
+\input{tex/toolbox.tex}
+\mode<beamer>{\usecolortheme{bear}}
+\mode<beamer>{\titlegraphic{\includegraphics[width=0.2\textwidth]{brown-logo}}}
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{HCAL Prompt Feedback Group (PFG)}
+\author{Edmund Berry}
+\date{Thursday, September 11, 2014}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.9.3f}}
+
+\author[Edmund Berry]{\alert{Edmund Berry}}
+\begin{document}
+
+\maketitle
+
+
+\section{HCAL PFG}
+\label{sec-1}
+\subsection{Introduction}
+\label{sec-1-1}
+\begin{frame}
+\frametitle{What is the PFG?}
+\label{sec-1-1-1}
+\begin{itemize}
+
+\item HCAL's ``Prompt Feedback Group''
+\label{sec-1-1-1-1}%
+
+\item Fills a gap in HCAL problem solving:
+\label{sec-1-1-1-2}%
+\begin{itemize}
+
+\item Problems that can be solved by the DQM
+\label{sec-1-1-1-2-1}%
+
+\item \alert{PFG sweet spot}
+\label{sec-1-1-1-2-2}%
+
+\item Problems that must be solved by the PFG
+\label{sec-1-1-1-2-3}%
+\end{itemize} % ends low level
+
+\item Twiki: \href{https://twiki.cern.ch/twiki/bin/viewauth/CMS/HcalProm}{\alert{\underline{HcalProm}}}
+\label{sec-1-1-1-3}%
+
+\item Task list: \href{https://twiki.cern.ch/twiki/bin/viewauth/CMS/HcalPromTaskList2014}{\alert{\underline{HcalPromTaskList2014}}}
+\label{sec-1-1-1-4}%
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{What does the PFG do?}
+\label{sec-1-1-2}
+\begin{itemize}
+
+\item Data certification
+\label{sec-1-1-2-1}%
+
+\item Tracking/validation of calibration changes
+\label{sec-1-1-2-2}%
+
+\item Tracking/validation of other database changes
+\label{sec-1-1-2-3}%
+
+\item Maintaining/developing analysis and certification tools
+\label{sec-1-1-2-4}%
+
+\item Maintaining/developing certain HCAL ops procedures\\
+\label{sec-1-1-2-5}%
+(e.g. the HF phase scan)
+
+\item \alert{And more!}
+\label{sec-1-1-2-6}%
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{PFG example: missing FEDs in HBHE laser runs}
+\label{sec-1-1-3}
+\begin{columns} % Columns
+\label{sec-1-1-3-1}
+\begin{column}{0.55\textwidth}
+%% Column 1
+\label{sec-1-1-3-1-1}
+
+\centering
+\href{http://cmshcalweb01.cern.ch/DetDiag/Local_HTML/DQM_Hcal_R000224625_0/}{\alert{Run 224625}}
+\includegraphics[width=.9\linewidth]{fig/fed_occ_vs_event_Run224625.pdf}
+\end{column}
+\begin{column}{0.55\textwidth}
+%% Column 2
+\label{sec-1-1-3-1-2}
+
+\centering
+\href{http://cmshcalweb01.cern.ch/DetDiag/Local_HTML/DQM_Hcal_R000224625_0/}{\alert{Run 224626}}
+\includegraphics[width=.9\linewidth]{fig/fed_occ_vs_event_Run224626.pdf}
+\end{column}
+\end{columns}
+\begin{itemize}
+
+\item $x$-axis: Event number (1000 events in these runs)
+\label{sec-1-1-3-2}%
+
+\item $y$-axis: FED numbers
+\label{sec-1-1-3-3}%
+
+\item $z$-axis: Number of digis produced given FED \& event
+\label{sec-1-1-3-4}%
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{PFG example: adding plots to DQM and DetDiag}
+\label{sec-1-1-4}
+\begin{columns} % Columns
+\label{sec-1-1-4-1}
+\begin{column}{0.6\textwidth}
+%% Column 1
+\label{sec-1-1-4-1-1}
+\begin{itemize}
+
+\item Working with subsystems\\
+\label{sec-1-1-4-1-1-1}%
+(HO, HF) and DetDiag experts
+
+\item Goal is to make it easy to respond to subsystems when they request new monitoring tools
+\label{sec-1-1-4-1-1-2}%
+\end{itemize} % ends low level
+\end{column}
+\begin{column}{0.50\textwidth}
+%% Column 2
+\label{sec-1-1-4-1-2}
+
+\centering
+\includegraphics[width=.9\linewidth]{fig/led_energy_hbhehf.png}
+\end{column}
+\end{columns}
+\begin{itemize}
+
+\item Plenty to learn and the task is ongoing!
+\label{sec-1-1-4-2}%
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{What are the PFG's plans for the future?}
+\label{sec-1-1-5}
+\begin{itemize}
+
+\item Recruiting!
+\label{sec-1-1-5-1}%
+\begin{itemize}
+
+\item The PFG is an important group, and we need help
+\label{sec-1-1-5-1-1}%
+
+\item Great way to get to know the detector
+\label{sec-1-1-5-1-2}%
+
+\item Great way to interface with a variety of experts
+\label{sec-1-1-5-1-3}%
+\end{itemize} % ends low level
+
+\item Stepping up validation (local and MWGR)
+\label{sec-1-1-5-2}%
+\begin{itemize}
+
+\item We've been focusing on solving smaller-scale problems
+\label{sec-1-1-5-2-1}%
+
+\item Long-term maintenance needs to become a priority
+\label{sec-1-1-5-2-2}%
+\end{itemize} % ends low level
+
+\item Emphasis on reviving old and developing new tools\\
+\label{sec-1-1-5-3}%
+For example:
+\begin{itemize}
+
+\item Re-analyzing 2012 data used to time-in HF
+\label{sec-1-1-5-3-1}%
+
+\item Implimenting laser event detection in the DQM
+\label{sec-1-1-5-3-2}%
+
+\item \alert{And more!}
+\label{sec-1-1-5-3-3}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+
+\end{document}

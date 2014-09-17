@@ -1,0 +1,141 @@
+% Created 2014-08-04 Mon 15:58
+\documentclass[bigger]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\mode<beamer>{\usetheme[compress]{Berlin}}
+\usepackage{multirow}
+\input{tex/header.tex}
+\input{tex/macros.tex}
+\input{tex/toolbox.tex}
+\mode<beamer>{\usecolortheme{bear}}
+\mode<beamer>{\titlegraphic{\includegraphics[width=0.2\textwidth]{brown-logo}}}
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{HCAL PFG status}
+\author{Edmund Berry}
+\date{Monday, August 4, 2014}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.8.11}}
+
+\author[Edmund Berry]{\alert{Edmund Berry}}
+\begin{document}
+
+\maketitle
+
+
+\section{Status}
+\label{sec-1}
+\subsection{Status}
+\label{sec-1-1}
+\begin{frame}
+\frametitle{Status}
+\label{sec-1-1-1}
+\begin{itemize}
+
+\item Two main areas of focus for now:
+\label{sec-1-1-1-1}%
+\begin{itemize}
+
+\item Broad focus: data validation
+\label{sec-1-1-1-1-1}%
+
+\item Narrow focus: laser plots in DQM
+\label{sec-1-1-1-1-2}%
+\end{itemize} % ends low level
+
+\item Other tasks will be posted here as they come in:
+\label{sec-1-1-1-2}%
+\begin{itemize}
+
+\item \href{https://twiki.cern.ch/twiki/bin/viewauth/CMS/HcalPromTaskList2014}{\alert{HcalPromTaskList2014}}
+\label{sec-1-1-1-2-1}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Data validation}
+\label{sec-1-1-2}
+\begin{itemize}
+
+\item Very broad task.
+\label{sec-1-1-2-1}%
+\begin{itemize}
+
+\item E. Berry will work on this
+\label{sec-1-1-2-1-1}%
+
+\item Others (Cukurova students, Pavel Bunin?) will join in
+\label{sec-1-1-2-1-2}%
+\end{itemize} % ends low level
+
+\item Goal: make a list of recipes and criteria for validating various forms of data
+\label{sec-1-1-2-2}%
+
+\item Currently:
+\label{sec-1-1-2-3}%
+\begin{itemize}
+
+\item Large scale task, working on many fronts
+\label{sec-1-1-2-3-1}%
+
+\item Working to resurrect and update \href{https://twiki.cern.ch/twiki/bin/viewauth/CMS/HcalPFGRecipesan}{\alert{old validation code}}
+\label{sec-1-1-2-3-2}%
+
+\item Also, new code coming from subgroups:
+\label{sec-1-1-2-3-3}%
+\begin{itemize}
+
+\item \href{https://git.cern.ch/web/HO.git}{\alert{Code}} for validation from Keti Kaadze and HO group
+\label{sec-1-1-2-3-3-1}%
+
+\item \href{https://github.com/HCALPFG/RawAnalyzer}{\alert{Tool}} for analysis of RAW data from Drew Baden
+\label{sec-1-1-2-3-3-2}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Laser plots in DQM}
+\label{sec-1-1-3}
+\begin{itemize}
+
+\item More specific task.
+\label{sec-1-1-3-1}%
+\begin{itemize}
+
+\item Fatma Boran (Cukurova) will work on this with E. Berry
+\label{sec-1-1-3-1-1}%
+
+\item Have working code \href{https://github.com/cms-sw/cmssw/tree/CMSSW_7_2_X/EventFilter/HcalRawToDigi/plugins}{(\alert{updated to 72X})} from Jeff Temple
+\label{sec-1-1-3-1-2}%
+\end{itemize} % ends low level
+
+\item Goal: make DQM plots to detect events failing the laser filter requirements
+\label{sec-1-1-3-2}%
+
+\item Currently:
+\label{sec-1-1-3-3}%
+\begin{itemize}
+
+\item Skimming dataset of 2012 laser events at FNAL for analyis \& testing so that Fatma can begin learning and contributing
+\label{sec-1-1-3-3-1}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+
+\end{document}

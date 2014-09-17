@@ -1,0 +1,59 @@
+#+TITLE:     HCAL PFG status
+#+EMAIL:     Edmund.A.Berry@cern.ch
+#+DATE:      Monday, August 11, 2014
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [bigger]
+#+BEAMER_FRAME_LEVEL: 3
+#+latex_header: \mode<beamer>{\usetheme[compress]{Berlin}}
+#+latex_header: \usepackage{multirow}
+#+latex_header: \input{tex/header.tex}
+#+latex_header: \input{tex/macros.tex}
+#+latex_header: \input{tex/toolbox.tex}
+#+latex_header: \mode<beamer>{\usecolortheme{bear}}
+#+latex_header: \mode<beamer>{\titlegraphic{\includegraphics[width=0.2\textwidth]{brown-logo}}}
+#+beamer_header_extra: \author[Edmund Berry]{\alert{Edmund Berry}}
+
+* Status
+** Status
+*** Status
+**** Ongoing tasks
+***** Laser plots in DQM (Edmund, Kadri, Fatma)
+***** HO validation plots in DetDiag (Edmund, HO experts)
+**** New task
+***** \alert{Missing channels in HBHE laser runs}
+**** All tasks listed here
+***** [[https://twiki.cern.ch/twiki/bin/viewauth/CMS/HcalPromTaskList2014][\alert{HcalPromTaskList2014}]]
+** Missing channels in HBHE laser runs
+
+*** Missing channels in HBHE laser runs
+**** Symptoms when FEDs are "missing"
+***** No digis produced
+***** FED data size = 0 bytes
+***** Can't access FED headers
+**** Three kinds of failure:
+1. Some FEDs drop out of laser runs entirely
+2. Some FEDs drop out for 100 events at a time
+3. Some FEDs "flicker" in and out of the run for 100 events
+**** Failure mode is unclear (to me, anyway):
+***** Are FEDs sporadically not being read out? (impossible?)
+***** Are digis in these FEDs so bad that the unpacker won't unpack them?
+****** \texttt{hcalDigis.FilterDataQuality} set to \texttt{False}
+*** Missing channels in HBHE laser runs
+**** DAQ logs have the following errors:
+***** \texttt{ERROR Caught exception: hcal::exception::Exception 'Expected 100 events, saw 32 from QDC 0' raised at readout(hcalQDCTDCReadout.cc:209)}
+***** \texttt{WARN Chunk received for unknown source 711}
+*** Missing channels in HBHE laser runs
+**** Investigation continues:
+***** DAQ expert (Chris West) investigating
+***** Currently only see these problems in HBHE laser runs
+****** Looking in other run types too

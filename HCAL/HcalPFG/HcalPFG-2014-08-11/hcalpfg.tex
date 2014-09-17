@@ -1,0 +1,198 @@
+% Created 2014-08-11 Mon 15:55
+\documentclass[bigger]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\mode<beamer>{\usetheme[compress]{Berlin}}
+\usepackage{multirow}
+\input{tex/header.tex}
+\input{tex/macros.tex}
+\input{tex/toolbox.tex}
+\mode<beamer>{\usecolortheme{bear}}
+\mode<beamer>{\titlegraphic{\includegraphics[width=0.2\textwidth]{brown-logo}}}
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{HCAL PFG status}
+\author{Edmund Berry}
+\date{Monday, August 11, 2014}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.8.11}}
+
+\author[Edmund Berry]{\alert{Edmund Berry}}
+\begin{document}
+
+\maketitle
+
+
+\section{Status}
+\label{sec-1}
+\subsection{Status}
+\label{sec-1-1}
+\begin{frame}
+\frametitle{Status}
+\label{sec-1-1-1}
+\begin{itemize}
+
+\item Ongoing tasks
+\label{sec-1-1-1-1}%
+\begin{itemize}
+
+\item Laser plots in DQM (Edmund, Kadri, Fatma)
+\label{sec-1-1-1-1-1}%
+
+\item HO validation plots in DetDiag (Edmund, HO experts)
+\label{sec-1-1-1-1-2}%
+\end{itemize} % ends low level
+
+\item New task
+\label{sec-1-1-1-2}%
+\begin{itemize}
+
+\item \alert{Missing channels in HBHE laser runs}
+\label{sec-1-1-1-2-1}%
+\end{itemize} % ends low level
+
+\item All tasks listed here
+\label{sec-1-1-1-3}%
+\begin{itemize}
+
+\item \href{https://twiki.cern.ch/twiki/bin/viewauth/CMS/HcalPromTaskList2014}{\alert{HcalPromTaskList2014}}
+\label{sec-1-1-1-3-1}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+\subsection{Missing channels in HBHE laser runs}
+\label{sec-1-2}
+\begin{frame}
+\frametitle{Missing channels in HBHE laser runs}
+\label{sec-1-2-1}
+\begin{columns} % Columns
+\label{sec-1-2-1-1}
+\begin{column}{0.55\textwidth}
+%% Column 1
+\label{sec-1-2-1-1-1}
+
+\centering
+\href{http://cmshcalweb01.cern.ch/DetDiag/Local_HTML/DQM_Hcal_R000224625_0/}{\alert{Run 224625}}
+\includegraphics[width=.9\linewidth]{fig/fed_occ_vs_event_Run224625.pdf}
+\end{column}
+\begin{column}{0.55\textwidth}
+%% Column 2
+\label{sec-1-2-1-1-2}
+
+\centering
+\href{http://cmshcalweb01.cern.ch/DetDiag/Local_HTML/DQM_Hcal_R000224625_0/}{\alert{Run 224626}}
+\includegraphics[width=.9\linewidth]{fig/fed_occ_vs_event_Run224626.pdf}
+\end{column}
+\end{columns}
+\begin{itemize}
+
+\item $x$-axis: Event number (1000 events in these runs)
+\label{sec-1-2-1-2}%
+
+\item $y$-axis: FED numbers
+\label{sec-1-2-1-3}%
+
+\item $z$-axis: Number of digis produced given FED \& event
+\label{sec-1-2-1-4}%
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Missing channels in HBHE laser runs}
+\label{sec-1-2-2}
+\begin{itemize}
+
+\item Symptoms when FEDs are ``missing''
+\label{sec-1-2-2-1}%
+\begin{itemize}
+
+\item No digis produced
+\label{sec-1-2-2-1-1}%
+
+\item FED data size = 0 bytes
+\label{sec-1-2-2-1-2}%
+
+\item Can't access FED headers
+\label{sec-1-2-2-1-3}%
+\end{itemize} % ends low level
+
+\item Three kinds of failure:
+\label{sec-1-2-2-2}%
+\begin{enumerate}
+\item Some FEDs drop out of laser runs entirely
+\item Some FEDs drop out for 100 events at a time
+\item Some FEDs ``flicker'' in and out of the run for 100 events
+\end{enumerate}
+
+\item Failure mode is unclear (to me, anyway):
+\label{sec-1-2-2-3}%
+\begin{itemize}
+
+\item Are FEDs sporadically not being read out? (impossible?)
+\label{sec-1-2-2-3-1}%
+
+\item Are digis in these FEDs so bad that the unpacker won't unpack them?
+\label{sec-1-2-2-3-2}%
+\begin{itemize}
+
+\item \texttt{hcalDigis.FilterDataQuality} set to \texttt{False}
+\label{sec-1-2-2-3-2-1}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Missing channels in HBHE laser runs}
+\label{sec-1-2-3}
+\begin{itemize}
+
+\item DAQ logs have the following errors:
+\label{sec-1-2-3-1}%
+\begin{itemize}
+
+\item \texttt{ERROR Caught exception: hcal:\textbf{:exception:}:Exception 'Expected 100 events, saw 32 from QDC 0' raised at readout(hcalQDCTDCReadout.cc:209)}
+\label{sec-1-2-3-1-1}%
+
+\item \texttt{WARN Chunk received for unknown source 711}
+\label{sec-1-2-3-1-2}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Missing channels in HBHE laser runs}
+\label{sec-1-2-4}
+\begin{itemize}
+
+\item Investigation continues:
+\label{sec-1-2-4-1}%
+\begin{itemize}
+
+\item DAQ expert (Chris West) investigating
+\label{sec-1-2-4-1-1}%
+
+\item Currently only see these problems in HBHE laser runs
+\label{sec-1-2-4-1-2}%
+\begin{itemize}
+
+\item Looking in other run types too
+\label{sec-1-2-4-1-2-1}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+
+\end{document}
