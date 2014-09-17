@@ -1,0 +1,28 @@
+* Email Jordan and Ted Kolberg:
+** Roughly how long will it take to collect these events?
+** Assume 1 KHz: 5000 seconds?  What's the plan from the operations side?
+* Regarding radiation damage:
+** What do we know:
+*** HE:
+**** Run 1 [O(20 fb-1)], we had unexpectedly large damage in HE
+***** L1, $\eta$ = 3.0: 30% loss of signal
+***** L1, $\eta$ = 2.4: 5% loss of signal
+**** In the first year of Run 2, we are anticipating similar loss in HE
+**** Plan to maintain calibration of HE
+**** Calibration will be applied at all stages of data processing (L1, HLT, prompt reco)
+*** HF:
+**** Dominant problem in HF in 2011-2012 was loss of PMT gain
+***** We hope that problem is gone with replacement PMTs
+**** Next biggest problem could be damage to quartz fibers (few % for integrated dose from Run 1)
+***** Small effect which we also can correct for
+*** HB
+**** Preliminary information suggests layer-dependent (flat with $\eta$) radiation damage representing 5%
+**** Because this is a single readout (layers are summed to form a tower), can only correct on average
+**** Small effect now
+** Because we see this non-trivial effect
+*** We're spending time to quantify with sourcing
+*** Starting this Friday
+* Names for radiation damage studies:
+** Dima Vishnevskiy (Rochester)
+** Robert Ciesielski (Rochester)
+** Vladimir Espteyn (ITEP)

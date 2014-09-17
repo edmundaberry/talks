@@ -1,0 +1,406 @@
+#+TITLE:     HCAL developments for Jets and MET
+#+EMAIL:     Edmund.A.Berry@cern.ch
+#+DATE:      Friday, August 22, 2014
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [bigger]
+#+BEAMER_FRAME_LEVEL: 3
+#+latex_header: \mode<beamer>{\usetheme[compress]{Berlin}}
+#+latex_header: \usepackage{graphicx}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{lmodern}
+#+latex_header: \usepackage{ifmtarg}
+#+latex_header: \usepackage{tikz}
+#+latex_header: \usetikzlibrary{calc}
+#+latex_header: \input{tex/toolbox.tex}
+#+latex_header: \input{tex/header.tex}
+#+latex_header: \input{tex/macros.tex}
+#+latex_header: \mode<beamer>{\usecolortheme{bear}}
+#+latex_header: \mode<beamer>{\titlegraphic{\includegraphics[width=0.2\textwidth]{brown-logo}}}
+#+latex_header: \institute[Brown University]{}
+#+latex_header: \AtBeginSection{\frame{\sectionpage}}
+#+beamer_header_extra: \author[Edmund A. Berry]{\alert{Edmund A. Berry}}
+
+* Introduction
+** Introduction
+*** Introduction
+**** Changes between the Run 1 and Run 2 physics environments are well-documented
+**** HCAL has implemented hardware upgrades in response
+**** Software updates must:
+***** Account for hardware changes (e.g. recalibration)
+***** Respond to physics changes in Run 2 environment
+*** HCAL hardware upgrades during LS1
+**** HB and HE:
+***** Replaced clock, control, monitor modules 
+***** \alert{Removes synchronization problems with isolated sections of HB and HE}
+**** HO
+***** Changed hybrid photodiodes to silicon photomultipliers
+***** \alert{Improves signal to noise for MIPs in HO}
+**** HF
+***** Replaced single-anode photomultiplier tubes (PMTs) with thin window multi-anode PMTs
+***** Also: installed new cables capable of dual readout
+***** \alert{Reduces fake signal from PMT window hits}
+*** HCAL software responses
+#+BEGIN_LaTeX
+\centering
+HCAL software is responding in many ways, \\
+all of which affect jets and MET
+#+END_LaTeX
+**** I will discuss three in particular:                         :B_block:
+:PROPERTIES:
+:BEAMER_env: block
+:END:
+1. Calibration
+2. Reconstruction
+3. Noise filters
+* Calibration
+** Introduction to calibration
+*** Calibration scope and priorities
+**** Tuning and development (\alert{now - end 2014})
+***** Address HCAL shortcomings revealed during Run 1
+***** Tune existing Run 1 methods for Run 2 environment
+***** Develop new methods when necessary
+**** Preparing HCAL pre-calibration, (\alert{end 2014, 2 months})
+Relying on:
+***** Radioactive source calibration: critical for HF startup calibration
+***** Cosmics: very effective tool for HO calibration
+***** Splashes: useful in 2009 and 2010 for HBHE, not essential in 2015
+**** Integration of HCAL tools with AlCa (\alert{\texttt{CMSSW\_7\_3\_X}})
+***** \alert{If necessary}
+*** Calibration outline
+**** Three main areas of focus:                                     :B_block:
+:PROPERTIES:
+:BEAMER_env: block
+:END:
+1. Radiation damage correction
+2. \phi symmetry calibration 
+3. Absolute energy calibration:
+   * HB & part of HE: single particle (IsoTracks)
+   * HE (& perhaps elsewhere): dijet, $\gamma$-jet
+   * HF: $Z\rightarrow ee$
+   * HO: muons (GeV/MIP sets the scale)
+**** Conveners: [[mailto:jordan.damgov@cern.ch][\underline{\alert{Jordan Damgov}}]] and [[mailto:yurii.maravin@cern.ch][\underline{\alert{Yurii Maravin}}]]
+** Radiation damage correction
+*** Radiation damage in the HE: what we know today
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Text column                                 :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+****** In first 20 $\text{fb}^{-1}$, in the high-$\eta$ region ($|\eta| = 3$)
+******* L1 lost 30% orig. signal
+******* L7 lost 15% orig. signal
+****** Even at $|\eta = 2.4|$ the loss was non-negligible
+******* L1 lost 15% orig. signal
+******* L7 lost  5% orig. signal
+***** HE                                          :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Results for Layer 1 of HE
+#+END_LaTeX
+#+ATTR_LaTeX: width=\textwidth
+[[file:fig/radHE.png]]
+**** Raddam work: [[mailto:Robert.Ciesielski@cern.ch][\underline{\alert{R. Ciesielski}}]], [[mailto:vladimir.epshteyn@cern.ch][\underline{\alert{V. Epshteyn}}]], [[mailto:dmitry.vishnevskiy@cern.ch][\underline{\alert{D. Vishnevskiy}}]]
+*** Radiation damage in the HE: how we know it
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Text column                                 :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+****** In Run 1, radiation damage was monitored with laser measurements
+****** In 2012, an additional method using pp data with physics triggers was introduced
+***** Figure column                               :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LaTeX width=\textwidth
+[[file:fig/HElaser.png]]
+*** Radiation damage in the HB: what we know today
+**** Figure                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LaTeX: width=0.50\textwidth
+[[file:fig/radHB.png]]
+**** Ratio of signal from HB Co-60 calibration (2014/2005)
+**** $2 \times 20^{\circ}$ wedges on HB-: \alert{April, 2014}
+**** Consistent with 5% damage to L1 of HB
+*** Radiation damage in the HB: how we know it
+**** Figure                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LaTeX: width=0.7\textwidth
+[[file:fig/laserInsert.png]]
+**** Laser monitoring can't monitor radiation damage to front layers of HB
+**** Co-60 calibration (2005, 2014) is the only way to learn about radiation damage to front layers of HB
+*** Radiation damage in the HB: how to deal with it
+**** Figure                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LaTeX: width=0.7\textwidth
+[[file:fig/laserInsert.png]]
+**** More data needed to establish effect beyond stat. fluct.
+**** Since HB only has 1 depth (unlike HE with 2-3 depths), layer-dependent damage can only be corrected on average, introducing an energy dependence
+**** Effect can probably be removed by MC corrections.
+*** Radiation damage: what to do about it
+**** Current plan for HE:
+***** Use updated laser measurement algo. and updated laser
+***** Use pp data as a less-frequent cross-check
+***** First year of Run 2: expect signal loss similar to Run 1
+**** Current plan for HB:
+***** Data suggests layer-dependent radiation damage at 5\%
+***** More data needed to establish effect beyond stat. fluct.
+***** Continue Co-60 sourcing campaign on HB (\alert{Friday})
+***** 4 additional HB wedges to be sourced
+**** Correct 2015 data at all levels (L1, HLT, Offline)
+** \phi symmetry calibration
+*** \phi symmetry calibration
+**** Goal: equalize response in \phi for \eta-rings with 2 methods:
+**** Method of moments
+***** Non-zero-suppressed and non-HCAL triggers
+***** Worse precision in the HB than iterative method
+***** $\sim5$ million events yields $\sim2\%$ precision
+**** Iterative method
+***** non-HCAL physics triggers
+***** Better precision in the HB than moments method
+***** 60 million events yields: 1% HB; 0.2-2.5% HE; 0.3% HF
+**** Work on both methods is ongoing for Run 2 environment
+** Absolute energy calibration
+*** Absolute HB/HE energy calibration: single particle
+**** Method for calibration with isolated tracks
+**** Tracker provides precision momentum measurement
+**** Require:
+***** Good quality tracks reaching ECAL and HCAL
+***** Tracks are isolated w.r.t. ECAL energy and other tracks
+**** Preparing estimates on precision for Run 2 environment
+**** No IsoTrack trigger coverage in high $\eta$ HE region
+*** Absolute HE energy scale: dijet balancing
+**** Method for ring-by-ring calibration with dijet events
+**** Building on work done by JP Chou ([[https://indico.cern.ch/event/75820/session/0/contribution/9/material/slides/0.pdf][\underline{\alert{talk}}]], [[http://cms.cern.ch/iCMS/jsp/openfile.jsp?type=IN&year=2008&files=IN2008_046.pdf][\underline{\alert{IN2008/046}}]])
+**** Require:
+***** Two PFJets with small $|\Delta \eta|$: i.e. two PFJets in the same part of the jet energy response curve
+***** Remove PU using PFJets
+****** Need to disambiguate energy corrections
+****** Working with PF experts
+*** Absolute HF energy scale: $Z\rightarrow ee$
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Text                                            :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+****** 2011 method: [[http://cms.cern.ch/iCMS/jsp/openfile.jsp?type=DN&year=2011&files=DN2011_012.pdf][\underline{\alert{DN2011/012}}]]
+****** Require:
+******* Precision tag electron in the ECAL with tracking
+******* Probe electron in the HF
+****** For 2015 running:
+******* Special trigger needed to collect data at $|\eta| > 4.0$
+******* Performance evaluated with CSA14 samples
+***** Plot                                            :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Results from 2012
+#+END_LaTeX
+#+ATTR_LATEX: width=\textwidth
+[[file:fig/HF_Zee.png]]
+* Reconstruction
+** Introduction to reconstruction
+*** Reconstruction scope and priorities
+**** Primary goal is to develop an algorithm for OOT PU mitigation in 25 ns running (\alert{now})
+***** A baseline algorithm is ready for \texttt{CMSSW\_7\_2\_0}
+***** Fine-tuning is ongoing
+***** Improvements could go into \texttt{CMSSW\_7\_3\_0} (\alert{Nov. 10})
+**** Develop alternative algorithms (until \alert{Dec. 2014})
+**** If we have more than one working algorithm, make a choice for data taking
+*** Reconstruction outline
+**** Main areas of focus:                                        :B_block:
+:PROPERTIES:
+:BEAMER_env: block
+:END:
+1. Baseline method (complete, improvements ongoing)
+2. Alternative method (in development)
+**** Convener: [[mailto:artur.apresyan@cern.ch][\underline{\alert{Artur Apresyan}}]] $\rightarrow$ [[mailto:s.brandt@cern.ch][\underline{\alert{Stephanie Brandt}}]]
+** Reconstruction: baseline method
+*** Reconstruction: baseline method
+**** Figure                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+ATTR_LATEX: width=0.8\textwidth
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+[[file:fig/hcal25ns.png]]
+**** Algorithm parameterizes pulse shape as function of charge in triggered TS
+***** Step 1: Measure shape in data for given $|\eta|$ regions
+***** Step 2: Use pulse shape to subtract OOT pulses
+**** Status:
+***** Baseline method \alert{validated and ready} for \texttt{CMSSW\_7\_2\_0}
+***** See [[https://indico.cern.ch/event/318703/session/2/contribution/7/material/slides/0.pdf][\underline{\alert{talk}}]] by [[mailto:artur.apresyan@cern.ch][\underline{\alert{Artur Apresyan}}]]
+***** Work is not done!  New algorithms are under study!
+** Reconstruction: alternative method
+*** Reconstruction: alternative method
+**** Figure                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LaTeX: width=\textwidth
+[[file:fig/hcal25_MIT.png]]
+**** Also, new method being investigated by the MIT group
+***** Step 1: fit pulse shape for arrival time and total charge
+***** Step 2: use fit to estimate the OOT PU contamination in energy when there are two pulses
+**** Still in development stage, but manpower is present
+**** Regular status updates in HCAL reconstruction working group
+* Noise filters
+** Introduction to noise filters
+*** Noise filters scope and priorities
+**** Noise filters that worked in Run 1 need to be updated for the Run 2 environment
+**** These updates are under development, and the results are encouraging
+**** Note that these noise filters may change a bit with the reconstruction algorithm
+*** Noise filters outline
+**** Main areas of focus:
+:PROPERTIES:
+:BEAMER_env: block
+:END:
+1. R45 upgrade filter
+2. Negative energy filter
+3. Validation on data and MC & implementation in CMSSW
+**** Convener: [[mailto:yi.chen@cern.ch][\underline{\alert{Yi Chen}}]]
+** R45 upgrade filter
+*** R45 upgrade filter
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Text column                                 :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+****** \(R45 = \frac{TS4 - TS5}{TS4 + TS5}\) used in 2012 to identify RBX noise
+****** New method needed for 25 ns
+****** An RBX with a large fraction of energy coming from "noisy" RecHits is suspect
+****** Initial results encouraging
+****** Need more work to finalize version in CMSSW
+***** Figure column                               :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+****** Figure 1                                        :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Healthy RBX
+#+END_LaTeX
+#+ATTR_LaTeX: width=0.7\textwidth
+[[file:fig/HealthyRBX.png]]
+****** Figure 2                                        :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Noisy RBX
+#+END_LaTeX
+#+ATTR_LaTeX: width=0.7\textwidth
+[[file:fig/NoisyRBX.png]]
+** Negative energy filter
+*** Negative energy filter
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Text column                                 :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+****** New HCAL reconstruction corrects for expected tail from previous time samples
+****** For spike-like noise, reconstructed energy from TS6 can be negative
+****** Initial results encouraging (see plot for data, right)
+****** Need more work to finalize version in CMSSW
+***** Figure column                               :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+****** Figure 1                                        :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Cartoon of effect
+#+END_LaTeX
+#+ATTR_LaTeX: width=0.7\textwidth
+[[file:fig/negative.png]]
+****** Figure 2                                        :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+OOT PU-corrected TS6 in data
+#+END_LaTeX
+#+ATTR_LaTeX: width=0.7\textwidth
+[[file:fig/TS6.png]]
+* Conclusion
+** Conclusion
+*** Conclusion
+**** HCAL is preparing for data taking in 2015
+**** Lots of new developments are underway:
+***** New/updated calibration efforts
+***** New/updated noise filtering algorithms
+***** New OOT PU mitigation algorithms
+**** Some improvements are already in place
+**** Other improvements are coming soon
+**** Questions are welcome
