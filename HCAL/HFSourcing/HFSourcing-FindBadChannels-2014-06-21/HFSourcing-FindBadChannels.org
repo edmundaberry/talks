@@ -1,0 +1,547 @@
+#+TITLE:     HF Sourcing: Pedestal Oscillation Analysis
+#+EMAIL:     Edmund.A.Berry@cern.ch
+#+DATE:      Sunday, June 22, 2014
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [bigger]
+#+BEAMER_FRAME_LEVEL: 3
+#+latex_header: \mode<beamer>{\usetheme[compress]{Berlin}}
+#+latex_header: \usepackage{multirow}
+#+latex_header: \input{tex/header.tex}
+#+latex_header: \input{tex/macros.tex}
+#+latex_header: \input{tex/toolbox.tex}
+#+latex_header: \mode<beamer>{\usecolortheme{bear}}
+#+latex_header: \mode<beamer>{\titlegraphic{\includegraphics[width=0.2\textwidth]{brown-logo}}}
+#+beamer_header_extra: \author[Edmund Berry]{\alert{Edmund Berry}, Vladimir Gavrilov, \\ Richard Kellogg, Viktor Krishtenko}
+
+* Introduction
+** Issue
+*** Issue: HF pedestal oscillating for some channels
+**** Figure                                              :B_ignoreheading:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LATEX: width=0.6\textwidth
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+[[file:fig/SPE_vs_ORN_unzoomed.png]]
+**** Plot from Viktor Khristenko
+**** Run: ???; Channel: HF(40, 23, 1)
+**** \alert{Full} $x$-axis range shown
+*** Issue: HF pedestal oscillating for some channels
+**** Figure                                              :B_ignoreheading:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LATEX: width=0.6\textwidth
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+[[file:fig/SPE_vs_ORN_zoomed.png]]
+**** Same plot as last slide, but \alert{zoomed} $x$-axis range
+**** Data broken into $0.35 s$ \alert{chunks} (expected)
+**** Oscillations are clear (not in all channels)
+** Goals
+*** Goals
+**** Three (more?) main goals for this analysis:
+1. Identify oscillating channels
+2. Quantify oscillation
+3. See if oscillation varies with time
+**** Focus on Goal 1 (identification) for now
+* Method
+** Method
+*** Method: overview
+1. Viktor provides a \texttt{TGraph} (slide 2) for each channel in run
+2. For each channel, break \texttt{TGraph} into $0.35 s$ chunks
+3. Convert each chunk's $x$-axis from OrN to time
+   * Divide OrN by orbit frequency in Hz
+4. Fit each chunk ($\approx 200$) with a sinusoid
+5. Use collection of fits to identify oscillating pedestals:
+   * Oscillating channels have good fits \& big amplitudes
+   * Non-oscillating channels have bad fits \& low amplitudes
+*** Method: the fit
+**** Fit function with 4 degrees of freedom:
+\(f(t) = a_{0} + a_{1} \cdot \text{sin}(2\pi \cdot (f\cdot x + \phi))\)
+**** Limits on parameters:
+***** Let $y_{i}$ be the SPE of the $i$-th point in the chunk
+****** $a_{0}$ varies between 0 and \(\left[2 \cdot \left(\frac{y_{\text{max}} + y_{\text{min}}}{2}\right)\right] \)
+****** $a_{1}$ varies between 0 and \(\left[2 \cdot \left(\frac{y_{\text{max}} - y_{\text{min}}}{2}\right)\right] \)
+***** Let $f_{\text{FFT}}$ be the frequency found by the peak of an FFT on the chunk
+****** $f$ varies between 0 and sampling frequency
+****** $f$ initially set to $f_{\text{FFT}}$
+***** No restrictions on phase
+****** $\phi$ varies between 0 and 1
+*** Method: example on oscillating channel
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Input histogram                             :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Example $0.35 s$ chunk input
+#+END_LaTeX
+#+ATTR_LaTeX width=\textwidth
+[[file:fig/input_graph_ieta40_iphi23_depth1.png]]
+***** FFT output                                  :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Example FFT output
+#+END_LaTeX
+#+ATTR_LaTeX width=\textwidth
+[[file:fig/fft_output_ieta40_iphi23_depth1.png]]
+**** Channel = HF(40, 23, 1): oscillating
+**** FFT peaks around 5.2 Hz: $f$ is within [2.6, 10.4] Hz in fit
+**** Fit on next slide
+*** Method: example on oscillating channel
+**** Figure                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LaTeX: width=0.6\textwidth
+[[file:fig/fit_output_ieta40_iphi23_depth1.png]]
+**** Channel = HF(40, 23, 1): oscillating
+*** Method: define fit significance
+**** Define variable to quantify residuals of data w.r.t. fit
+**** Each point, $i$, in chunk has coordinate in time and SPE:
+***** time value: $t_i$ [s]
+***** SPE value: $y_i$ [linear ADC]
+**** Fit function, $f$, is defined for each $t_i$
+**** There are $N$ points in a given chunk
+**** Define \alert{significance}, $\sigma$, for a chunk as follows:
+\(\sigma = \frac{1}{N}\cdot\sqrt{\sum_{i=1}^{i=N}\left[f(t_{i}) - y_{i}\right]^{2}} \)
+***** $\sigma$ small for oscillating distributions
+***** $\sigma$ large for non-oscillating distributions
+*** Method: example on oscillating channel
+**** Figure                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LaTeX: width=0.6\textwidth
+[[file:fig/fit_output_ieta40_iphi23_depth1.png]]
+**** Channel = HF(40, 23, 1): oscillating
+**** $\sigma =$ 9.2e-5; $a_{1}$ (amplitude from fit) = 4.7e-3
+**** \alert{$\sigma / a_{1} = 15.9$ (large)}
+*** Method: example on non-oscillating channel
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Input histogram                             :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Example $0.35 s$ chunk input
+#+END_LaTeX
+#+ATTR_LaTeX width=\textwidth
+[[file:fig/input_graph_ieta38_iphi21_depth1.png]]
+***** FFT output                                  :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Example FFT output
+#+END_LaTeX
+#+ATTR_LaTeX width=\textwidth
+[[file:fig/fft_output_ieta38_iphi21_depth1.png]]
+**** Channel = HF(38, 21, 1): non-oscillating
+**** FFT peaks around 2.6 Hz: $f$ is within [1.3, 5.2] Hz in fit
+**** Fit on next slide
+*** Method: example on non-oscillating channel
+**** Figure                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LaTeX: width=0.6\textwidth
+[[file:fig/fit_output_ieta38_iphi21_depth1.png]]
+**** Channel = HF(38, 21, 1): non-oscillating
+**** $\sigma =$ 1.6e-4; $a_{1}$ (amplitude from fit) = 2.8e-4
+**** \alert{$\sigma / a_{1} = 1.8$ (small)}
+*** Method: look at all $0.35 s$ chunks for two channels
+**** Figure                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LaTeX: width=0.6\textwidth
+[[file:fig/amp_over_signif_comparison.png]]
+**** Define \alert{$\chi = \sigma / a_{1}$}: a good measure for "oscillating-ness"
+**** Naively look for chunks with $\chi > 10$ 
+**** Enough method: let's look at results
+* Results
+** Time vs. Frequency
+*** Results: $\chi$ vs. time for all chunks
+**** Figure                                                 :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LaTeX: width=0.6\textwidth
+[[file:fig/time_vs_amp_over_significance_hist.png]]
+**** Plot is a 2D histogram 
+**** One entry per chunk, per channel
+**** $x$-axis: time [seconds], $y$-axis: $\chi$
+*** Results: Freq. vs. time for chunks with $\chi > 10$
+**** Figure                                                 :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LaTeX: width=0.6\textwidth
+[[file:fig/time_vs_frequency_signifOver10_hist.png]]
+**** Plot is a 2D histogram 
+**** One entry per chunk, per channel, \alert{if chunk $\chi > 10$}
+**** $x$-axis: time [seconds], $y$-axis: frequency from fit
+*** Observations:
+**** Observations from the $\chi$ vs time plot:
+***** Most chunks have $\chi < 10$ (non-oscillating)
+***** There are spikes in $\chi$ at time = 40s and 150s
+**** Observations from the frequency vs time plot:
+***** \alert{Two frequencies of oscillation observed}
+***** Spikes in $\chi$ at time = 40s and 150s are mostly 0-2 Hz
+***** Roughly constant rate of 5-7 Hz chunks between \\ time = 40s and 150s
+**** Next:
+***** Where (ieta, iphi, depth) are the 0-2 Hz chunks?
+***** Where (ieta, iphi, depth) are the 5-7 Hz chunks?
+** 0-2 Hz chunks
+*** Results: Where are the 0-2 Hz chunks (30-60 s)?
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Depth 1                                     :B_ignoreheading:BMCOL:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:BEAMER_col: 0.55
+:END:
+#+BEGIN_LaTeX
+\centering
+Occupancy, Depth = 1
+#+END_LaTeX
+#+ATTR_LaTeX: width=\textwidth
+[[file:fig/occupancy_frequencyUnder4_time30to60_signifOver10_depth1_hist.png]]
+***** Depth 2                                     :B_ignoreheading:BMCOL:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:BEAMER_col: 0.55
+:END:
+#+BEGIN_LaTeX
+\centering
+Occupancy, Depth = 2
+#+END_LaTeX
+#+ATTR_LaTeX: width=\textwidth
+[[file:fig/occupancy_frequencyUnder4_time30to60_signifOver10_depth2_hist.png]]
+**** Plot is a 2D histogram
+**** One entry per chunk, per channel,\\ \alert{if freq $< 4$ Hz, $\chi > 10$, and time $\epsilon$ [30, 60]}
+**** $x$-axis: ieta, $y$-axis: iphi
+*** Results: Where are the 0-2 Hz chunks (140-160 s)?
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Depth 1                                     :B_ignoreheading:BMCOL:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:BEAMER_col: 0.55
+:END:
+#+BEGIN_LaTeX
+\centering
+Occupancy, Depth = 1
+#+END_LaTeX
+#+ATTR_LaTeX: width=\textwidth
+[[file:fig/occupancy_frequencyUnder4_time140to160_signifOver10_depth1_hist.png]]
+***** Depth 2                                     :B_ignoreheading:BMCOL:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:BEAMER_col: 0.55
+:END:
+#+BEGIN_LaTeX
+\centering
+Occupancy, Depth = 2
+#+END_LaTeX
+#+ATTR_LaTeX: width=\textwidth
+[[file:fig/occupancy_frequencyUnder4_time140to160_signifOver10_depth2_hist.png]]
+**** Plot is a 2D histogram
+**** One entry per chunk, per channel,\\ \alert{if freq $< 4$ Hz, $\chi > 10$, and time $\epsilon$ [140, 160]}
+**** $x$-axis: ieta, $y$-axis: iphi
+*** Results: What does an 0-2 Hz chunk look like?
+**** Figure                                                 :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LaTeX: width=0.6\textwidth
+[[file:fig/fit_output_ieta29_iphi5_depth1_burst199.png]]
+**** Channel: HF(29, 5, 1)
+**** Time: 145s
+**** Frequency: $1.3 \pm 0.2$ Hz
+*** Observations: 0-2 Hz chunks
+**** 0-2 Hz chunks more common at 140-160 than at 30-60 s
+**** No single channel contributing most of the 0-2 Hz chunks
+**** Low-ieta channels are far more likely to have 0-2 Hz chunks
+**** Side effect from sourcing?
+** 5-7 Hz chunks
+*** Results: Where are the 5-7 Hz chunks?
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Depth 1                                     :B_ignoreheading:BMCOL:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:BEAMER_col: 0.55
+:END:
+#+BEGIN_LaTeX
+\centering
+Occupancy, Depth = 1
+#+END_LaTeX
+#+ATTR_LaTeX: width=\textwidth
+[[file:fig/occupancy_frequencyOver4_signifOver10_depth1_hist.png]]
+***** Depth 2                                     :B_ignoreheading:BMCOL:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:BEAMER_col: 0.55
+:END:
+#+BEGIN_LaTeX
+\centering
+Occupancy, Depth = 2
+#+END_LaTeX
+#+ATTR_LaTeX: width=\textwidth
+[[file:fig/occupancy_frequencyOver4_signifOver10_depth2_hist.png]]
+**** Plot is a 2D histogram
+**** One entry per chunk, per channel,\\ \alert{if freq $> 4$ Hz and $\chi > 10$}
+**** $x$-axis: ieta, $y$-axis: iphi
+*** Observations:
+**** 5-7 Hz chunks mostly come from three \alert{hot} channels:
+***** HF(40, 23, 1)
+***** HF(40, 23, 2)
+***** HF(38, 25, 1)
+**** Other channels contribute relatively few chunks per run
+**** Next:
+***** More investigation into these oscillating channels
+***** Compare against HF(38, 21, 1) (non-oscillating)
+*** Results: $\left<\chi\right>$ for 5-7 Hz hot channels
+**** Figure                                              :B_ignoreheading:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+#+END_LaTeX
+#+ATTR_LaTeX: width=0.6\textwidth
+[[file:fig/amp_over_signif_comparison_more.png]]
+**** HF(40, 23, 1): $\left<\chi\right> = 21.2$
+**** HF(38, 25, 1): $\left<\chi\right> = 17.2$
+**** HF(40, 23, 2): $\left<\chi\right> = 7.2$
+*** Results: Amplitude and Frequency HF(38, 21, 1)
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Amplitude                                   :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Amplitude from fit
+#+END_LaTeX
+#+ATTR_LaTeX:width=\textwidth
+[[file:fig/amp_ieta38_iphi21_depth1.png]]
+***** Frequency                                   :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Frequency from fit
+#+END_LaTeX
+#+ATTR_LaTeX:width=\textwidth
+[[file:fig/freq_ieta38_iphi21_depth1.png]]
+**** \alert{Non-oscillating} channel
+**** Avg. amplitude = $0.00038 \pm 0.00020$
+*** Results: Amplitude and Frequency HF(40, 23, 1)
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Amplitude                                   :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Amplitude from fit
+#+END_LaTeX
+#+ATTR_LaTeX:width=\textwidth
+[[file:fig/amp_ieta40_iphi23_depth1.png]]
+***** Frequency                                   :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Frequency from fit
+#+END_LaTeX
+#+ATTR_LaTeX:width=\textwidth
+[[file:fig/freq_ieta40_iphi23_depth1.png]]
+**** \alert{Oscillating} channel
+**** Avg. amplitude = $0.00484 \pm 0.00064$
+**** Avg. frequency = $5.54 \pm 0.44$
+*** Results: Amplitude and Frequency HF(40, 23, 2)
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Amplitude                                   :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Amplitude from fit
+#+END_LaTeX
+#+ATTR_LaTeX:width=\textwidth
+[[file:fig/amp_ieta40_iphi23_depth2.png]]
+***** Frequency                                   :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Frequency from fit
+#+END_LaTeX
+#+ATTR_LaTeX:width=\textwidth
+[[file:fig/freq_ieta40_iphi23_depth2.png]]
+**** \alert{Oscillating} channel
+**** Avg. amplitude = $0.00040 \pm 0.00013$
+**** Avg. frequency = $5.65 \pm 1.99$
+*** Results: Amplitude and Frequency HF(38, 25, 1)
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Amplitude                                   :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Amplitude from fit
+#+END_LaTeX
+#+ATTR_LaTeX:width=\textwidth
+[[file:fig/amp_ieta38_iphi25_depth1.png]]
+***** Frequency                                   :BMCOL:B_ignoreheading:
+:PROPERTIES:
+:BEAMER_col: 0.55
+:BEAMER_env: ignoreheading
+:END:
+#+BEGIN_LaTeX
+\centering
+Frequency from fit
+#+END_LaTeX
+#+ATTR_LaTeX:width=\textwidth
+[[file:fig/freq_ieta38_iphi25_depth1.png]]
+**** \alert{Oscillating} channel
+**** Avg. amplitude = $0.00415 \pm 0.00092$
+**** Avg. frequency = $5.88 \pm 1.11$
+*** Results: Amplitude and Frequency observations
+**** Avg. amplitudes of oscillating channels vary by an order of magnitude:
+***** Avg. amplitude = $0.00484 \pm 0.00064$ in HF(40, 23, 1)
+***** Avg. amplitude = $0.00040 \pm 0.00013$ in HF(40, 23, 2)
+***** Units are linear ADC ($y$-axis of Viktor's plots)
+* Conclusions
+** Conclusions
+** Conclusions
+*** Conclusions
+**** Used $\chi$ to find oscillating channels
+***** Variable determined from FFT + sine-wave fit
+**** Found two kinds of oscillations:
+***** 0-2 Hz, spread in low-ieta channels at specific times
+****** Related to movement of the source?
+***** 5-7 Hz, mostly from three hot channels at all times:
+****** HF(40, 23, 1)
+****** HF(40, 23, 2)
+****** HF(38, 25, 1)
+**** 5-7 Hz chunks have widely varying amplitudes:
+***** Avg. amplitude = $0.00484 \pm 0.00064$ in HF(40, 23, 1)
+***** Avg. amplitude = $0.00040 \pm 0.00013$ in HF(40, 23, 2)
+* Backup
+** Backup
+*** Backup: Mean $\chi$ 
+**** Columns                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_env: columns
+:END:
+***** Figure                                      :B_ignoreheading:BMCOL:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:BEAMER_col: 0.55
+:END:
+#+BEGIN_LaTeX
+\centering
+$\left<\chi\right>$, Depth = 1 \\
+#+END_LaTeX
+#+ATTR_LaTeX: width=\textwidth
+[[file:fig/mean_fit_amp_over_significance_depth1_hist.png]]
+***** Figure                                      :B_ignoreheading:BMCOL:
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:BEAMER_col: 0.55
+:END:
+#+BEGIN_LaTeX
+\centering
+$\left<\chi\right>$, Depth = 2 \\
+#+END_LaTeX
+#+ATTR_LaTeX: width=\textwidth
+[[file:fig/mean_fit_amp_over_significance_depth2_hist.png]]
+**** HF(40, 23, 1): $\left<\sigma / a_{1}\right> = 21.2$
+**** HF(38, 25, 1): $\left<\sigma / a_{1}\right> = 17.2$
+**** HF(40, 23, 2): $\left<\sigma / a_{1}\right> = 7.2$
