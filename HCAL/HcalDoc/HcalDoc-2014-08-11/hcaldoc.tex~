@@ -1,0 +1,168 @@
+% Created 2014-08-11 Mon 15:42
+\documentclass[bigger]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\mode<beamer>{\usetheme[compress]{Berlin}}
+\usepackage{multirow}
+\input{tex/header.tex}
+\input{tex/macros.tex}
+\input{tex/toolbox.tex}
+\mode<beamer>{\usecolortheme{bear}}
+\mode<beamer>{\titlegraphic{\includegraphics[width=0.2\textwidth]{brown-logo}}}
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{HCAL DOC shift: July 28 - August 4}
+\author{Edmund Berry}
+\date{Monday, August 4, 2014}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.8.11}}
+
+\author[Edmund Berry]{\alert{Edmund Berry}}
+\begin{document}
+
+\maketitle
+
+
+\section{Outline}
+\label{sec-1}
+\subsection{Outline}
+\label{sec-1-1}
+\begin{frame}
+\frametitle{Outline}
+\label{sec-1-1-1}
+\begin{itemize}
+
+\item Time period:
+\label{sec-1-1-1-1}%
+\begin{itemize}
+
+\item Full shift runs from \alert{Mon., July 28 - Mon., August 11}
+\label{sec-1-1-1-1-1}%
+
+\item \href{https://indico.cern.ch/event/328809/contribution/6/material/0/0.pdf}{\alert{Last report}} covered \alert{Mon., July 28 - Mon., August 4}
+\label{sec-1-1-1-1-2}%
+
+\item This report covers \alert{Mon., August 4 - Mon., August 11}
+\label{sec-1-1-1-1-3}%
+\end{itemize} % ends low level
+
+\item Issues encountered:
+\label{sec-1-1-1-2}%
+\begin{itemize}
+
+\item Laser commissioning
+\label{sec-1-1-1-2-1}%
+
+\item New RCMS interface now default
+\label{sec-1-1-1-2-2}%
+
+\item Glitch in PVSS
+\label{sec-1-1-1-2-3}%
+
+\item HFM08 CCM replaced
+\label{sec-1-1-1-2-4}%
+\end{itemize} % ends low level
+
+\item Also:
+\label{sec-1-1-1-3}%
+\begin{itemize}
+
+\item uTCA commissioning continues
+\label{sec-1-1-1-3-1}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+\section{Issues encountered}
+\label{sec-2}
+\subsection{Issues encountered}
+\label{sec-2-1}
+\begin{frame}
+\frametitle{Laser commissioning}
+\label{sec-2-1-1}
+\begin{itemize}
+
+\item e-logs: \href{http://cmsonline.cern.ch/cms-elog/821442}{\alert{821442}}, \href{http://cmsonline.cern.ch/cms-elog/821523}{\alert{821523}}, \href{http://cmsonline.cern.ch/cms-elog/821555}{\alert{821555}}
+\label{sec-2-1-1-1}%
+
+\item Too much work to list here
+\label{sec-2-1-1-2}%
+
+\item Now able to take laser runs and observe signal
+\label{sec-2-1-1-3}%
+
+\item Some strange features:
+\label{sec-2-1-1-4}%
+\begin{itemize}
+
+\item Runs occasionally at 25 events
+\label{sec-2-1-1-4-1}%
+
+\item Occasionally ``missing'' FEDs in HBHE laser runs
+\label{sec-2-1-1-4-2}%
+
+\item See PFG report (next talk)
+\label{sec-2-1-1-4-3}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{New RCMS interface now default: Thanks, John!}
+\label{sec-2-1-2}
+\begin{itemize}
+
+\item e-log: \href{http://cmsonline.cern.ch/cms-elog/821655}{\alert{821655}}
+\label{sec-2-1-2-1}%
+\end{itemize} % ends low level
+%% Figure
+\label{sec-2-1-2-2}
+
+\centering
+\includegraphics[width=.9\linewidth]{fig/running.png}
+\end{frame}
+\begin{frame}
+\frametitle{Glitch in PVSS}
+\label{sec-2-1-3}
+\begin{itemize}
+
+\item e-log: \href{http://cmsonline.cern.ch/cms-elog/821531}{\alert{821531}}
+\label{sec-2-1-3-1}%
+
+\item All HCAL subsystems' statuses set to ``dead'' in DCS.
+\label{sec-2-1-3-2}%
+
+\item Happened between 09:30 and 10:30 on Thursday
+\label{sec-2-1-3-3}%
+
+\item Not limited to HCAL: all CMS systems experienced this
+\label{sec-2-1-3-4}%
+
+\item Only lasted a few minutes
+\label{sec-2-1-3-5}%
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{HFM08 CCM replaced: Thanks, Alexi \& Olga!}
+\label{sec-2-1-4}
+\begin{itemize}
+
+\item e-logs: \href{http://cmsonline.cern.ch/cms-elog/821552}{\alert{821552}}, \href{http://cmsonline.cern.ch/cms-elog/821535}{\alert{821535}}, \href{http://cmsonline.cern.ch/cms-elog/821560}{\alert{821560}}
+\label{sec-2-1-4-1}%
+\end{itemize} % ends low level
+\end{frame}
+
+\end{document}

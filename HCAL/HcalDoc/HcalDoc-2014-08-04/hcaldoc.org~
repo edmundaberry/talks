@@ -1,0 +1,84 @@
+#+TITLE:     HCAL DOC shift: July 28 - August 4
+#+EMAIL:     Edmund.A.Berry@cern.ch
+#+DATE:      Monday, August 4, 2014
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [bigger]
+#+BEAMER_FRAME_LEVEL: 3
+#+latex_header: \mode<beamer>{\usetheme[compress]{Berlin}}
+#+latex_header: \usepackage{multirow}
+#+latex_header: \input{tex/header.tex}
+#+latex_header: \input{tex/macros.tex}
+#+latex_header: \input{tex/toolbox.tex}
+#+latex_header: \mode<beamer>{\usecolortheme{bear}}
+#+latex_header: \mode<beamer>{\titlegraphic{\includegraphics[width=0.2\textwidth]{brown-logo}}}
+#+beamer_header_extra: \author[Edmund Berry]{\alert{Edmund Berry}}
+
+* Outline
+** Outline
+*** Outline
+**** Time period:
+***** Full shift runs from \alert{Mon., July 28 - Mon., August 11}
+***** This report covers \alert{Mon., July 28 - Mon., August 4}
+***** MWGR from \alert{Wed., July 30 - Fri., August 1}
+**** Issues encountered during MWGR:
+***** Flaky CAEN adaptor on \texttt{ttc-hcal}
+***** Lights on for TOTEM
+***** S-link errors for DCC 723 (HF)
+**** Other issues:
+***** Investigation of CCM for HFM08
+***** Work on new laser
+* Issues encountered during MWGR
+** Issues encountered during MWGR
+*** Lights on for TOTEM: Wed. morning
+**** e-logs: [[http://cmsonline.cern.ch/cms-elog/820730][\alert{820730}]], [[http://cmsonline.cern.ch/cms-elog/820859][\alert{820859}]]
+**** Symptoms:
+***** Usual effects on HF data quality when lights are on
+**** Solution:
+***** \alert{This intervention will continue for O(weeks)!}
+***** We have called TOTEM and asked them to notify us and turn off lights when possible
+*** Flakey CAEN adaptor on \texttt{ttc-hcal}: Wed. night
+**** e-logs: [[http://cmsonline.cern.ch/cms-elog/820848][\alert{820848}]], [[http://cmsonline.cern.ch/cms-elog/820858][\alert{820858}]]
+**** Symptoms:
+***** HCAL fails to configure multiple times in global.
+***** Chainsaw reads: \texttt{Applications ttc::TTCciControl:4 configuration timed out}
+***** Handsaw logs read: \texttt{ERROR TTCXDAQBase::actionPerformed for event type 'ItemRetrieveEvent', item 'StrobeCounter' failed: Caught exception: BusAdapterException 'Could not read from CAEN BusAdapter'}
+**** Solution (temporary): reboot \texttt{ttc-hcal}
+**** Solution (long-term): under investigation
+*** SLINKs errors for DCC 723 (HF): Wed. night
+**** e-logs: [[http://cmsonline.cern.ch/cms-elog/820865][\alert{820865}]], [[http://cmsonline.cern.ch/cms-elog/820839][\alert{820839}]]
+**** Symptoms:
+***** HCAL fails to configure
+***** cDAQ errors read: \texttt{Failed to prepare SLINKs} for 723
+***** Seating for SLINK cable is OK on both DCC and FRL
+**** Solution (temporary): remove FED 723 from global run
+**** Solution (long-term): Not obvious.  Under investigation by cDAQ.
+***** cDAQ expert is on vacation.
+***** \alert{FED 723 will be out of global for O(weeks)!}
+* Issues outside of MWGR
+** Issues outside of MWGR
+*** Investigation of CCM for HFM08: Wed. morning
+**** e-log: [[http://cmsonline.cern.ch/cms-elog/820724][820724]]
+**** Symptoms:
+***** ADCs in current HFM08 CCM do not work
+***** After replacing the CCM, HFM08 won't configure
+**** Solution:
+***** Put original CCM (bad ADCs) back into HFM08
+***** Further investigation required
+*** Work on new laser: Wed.
+**** e-log: [[http://cmsonline.cern.ch/cms-elog/820902][820902]]
+**** Refilled laser with premix gas (output 0.5 mJ/pulse -> ~7 mJ/pulse)
+**** Updated PCI driver and laser software to fix bug with internal triggers
+**** Fixed swap of PMT and RADDAM fibers in HFM
+**** Now: no light arriving on HFRADDAM fiber on the horizontal near side of HFM
+***** Need to open splitter box to understand
+***** Other fibers OK

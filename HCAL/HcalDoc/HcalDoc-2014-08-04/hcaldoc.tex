@@ -1,0 +1,336 @@
+% Created 2014-08-04 Mon 13:18
+\documentclass[bigger]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\mode<beamer>{\usetheme[compress]{Berlin}}
+\usepackage{multirow}
+\input{tex/header.tex}
+\input{tex/macros.tex}
+\input{tex/toolbox.tex}
+\mode<beamer>{\usecolortheme{bear}}
+\mode<beamer>{\titlegraphic{\includegraphics[width=0.2\textwidth]{brown-logo}}}
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{HCAL DOC shift: July 28 - August 4}
+\author{Edmund Berry}
+\date{Monday, August 4, 2014}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.8.11}}
+
+\author[Edmund Berry]{\alert{Edmund Berry}}
+\begin{document}
+
+\maketitle
+
+
+\section{Outline}
+\label{sec-1}
+\subsection{Outline}
+\label{sec-1-1}
+\begin{frame}
+\frametitle{Outline}
+\label{sec-1-1-1}
+\begin{itemize}
+
+\item Time period:
+\label{sec-1-1-1-1}%
+\begin{itemize}
+
+\item Full shift runs from \alert{Mon., July 28 - Mon., August 11}
+\label{sec-1-1-1-1-1}%
+
+\item This report covers \alert{Mon., July 28 - Mon., August 4}
+\label{sec-1-1-1-1-2}%
+
+\item MWGR from \alert{Wed., July 30 - Fri., August 1}
+\label{sec-1-1-1-1-3}%
+\end{itemize} % ends low level
+
+\item Issues affecting MWGR:
+\label{sec-1-1-1-2}%
+\begin{itemize}
+
+\item Flaky CAEN adaptor on \texttt{ttc-hcal}
+\label{sec-1-1-1-2-1}%
+
+\item Lights on for TOTEM
+\label{sec-1-1-1-2-2}%
+
+\item S-link errors for DCC 723 (HF)
+\label{sec-1-1-1-2-3}%
+
+\item SLB idle in crate 10
+\label{sec-1-1-1-2-4}%
+\end{itemize} % ends low level
+
+\item Issues not affecting MWGR:
+\label{sec-1-1-1-3}%
+\begin{itemize}
+
+\item Investigation of CCM for HFM08
+\label{sec-1-1-1-3-1}%
+
+\item Work on new laser
+\label{sec-1-1-1-3-2}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+\section{Issues affecting MWGR}
+\label{sec-2}
+\subsection{Issues affecting MWGR}
+\label{sec-2-1}
+\begin{frame}
+\frametitle{Lights on for TOTEM: Wed. morning}
+\label{sec-2-1-1}
+\begin{itemize}
+
+\item e-logs: \href{http://cmsonline.cern.ch/cms-elog/820730}{\alert{820730}}, \href{http://cmsonline.cern.ch/cms-elog/820859}{\alert{820859}}
+\label{sec-2-1-1-1}%
+
+\item Symptoms:
+\label{sec-2-1-1-2}%
+\begin{itemize}
+
+\item Usual effects on HF data quality when lights are on
+\label{sec-2-1-1-2-1}%
+\end{itemize} % ends low level
+
+\item Solution:
+\label{sec-2-1-1-3}%
+\begin{itemize}
+
+\item \alert{This intervention will continue for O(weeks)!}
+\label{sec-2-1-1-3-1}%
+
+\item We have called TOTEM and asked them to notify us and turn off lights when possible
+\label{sec-2-1-1-3-2}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Flakey CAEN adaptor on \texttt{ttc-hcal}: Wed. night}
+\label{sec-2-1-2}
+\begin{itemize}
+
+\item e-logs: \href{http://cmsonline.cern.ch/cms-elog/820848}{\alert{820848}}, \href{http://cmsonline.cern.ch/cms-elog/820858}{\alert{820858}}
+\label{sec-2-1-2-1}%
+
+\item Symptoms:
+\label{sec-2-1-2-2}%
+\begin{itemize}
+
+\item HCAL fails to configure multiple times in global.
+\label{sec-2-1-2-2-1}%
+
+\item Chainsaw reads: \texttt{Applications ttc:\textbf{:TTCciControl:}4 configuration timed out}
+\label{sec-2-1-2-2-2}%
+
+\item Handsaw logs read: \texttt{ERROR TTCXDAQBase::actionPerformed for event type 'ItemRetrieveEvent', item 'StrobeCounter' failed: Caught exception: BusAdapterException 'Could not read from CAEN BusAdapter'}
+\label{sec-2-1-2-2-3}%
+\end{itemize} % ends low level
+
+\item Solution (temporary): reboot \texttt{ttc-hcal}
+\label{sec-2-1-2-3}%
+
+\item Solution (long-term): under investigation
+\label{sec-2-1-2-4}%
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{SLINKs errors for DCC 723 (HF): Wed. night}
+\label{sec-2-1-3}
+\begin{itemize}
+
+\item e-logs: \href{http://cmsonline.cern.ch/cms-elog/820865}{\alert{820865}}, \href{http://cmsonline.cern.ch/cms-elog/820839}{\alert{820839}}
+\label{sec-2-1-3-1}%
+
+\item Symptoms:
+\label{sec-2-1-3-2}%
+\begin{itemize}
+
+\item HCAL fails to configure
+\label{sec-2-1-3-2-1}%
+
+\item cDAQ errors read: \texttt{Failed to prepare SLINKs} for 723
+\label{sec-2-1-3-2-2}%
+
+\item Seating for SLINK cable is OK on both DCC and FRL
+\label{sec-2-1-3-2-3}%
+\end{itemize} % ends low level
+
+\item Solution (temporary): remove FED 723 from global run
+\label{sec-2-1-3-3}%
+
+\item Solution (long-term): Not obvious.  Under investigation by cDAQ.
+\label{sec-2-1-3-4}%
+\begin{itemize}
+
+\item cDAQ expert is on vacation.
+\label{sec-2-1-3-4-1}%
+
+\item \alert{FED 723 will be out of global for O(weeks)!}
+\label{sec-2-1-3-4-2}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{SLB idle in Crate 10: Fri. morning}
+\label{sec-2-1-4}
+\begin{itemize}
+
+\item e-logs: \href{http://cmsonline.cern.ch/cms-elog/821232}{\alert{821232}}, \href{http://cmsonline.cern.ch/cms-elog/821244}{\alert{821244}}, \href{http://cmsonline.cern.ch/cms-elog/821365}{\alert{821365}}
+\label{sec-2-1-4-1}%
+
+\item Symptoms:
+\label{sec-2-1-4-2}%
+\begin{itemize}
+
+\item RCT complains of BC0 and phase errors, all from HCAL crate 10
+\label{sec-2-1-4-2-1}%
+
+\item No SLB errors in MonVis, but all SLBs from crate 10 are idle
+\label{sec-2-1-4-2-2}%
+\end{itemize} % ends low level
+
+\item Solution (?):
+\label{sec-2-1-4-3}%
+\begin{itemize}
+
+\item Dick observes that RJ-45 cable from the HCAL Master TTCf was not well plugged into crate 10 TTCf.  Reseated.
+\label{sec-2-1-4-3-1}%
+
+\item Waiting to hear if this solves the problem.
+\label{sec-2-1-4-3-2}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+\section{Issues not affecting MWGR}
+\label{sec-3}
+\subsection{Issues not affecting MWGR}
+\label{sec-3-1}
+\begin{frame}
+\frametitle{Investigation of CCM for HFM08: Wed. morning}
+\label{sec-3-1-1}
+\begin{itemize}
+
+\item e-log: \href{http://cmsonline.cern.ch/cms-elog/820724}{\alert{820724}}
+\label{sec-3-1-1-1}%
+
+\item Symptoms:
+\label{sec-3-1-1-2}%
+\begin{itemize}
+
+\item ADCs in current HFM08 CCM do not work
+\label{sec-3-1-1-2-1}%
+
+\item After replacing the CCM, HFM08 won't configure
+\label{sec-3-1-1-2-2}%
+\end{itemize} % ends low level
+
+\item Solution:
+\label{sec-3-1-1-3}%
+\begin{itemize}
+
+\item Put original CCM (bad ADCs) back into HFM08
+\label{sec-3-1-1-3-1}%
+
+\item Further investigation required
+\label{sec-3-1-1-3-2}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+\begin{frame}
+\frametitle{Work on new laser: Wed.}
+\label{sec-3-1-2}
+\begin{itemize}
+
+\item e-log: \href{http://cmsonline.cern.ch/cms-elog/820902}{\alert{820902}}
+\label{sec-3-1-2-1}%
+
+\item German refilled laser with premix gas\\
+\label{sec-3-1-2-2}%
+(output 0.5 mJ/pulse $\rightarrow \text{ } \sim 7$ mJ/pulse)
+
+\item Updated PCI driver and laser software to fix bug with internal triggers
+\label{sec-3-1-2-3}%
+
+\item Fixed swap of PMT and RADDAM fibers in HFM
+\label{sec-3-1-2-4}%
+
+\item Now: no light arriving on HFRADDAM fiber on the horizontal near side of HFM
+\label{sec-3-1-2-5}%
+\begin{itemize}
+
+\item Need to open splitter box to understand
+\label{sec-3-1-2-5-1}%
+
+\item Other fibers OK
+\label{sec-3-1-2-5-2}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+\section{Conclusion}
+\label{sec-4}
+\subsection{Conclusion}
+\label{sec-4-1}
+\begin{frame}
+\frametitle{Conclusion}
+\label{sec-4-1-1}
+\begin{itemize}
+
+\item Generally pretty smooth
+\label{sec-4-1-1-1}%
+\begin{itemize}
+
+\item HCAL included in global for \href{https://hypernews.cern.ch/HyperNews/CMS/get/commissioning/5208.html}{\alert{more runs}} than any other subsystem (other than HLT and L1, of course)
+\label{sec-4-1-1-1-1}%
+\end{itemize} % ends low level
+
+\item HCAL interrupted the global run twice this week:
+\label{sec-4-1-1-2}%
+\begin{itemize}
+
+\item Failed to configure due to CAEN adaptor on \texttt{ttc-hcal}
+\label{sec-4-1-1-2-1}%
+
+\item SLINK errors on FED 723
+\label{sec-4-1-1-2-2}%
+\end{itemize} % ends low level
+
+\item HCAL affected RCT once this week:
+\label{sec-4-1-1-3}%
+\begin{itemize}
+
+\item Possibly due to poorly seated cable on crate 10
+\label{sec-4-1-1-3-1}%
+\end{itemize} % ends low level
+
+\item Two long-term issues \alert{O(weeks)} to consider:
+\label{sec-4-1-1-4}%
+\begin{itemize}
+
+\item TOTEM work means lights sometimes are on for HF
+\label{sec-4-1-1-4-1}%
+
+\item cDAQ investigation means FED 723 excluded from global
+\label{sec-4-1-1-4-2}%
+\end{itemize} % ends low level
+\end{itemize} % ends low level
+\end{frame}
+
+\end{document}
